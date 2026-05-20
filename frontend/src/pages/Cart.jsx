@@ -36,7 +36,7 @@ const Cart = () => {
         <div className="cart-items">
           {cart.map((item, index) => (
             <div key={index} className="cart-item">
-              <img src={`/_/backend/api${item.image_url}`} alt={item.name} className="cart-item-image" />
+              <img src={item.image_url?.startsWith("http") ? item.image_url : `/_/backend/api${item.image_url}`} alt={item.name} className="cart-item-image" />
               <div className="cart-item-details">
                 <h3>{item.name}</h3>
                 <p>Size: {item.size}</p>
@@ -77,4 +77,5 @@ const Cart = () => {
 };
 
 export default Cart;
+
 

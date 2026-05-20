@@ -52,7 +52,7 @@ const Home = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <video controls className="store-video">
-                  <source src={`/_/backend/api${video.video_url}`} type="video/mp4" />
+                  <source src={video.video_url?.startsWith("http") ? video.video_url : `/_/backend/api${video.video_url}`} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
                 <div className="video-info">
@@ -70,4 +70,5 @@ const Home = () => {
 };
 
 export default Home;
+
 

@@ -1,6 +1,8 @@
 from flask import Blueprint, request, jsonify, current_app, send_from_directory
 from werkzeug.utils import secure_filename
 import os
+import cloudinary
+import cloudinary.uploader
 from models import User, Product, Order, OrderItem, Video
 from extensions import db
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt
@@ -68,10 +70,11 @@ def upload_product():
     if not all([name, category, price, sizes]):
         return jsonify({"error": "Missing required fields"}), 400
         
-    filename = secure_filename(image.filename)
-    upload_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
-    os.makedirs(current_app.config['UPLOAD_FOLDER'], exist_ok=True)
-    image.save(upload_path)
+    try:
+        upload_result = cloudinary.uploader.upload(image)
+        image_url = upload_result.get('secure_url')
+    except Exception as e:
+        return jsonify({"error": f"Cloudinary upload failed: {str(e)}. Ensure CLOUDINARY_URL is set in environment."}), 500
     
     new_product = Product(
         name=name,
@@ -79,7 +82,7 @@ def upload_product():
         price=float(price),
         sizes=sizes,
         description=description,
-        image_url=f"/uploads/{filename}"
+        image_url=image_url
     )
     
     db.session.add(new_product)
@@ -98,7 +101,7 @@ def delete_product(product_id):
     if not product:
         return jsonify({"error": "Product not found"}), 404
         
-    if product.image_url:
+    if product.image_url and 'cloudinary.com' not in product.image_url:
         filename = os.path.basename(product.image_url)
         image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         if os.path.exists(image_path):
@@ -225,14 +228,15 @@ def upload_video():
     if not title:
         return jsonify({"error": "Missing video title"}), 400
         
-    filename = secure_filename(video_file.filename)
-    upload_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
-    os.makedirs(current_app.config['UPLOAD_FOLDER'], exist_ok=True)
-    video_file.save(upload_path)
+    try:
+        upload_result = cloudinary.uploader.upload(video_file, resource_type='video')
+        video_url = upload_result.get('secure_url')
+    except Exception as e:
+        return jsonify({"error": f"Cloudinary upload failed: {str(e)}. Ensure CLOUDINARY_URL is set."}), 500
     
     new_video = Video(
         title=title,
-        video_url=f"/uploads/{filename}"
+        video_url=video_url
     )
     
     db.session.add(new_video)
@@ -251,7 +255,7 @@ def delete_video(video_id):
     if not video:
         return jsonify({"error": "Video not found"}), 404
         
-    if video.video_url:
+    if video.video_url and 'cloudinary.com' not in video.video_url:
         filename = os.path.basename(video.video_url)
         video_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         if os.path.exists(video_path):
