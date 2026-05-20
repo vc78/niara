@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { X, Plus, Minus, Trash2, ShoppingBag, ArrowLeft, Copy, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import BespokeImage from './BespokeImage';
+import culturalFooterPattern from '../assets/cultural_footer_pattern.png';
 import './CartDrawer.css';
 
 const CartDrawer = ({ isOpen, onClose }) => {
@@ -147,8 +148,15 @@ const CartDrawer = ({ isOpen, onClose }) => {
 
     const encodedText = encodeURIComponent(orderText);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedText}`;
+    const mailtoUrl = `mailto:venkatbodduluri78@gmail.com?subject=${encodeURIComponent(`New Booking Order ${generatedInvoiceId} - Niara by Neenu`)}&body=${encodeURIComponent(orderText)}`;
     
+    // Open WhatsApp checkout in a new window/tab
     window.open(whatsappUrl, '_blank');
+    
+    // Open Mail client after a short delay
+    setTimeout(() => {
+      window.location.href = mailtoUrl;
+    }, 600);
     
     // Capture invoice details to show success receipt screen
     const generatedInvoice = {
@@ -565,6 +573,9 @@ const CartDrawer = ({ isOpen, onClose }) => {
                   <div className="print-invoice-footer-note">
                     <p className="footer-thank-you"><strong>Thank you for your business!</strong></p>
                     <p className="footer-desc-line">This invoice is designed for sharing easily through WhatsApp.</p>
+                    <div className="print-cultural-footer-bg">
+                      <img src={culturalFooterPattern} alt="Cultural Motif" />
+                    </div>
                   </div>
 
                   {/* Sizing & custom notes if any */}
