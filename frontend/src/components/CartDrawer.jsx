@@ -154,10 +154,8 @@ const CartDrawer = ({ isOpen, onClose }) => {
     // Open WhatsApp checkout in a new window/tab
     window.open(whatsappUrl, '_blank');
     
-    // Open Mail client after a short delay
-    setTimeout(() => {
-      window.location.href = mailtoUrl;
-    }, 600);
+    // Open Mail client directly
+    window.location.href = mailtoUrl;
     
     // Capture invoice details to show success receipt screen
     const generatedInvoice = {
