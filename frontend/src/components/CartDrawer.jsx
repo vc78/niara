@@ -64,7 +64,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
     e.preventDefault();
     if (cart.length === 0) return;
 
-    const phoneNumber = "919032306961"; // Owner's WhatsApp number
+    const phoneNumber = "919074450441"; // Owner's WhatsApp number
     
     let orderText = `✨ *New Booking Order - Niara by Neenu* ✨\n\n`;
     orderText += `Hello Neenu, I would like to book the following custom designer items:\n\n`;

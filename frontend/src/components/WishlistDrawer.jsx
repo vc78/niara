@@ -63,7 +63,7 @@ const WishlistDrawer = ({ isOpen, onClose }) => {
     e.preventDefault();
     if (wishlist.length === 0) return;
 
-    const phoneNumber = "919032306961"; // Owner's WhatsApp number
+    const phoneNumber = "919074450441"; // Owner's WhatsApp number
     
     let messageText = `✨ *Bespoke Consultation - Niara by Neenu* ✨\n\n`;
     messageText += `Hello Neenu, I have curated a selection of beautiful designs from your gallery and would love to consult with you on their custom crafting:\n\n`;

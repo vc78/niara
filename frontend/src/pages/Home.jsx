@@ -61,7 +61,7 @@ const Home = () => {
 
   const handleVideoConsultationSubmit = (e) => {
     e.preventDefault();
-    const phoneNumber = "919032306961";
+    const phoneNumber = "919074450441";
     let text = `✨ *Video Styling Consultation Request - Niara by Neenu* ✨\n\n`;
     text += `• *Client Name:* ${videoClientName}\n`;
     text += `• *Mobile Number:* ${videoMobile}\n`;
@@ -226,7 +226,7 @@ const Home = () => {
   const handleDirectWhatsAppBook = () => {
     if (!selectedProduct) return;
     
-    const phoneNumber = "919032306961"; // Designer contact
+    const phoneNumber = "919074450441"; // Designer contact
     const productPriceFormatted = formatPrice(selectedProduct.price * quantity);
     
     let orderText = `✨ *Bespoke Booking Request - Niara by Neenu* ✨\n\n`;
@@ -250,7 +250,7 @@ const Home = () => {
     e.preventDefault();
     if (!contactName.trim() || !contactMobile.trim() || !contactMessage.trim()) return;
 
-    const phoneNumber = "919032306961";
+    const phoneNumber = "919074450441";
     let inquiryText = `✨ *Custom Styling Enquiry - Niara by Neenu* ✨\n\n`;
     inquiryText += `• *Name:* ${contactName}\n`;
     inquiryText += `• *Mobile:* ${contactMobile}\n`;
@@ -483,7 +483,7 @@ const Home = () => {
         <div className="studio-content">
           <h2 className="studio-title">Store Now Open</h2>
           <p className="studio-sub">Experience true craftsmanship in person at our luxury studio</p>
-          <a href="https://wa.me/919032306961?text=Hello%20Neenu%2C%20I%20would%20like%20to%20schedule%20an%20in-person%20visit%20to%20your%20studio." target="_blank" rel="noopener noreferrer" className="btn-primary studio-btn">
+          <a href="https://wa.me/919074450441?text=Hello%20Neenu%2C%20I%20would%20like%20to%20schedule%20an%20in-person%20visit%20to%20your%20studio." target="_blank" rel="noopener noreferrer" className="btn-primary studio-btn">
             Visit Gurugram Studio
           </a>
         </div>
@@ -923,7 +923,7 @@ const Home = () => {
 
         <div className="testimonials-btn-wrapper">
           <button 
-            onClick={() => window.open('https://wa.me/919032306961?text=Hello%20Neenu%2C%20I%20would%20like%20to%20see%20more%20customer%20drapes%20and%20testimonials.', '_blank')} 
+            onClick={() => window.open('https://wa.me/919074450441?text=Hello%20Neenu%2C%20I%20would%20like%20to%20see%20more%20customer%20drapes%20and%20testimonials.', '_blank')} 
             className="btn-secondary"
           >
             View All Testimonials
