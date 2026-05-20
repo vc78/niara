@@ -897,8 +897,9 @@
     background-color: #ffffff !important;
     background: #ffffff !important;
     color: #111111 !important;
-    font-size: 12pt;
-    line-height: 1.5;
+    font-size: 11pt;
+    line-height: 1.4;
+    font-family: Arial, sans-serif !important;
   }
 
   /* Hide absolutely everything */
@@ -931,229 +932,125 @@
     margin: 0 auto;
     padding: 30px;
     background: #ffffff !important;
+    font-family: Arial, sans-serif !important;
   }
 
-  .print-invoice-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 20px;
+  .print-main-title {
+    color: #25D366 !important; /* Bright green title */
+    font-size: 28px !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    margin: 0 0 10px 0 !important;
+    font-family: Arial, sans-serif !important;
   }
 
-  .print-brand h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 24pt;
-    letter-spacing: 0.1em;
-    color: #000000 !important;
-    margin: 0 0 5px 0;
+  .print-date-line {
+    font-size: 14px !important;
+    color: #111111 !important;
+    margin: 0 0 10px 0 !important;
+    font-family: Arial, sans-serif !important;
+    text-align: left !important;
   }
 
-  .print-brand-tag {
-    font-size: 9pt;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #555555 !important;
-    margin: 0;
+  .print-green-divider {
+    height: 2px !important;
+    background-color: #25D366 !important;
+    margin-bottom: 25px !important;
+    border: none !important;
   }
 
-  .print-invoice-title {
-    text-align: right;
+  .print-details-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin-bottom: 30px !important;
+    border: 1px solid #cccccc !important;
   }
 
-  .print-invoice-title h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 18pt;
-    letter-spacing: 0.05em;
-    margin: 0 0 10px 0;
-    color: #8a7657 !important; /* Elegant brass/gold touch */
+  .print-details-table td {
+    padding: 10px 15px !important;
+    border: 1px solid #cccccc !important;
+    font-size: 14px !important;
+    color: #111111 !important;
+    font-family: Arial, sans-serif !important;
   }
 
-  .print-invoice-title p {
-    font-size: 10pt;
-    margin: 2px 0;
+  .print-details-table td.detail-header {
+    background-color: #e8f7ed !important; /* Very light green background */
+    font-weight: bold !important;
+    width: 25% !important;
+    color: #111111 !important;
+  }
+
+  .print-items-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin-bottom: 30px !important;
+    border: 1px solid #cccccc !important;
+  }
+
+  .print-items-table th {
+    background-color: #25D366 !important; /* Bright green header */
+    color: #ffffff !important;
+    font-weight: bold !important;
+    padding: 12px !important;
+    font-size: 14px !important;
+    border: 1px solid #cccccc !important;
+    font-family: Arial, sans-serif !important;
+    text-align: left !important;
+  }
+
+  .print-items-table th.text-center, 
+  .print-items-table td.text-center {
+    text-align: center !important;
+  }
+
+  .print-items-table th.text-right, 
+  .print-items-table td.text-right {
+    text-align: right !important;
+  }
+
+  .print-items-table td {
+    padding: 12px !important;
+    border: 1px solid #cccccc !important;
+    font-size: 14px !important;
+    color: #111111 !important;
+    font-family: Arial, sans-serif !important;
+  }
+
+  .grand-total-row td {
+    border: none !important;
+  }
+
+  .grand-total-row td.grand-total-label {
+    font-weight: bold !important;
+    background-color: #e8f7ed !important; /* Light green background */
+    border: 1px solid #cccccc !important;
+    color: #111111 !important;
+  }
+
+  .grand-total-row td.grand-total-value {
+    font-weight: bold !important;
+    background-color: #e8f7ed !important; /* Light green background */
+    border: 1px solid #cccccc !important;
+    color: #111111 !important;
+  }
+
+  .print-invoice-footer-note {
+    margin-top: 30px !important;
+    font-family: Arial, sans-serif !important;
+    text-align: left !important;
+  }
+
+  .footer-thank-you {
+    font-size: 16px !important;
+    margin-bottom: 5px !important;
+    color: #111111 !important;
+    font-weight: bold !important;
+  }
+
+  .footer-desc-line {
+    font-size: 14px !important;
     color: #333333 !important;
-  }
-
-  .print-divider {
-    border: none;
-    border-top: 1.5px solid #8a7657;
-    margin: 20px 0;
-  }
-
-  /* Details Grid */
-  .print-invoice-details-grid {
-    display: flex;
-    justify-content: space-between;
-    gap: 40px;
-    margin-bottom: 30px;
-  }
-
-  .print-billing-col,
-  .print-payment-col {
-    flex: 1;
-  }
-
-  .print-billing-col h3,
-  .print-payment-col h3 {
-    font-size: 11pt;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    color: #8a7657 !important;
-    margin: 0 0 10px 0;
-    border-bottom: 1px solid #e5e5e5;
-    padding-bottom: 5px;
-  }
-
-  .print-billing-col p,
-  .print-payment-col p {
-    font-size: 10pt;
-    margin: 4px 0;
-    color: #333333 !important;
-  }
-
-  .print-client-name {
-    font-size: 11pt !important;
-    color: #000000 !important;
-  }
-
-  /* Itemized Table */
-  .print-invoice-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0 30px 0;
-  }
-
-  .print-invoice-table th {
-    background-color: #f7f7f7 !important;
-    color: #000000 !important;
-    font-weight: 600;
-    font-size: 10pt;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    padding: 10px;
-    text-align: left;
-    border-bottom: 2px solid #8a7657;
-  }
-
-  .print-invoice-table td {
-    padding: 12px 10px;
-    font-size: 10pt;
-    border-bottom: 1px solid #e5e5e5;
-    color: #333333 !important;
-  }
-
-  .print-invoice-table tr:last-child td {
-    border-bottom: 1px solid #8a7657;
-  }
-
-  /* Totals Section */
-  .print-invoice-totals {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    margin-bottom: 30px;
-  }
-
-  .totals-row {
-    display: flex;
-    width: 320px;
-    justify-content: space-between;
-    padding: 6px 0;
-    font-size: 10pt;
-    color: #444444 !important;
-  }
-
-  .totals-row.grand-total {
-    border-top: 1.5px solid #8a7657;
-    padding-top: 10px;
-    font-size: 13pt;
-    font-weight: 700;
-    color: #000000 !important;
-  }
-
-  .totals-row.grand-total span:last-child {
-    color: #8a7657 !important;
-  }
-
-  /* Notes & Measurements */
-  .print-notes-section,
-  .print-measurements-section {
-    background-color: #fafaf8 !important;
-    border-left: 3px solid #8a7657;
-    padding: 15px;
-    margin-bottom: 25px;
-    border-radius: 2px;
-  }
-
-  .print-notes-section h3,
-  .print-measurements-section h3 {
-    font-size: 10pt;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    color: #8a7657 !important;
-    margin: 0 0 8px 0;
-  }
-
-  .print-notes-section p {
-    font-size: 10pt;
-    margin: 0;
-    color: #333333 !important;
-  }
-
-  .measurements-grid-print {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 15px;
-  }
-
-  .measurements-grid-print p {
-    font-size: 9.5pt;
-    margin: 0;
-    color: #333333 !important;
-  }
-
-  /* Invoice Footer & Signatures */
-  .print-invoice-footer {
-    margin-top: 50px;
-    border-top: 1px solid #e5e5e5;
-    padding-top: 20px;
-    text-align: center;
-  }
-
-  .print-invoice-footer p {
-    font-size: 9pt;
-    color: #666666 !important;
-    margin: 4px 0;
-  }
-
-  .footer-contact {
-    font-weight: 500;
-    color: #444444 !important;
-  }
-
-  .signature-line {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 40px;
-  }
-
-  .signature-box {
-    text-align: center;
-    width: 200px;
-  }
-
-  .sig-placeholder {
-    display: block;
-    height: 45px;
-    border-bottom: 1px solid #999999;
-    margin-bottom: 6px;
-  }
-
-  .signature-box p {
-    font-size: 9.5pt;
-    color: #444444 !important;
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
+    margin: 0 !important;
   }
 }

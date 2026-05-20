@@ -80,7 +80,13 @@ const CartDrawer = ({ isOpen, onClose }) => {
     if (cart.length === 0) return;
 
     const phoneNumber = "919074450441"; // Owner's WhatsApp number
-    const generatedInvoiceId = `INV-${Date.now().toString().slice(-6)}-${Math.floor(1000 + Math.random() * 9000)}`;
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    const formattedDate = `${dd}-${mm}-${yyyy}`;
+
+    const generatedInvoiceId = `INV-${yyyy}-${Math.floor(100 + Math.random() * 900)}`;
     
     let orderText = `✨ *New Booking Order - Niara by Neenu* ✨\n\n`;
     orderText += `Hello Neenu, I would like to book the following custom designer items:\n\n`;
@@ -147,7 +153,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
     // Capture invoice details to show success receipt screen
     const generatedInvoice = {
       invoiceId: generatedInvoiceId,
-      date: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' }),
+      date: formattedDate,
       clientName: formData.name,
       clientMobile: formData.mobile,
       clientAddress: formData.address,
@@ -155,8 +161,8 @@ const CartDrawer = ({ isOpen, onClose }) => {
       notes: formData.notes,
       items: cart.map(item => ({ ...item })),
       total: totalAmount,
-      paymentMethod: paymentMethod === 'upi' ? 'Google Pay / UPI' : 
-                     paymentMethod === 'bank' ? 'Bank Transfer (IMPS/NEFT)' : 'WhatsApp Pay (In-Chat)',
+      paymentMethod: paymentMethod === 'upi' ? 'UPI' : 
+                     paymentMethod === 'bank' ? 'Bank Transfer' : 'Cash',
       transactionId: formData.transactionId || 'Pending Verification'
     };
     
@@ -503,111 +509,76 @@ const CartDrawer = ({ isOpen, onClose }) => {
             {invoiceData && (
               <div id="printable-invoice-area" className="hidden-print-invoice">
                 <div className="print-invoice-wrapper">
-                  <div className="print-invoice-header">
-                    <div className="print-brand">
-                      <h1>NIARA BY NEENU</h1>
-                      <p className="print-brand-tag">Luxury Handloom & Bespoke Bridal Couture</p>
-                    </div>
-                    <div className="print-invoice-title">
-                      <h2>BESPOKE INVOICE</h2>
-                      <p><strong>Invoice ID:</strong> {invoiceData.invoiceId}</p>
-                      <p><strong>Date:</strong> {invoiceData.date}</p>
-                    </div>
-                  </div>
+                  <h1 className="print-main-title">WhatsApp Business Invoice</h1>
+                  <p className="print-date-line">Invoice Date: {invoiceData.date}</p>
+                  
+                  <div className="print-green-divider"></div>
 
-                  <hr className="print-divider" />
+                  <table className="print-details-table">
+                    <tbody>
+                      <tr>
+                        <td className="detail-header">Business Name:</td>
+                        <td>Niara by Neenu</td>
+                      </tr>
+                      <tr>
+                        <td className="detail-header">Customer Name:</td>
+                        <td>{invoiceData.clientName}</td>
+                      </tr>
+                      <tr>
+                        <td className="detail-header">Invoice No:</td>
+                        <td>{invoiceData.invoiceId}</td>
+                      </tr>
+                      <tr>
+                        <td className="detail-header">Payment Method:</td>
+                        <td>{invoiceData.paymentMethod}</td>
+                      </tr>
+                    </tbody>
+                  </table>
 
-                  <div className="print-invoice-details-grid">
-                    <div className="print-billing-col">
-                      <h3>Billed To:</h3>
-                      <p className="print-client-name"><strong>{invoiceData.clientName}</strong></p>
-                      <p><strong>Mobile:</strong> {invoiceData.clientMobile}</p>
-                      <p><strong>Address:</strong> {invoiceData.clientAddress}</p>
-                      <p><strong>Pincode:</strong> {invoiceData.clientPincode}</p>
-                    </div>
-                    <div className="print-payment-col">
-                      <h3>Payment Summary:</h3>
-                      <p><strong>Payment Status:</strong> Pending Verification via WhatsApp</p>
-                      <p><strong>Payment Method:</strong> {invoiceData.paymentMethod}</p>
-                      <p><strong>Transaction Ref:</strong> {invoiceData.transactionId}</p>
-                    </div>
-                  </div>
-
-                  <table className="print-invoice-table">
+                  <table className="print-items-table">
                     <thead>
                       <tr>
-                        <th>#</th>
-                        <th>Design Name</th>
-                        <th>Bespoke Size</th>
-                        <th>Qty</th>
-                        <th>Unit Price</th>
-                        <th>Total Amount</th>
+                        <th>Item</th>
+                        <th className="text-center" style={{ width: '80px' }}>Qty</th>
+                        <th className="text-right" style={{ width: '120px' }}>Price</th>
+                        <th className="text-right" style={{ width: '120px' }}>Total</th>
                       </tr>
                     </thead>
                     <tbody>
                       {invoiceData.items.map((item, index) => (
                         <tr key={index}>
-                          <td>{index + 1}</td>
-                          <td>{item.name}</td>
-                          <td>{item.size}</td>
-                          <td>{item.quantity}</td>
-                          <td>{formatPrice(item.price)}</td>
-                          <td>{formatPrice(item.price * item.quantity)}</td>
+                          <td>{item.name} {item.size ? `(${item.size})` : ''}</td>
+                          <td className="text-center">{item.quantity}</td>
+                          <td className="text-right">{formatPrice(item.price)}</td>
+                          <td className="text-right">{formatPrice(item.price * item.quantity)}</td>
                         </tr>
                       ))}
+                      <tr className="grand-total-row">
+                        <td style={{ border: 'none' }}></td>
+                        <td style={{ border: 'none' }}></td>
+                        <td className="grand-total-label">Grand Total</td>
+                        <td className="grand-total-value text-right">{formatPrice(invoiceData.total)}</td>
+                      </tr>
                     </tbody>
                   </table>
 
-                  <div className="print-invoice-totals">
-                    <div className="totals-row">
-                      <span>Subtotal:</span>
-                      <span>{formatPrice(invoiceData.total)}</span>
-                    </div>
-                    <div className="totals-row">
-                      <span>Custom Tailoring / Fit Adjustment:</span>
-                      <span>Free (Complimentary)</span>
-                    </div>
-                    <div className="totals-row">
-                      <span>Shipping / Packaging:</span>
-                      <span>Free (Complimentary)</span>
-                    </div>
-                    <div className="totals-row grand-total">
-                      <span>Grand Total:</span>
-                      <span>{formatPrice(invoiceData.total)}</span>
-                    </div>
+                  <div className="print-invoice-footer-note">
+                    <p className="footer-thank-you"><strong>Thank you for your business!</strong></p>
+                    <p className="footer-desc-line">This invoice is designed for sharing easily through WhatsApp.</p>
                   </div>
 
-                  {invoiceData.notes && (
-                    <div className="print-notes-section">
-                      <h3>Special Styling / Custom Fit Instructions:</h3>
-                      <p>{invoiceData.notes}</p>
+                  {/* Sizing & custom notes if any */}
+                  {(invoiceData.notes || (user && user.measurements)) && (
+                    <div className="print-bespoke-details" style={{ marginTop: '40px', borderTop: '1px dashed #cccccc', paddingTop: '20px' }}>
+                      <h4 style={{ color: '#10b981', fontFamily: 'Arial, sans-serif', fontSize: '14px', textTransform: 'uppercase', marginBottom: '10px', fontWeight: 'bold' }}>Bespoke Fitting & Notes</h4>
+                      {invoiceData.notes && <p style={{ fontSize: '13px', fontFamily: 'Arial, sans-serif', color: '#333', margin: '4px 0' }}><strong>Fitting Notes:</strong> {invoiceData.notes}</p>}
+                      {user && user.measurements && (
+                        <p style={{ fontSize: '13px', fontFamily: 'Arial, sans-serif', color: '#333', margin: '4px 0' }}>
+                          <strong>Measurements:</strong> {user.measurements.shoulder && `Shoulder: ${user.measurements.shoulder}in | `}{user.measurements.bust && `Bust: ${user.measurements.bust}in | `}{user.measurements.waist && `Waist: ${user.measurements.waist}in | `}{user.measurements.hips && `Hips: ${user.measurements.hips}in | `}{user.measurements.height && `Height: ${user.measurements.height}`}
+                        </p>
+                      )}
                     </div>
                   )}
-
-                  {/* Tailoring measurements attachment */}
-                  {user && user.measurements && (
-                    <div className="print-measurements-section">
-                      <h3>Attached Sizing Profile (Bespoke Fitting):</h3>
-                      <div className="measurements-grid-print">
-                        {user.measurements.shoulder && <p><strong>Shoulder:</strong> {user.measurements.shoulder} in</p>}
-                        {user.measurements.bust && <p><strong>Bust:</strong> {user.measurements.bust} in</p>}
-                        {user.measurements.waist && <p><strong>Waist:</strong> {user.measurements.waist} in</p>}
-                        {user.measurements.hips && <p><strong>Hips:</strong> {user.measurements.hips} in</p>}
-                        {user.measurements.height && <p><strong>Height:</strong> {user.measurements.height}</p>}
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="print-invoice-footer">
-                    <p>Thank you for supporting handcrafted luxury legacy and local Indian handloom artisans.</p>
-                    <p className="footer-contact">For any styling, customization, or shipping inquiries: contact@niarabynyenu.com | +91 90744 50441</p>
-                    <div className="signature-line">
-                      <div className="signature-box">
-                        <span className="sig-placeholder"></span>
-                        <p>Authorized Signature</p>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             )}
