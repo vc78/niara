@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
+import logo from '../assets/logo.jpg';
 import './Footer.css';
 
 const Footer = () => {
@@ -12,7 +13,10 @@ const Footer = () => {
       <div className="footer-container">
         {/* Brand identity column */}
         <div className="footer-info">
-          <h3 className="footer-logo">Niara by <span className="gold-text">Neenu</span></h3>
+          <div className="footer-logo-wrapper" style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '15px' }}>
+            <img src={logo} alt="Niara by Neenu Logo" style={{ width: '48px', height: '48px', borderRadius: '50%', border: '1.5px solid var(--accent-gold)', objectFit: 'cover' }} />
+            <h3 className="footer-logo" style={{ margin: 0 }}>Niara by <span className="gold-text">Neenu</span></h3>
+          </div>
           <p className="founder-name">Handcrafting bespoke luxury silhouettes since 2021.</p>
           <p className="founder-label">Founder & Creative Director: <strong>Neenu Ralish</strong></p>
         </div>

@@ -4,6 +4,7 @@ import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { useWishlist } from '../context/WishlistContext';
 import { motion } from 'framer-motion';
+import logo from '../assets/logo.jpg';
 import './Navbar.css';
 
 const Navbar = ({ onCartOpen, onWishlistOpen, onAuthOpen, onProfileOpen }) => {
@@ -53,7 +54,8 @@ const Navbar = ({ onCartOpen, onWishlistOpen, onAuthOpen, onProfileOpen }) => {
       <div className="navbar-container">
         {/* Brand Logo */}
         <a href="#home" className="navbar-logo">
-          Niara by <span className="gold-text">Neenu</span>
+          <img src={logo} alt="Niara by Neenu Logo" className="navbar-logo-img" />
+          <span>Niara by <span className="gold-text">Neenu</span></span>
         </a>
 
         {/* Desktop Navigation Links */}

@@ -43,6 +43,21 @@
   align-items: center;
 }
 
+.navbar-logo-img {
+  height: 44px;
+  width: 44px;
+  border-radius: 50%;
+  margin-right: 12px;
+  border: 1.5px solid var(--accent-gold);
+  object-fit: cover;
+  box-shadow: 0 0 10px rgba(197, 168, 128, 0.15);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.navbar-logo:hover .navbar-logo-img {
+  transform: rotate(360deg) scale(1.05);
+}
+
 .gold-text {
   color: var(--accent-gold);
   margin-left: 6px;

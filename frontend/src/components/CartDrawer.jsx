@@ -5,6 +5,7 @@ import { X, Plus, Minus, Trash2, ShoppingBag, ArrowLeft, Copy, Check } from 'luc
 import { motion, AnimatePresence } from 'framer-motion';
 import BespokeImage from './BespokeImage';
 import culturalFooterPattern from '../assets/cultural_footer_pattern.png';
+import logo from '../assets/logo.jpg';
 import './CartDrawer.css';
 
 const CartDrawer = ({ isOpen, onClose }) => {
@@ -517,8 +518,11 @@ const CartDrawer = ({ isOpen, onClose }) => {
             {invoiceData && (
               <div id="printable-invoice-area" className="hidden-print-invoice">
                 <div className="print-invoice-wrapper">
-                  <h1 className="print-main-title">WhatsApp Business Invoice</h1>
-                  <p className="print-date-line">Invoice Date: {invoiceData.date}</p>
+                  <div className="print-logo-header" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '20px' }}>
+                    <img src={logo} alt="Niara by Neenu Logo" style={{ width: '80px', height: '80px', borderRadius: '50%', marginBottom: '10px', border: '1.5px solid #25D366', objectFit: 'cover' }} />
+                    <h1 className="print-main-title" style={{ margin: '0' }}>WhatsApp Business Invoice</h1>
+                    <p className="print-date-line" style={{ margin: '4px 0 0 0' }}>Invoice Date: {invoiceData.date}</p>
+                  </div>
                   
                   <div className="print-green-divider"></div>
 

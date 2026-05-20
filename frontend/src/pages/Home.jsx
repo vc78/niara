@@ -6,6 +6,7 @@ import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import Footer from '../components/Footer';
 import BespokeImage from '../components/BespokeImage';
+import logo from '../assets/logo.jpg';
 import './Home.css';
 
 const Home = () => {
@@ -342,6 +343,9 @@ const Home = () => {
             transition={{ duration: 1, ease: 'easeOut' }}
             className="hero-inner"
           >
+            <div className="hero-logo-container">
+              <img src={logo} alt="Niara by Neenu Logo" className="hero-logo-img" />
+            </div>
             <span className="hero-subtitle">Niara by Neenu</span>
             <h1 className="hero-title">Elegance <br />Redefined</h1>
             <p className="hero-description">
