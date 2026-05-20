@@ -29,8 +29,9 @@ const Login = () => {
       } else {
         setError(data.error || 'Login failed');
       }
-    } catch {
-      setError('An error occurred. Please try again.');
+    } catch (err) {
+      console.error('Login Error:', err);
+      setError(`Error: ${err.message || 'Failed to fetch from server.'}. Make sure the Flask backend is running.`);
     }
   };
 
