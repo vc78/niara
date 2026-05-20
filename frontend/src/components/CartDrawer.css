@@ -598,4 +598,562 @@
   background: rgba(255, 255, 255, 0.06);
 }
 
+/* ==========================================================================
+   Receipt & Invoice Generator success view styles (Niara Luxury Aesthetic)
+   ========================================================================== */
 
+.invoice-success-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 10px 0 20px 0;
+}
+
+.success-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.success-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  background: rgba(37, 211, 102, 0.1);
+  border: 2px solid #25D366;
+  border-radius: 50%;
+  color: #25D366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(37, 211, 102, 0.2);
+}
+
+.success-banner h4 {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  color: var(--white);
+  letter-spacing: 0.02em;
+}
+
+.success-desc {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.5;
+  max-width: 320px;
+}
+
+/* Luxury Receipt Card Preview */
+.receipt-preview-card {
+  background: linear-gradient(135deg, rgba(25, 25, 25, 0.8) 0%, rgba(15, 15, 15, 0.95) 100%);
+  border: 1px solid rgba(197, 168, 128, 0.25);
+  border-radius: 8px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.receipt-preview-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #8a7657 0%, #c5a880 50%, #8a7657 100%);
+}
+
+.receipt-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+  padding-bottom: 14px;
+  margin-bottom: 16px;
+}
+
+.brand-logo {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  color: var(--accent-gold);
+  font-weight: 500;
+}
+
+.receipt-tag {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  background: rgba(197, 168, 128, 0.15);
+  color: var(--accent-gold);
+  padding: 2px 8px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.receipt-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.receipt-meta-grid div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.receipt-meta-grid .label {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.03em;
+}
+
+.receipt-meta-grid .val {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--white);
+}
+
+.receipt-section-block {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 14px;
+  margin-bottom: 16px;
+}
+
+.receipt-section-block h5 {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+  font-family: var(--font-sans);
+}
+
+.receipt-section-block p {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.receipt-address-text {
+  font-size: 12px !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+  margin-top: 2px !important;
+}
+
+.highlight-client {
+  color: var(--white) !important;
+}
+
+.receipt-summary-block {
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  padding-top: 14px;
+  margin-bottom: 8px;
+}
+
+.receipt-summary-block h5 {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin-bottom: 10px;
+  letter-spacing: 0.05em;
+}
+
+.receipt-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.item-name-qty {
+  flex-grow: 1;
+  padding-right: 12px;
+  line-height: 1.3;
+}
+
+.item-price-val {
+  font-weight: 500;
+  color: var(--white);
+  white-space: nowrap;
+}
+
+.receipt-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 14px;
+  padding-top: 12px;
+  font-size: 14px;
+  color: var(--white);
+}
+
+.grand-total-val {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--accent-gold);
+}
+
+/* Action Buttons */
+.invoice-action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.print-invoice-btn {
+  width: 100%;
+  padding: 14px 20px;
+  background: var(--accent-gold);
+  border: 1px solid var(--accent-gold);
+  color: var(--primary-color);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.print-invoice-btn:hover {
+  background: transparent;
+  color: var(--accent-gold);
+}
+
+.continue-shopping-btn {
+  width: 100%;
+  padding: 14px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.continue-shopping-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+}
+
+/* micro-animations */
+.animate-pulse-slow {
+  animation: pulse-gold 2s infinite ease-in-out;
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2.5s infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+@keyframes pulse-gold {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   PRINT MEDIA RULES (Hides Web Interface, formats Letter Page layout)
+   ========================================================================== */
+.hidden-print-invoice {
+  display: none;
+}
+
+@media print {
+  /* Set high-contrast light theme rules for printer compatibility */
+  :root {
+    --white: #ffffff;
+    --primary-color: #ffffff;
+    --black: #000000;
+  }
+
+  body {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    color: #111111 !important;
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  /* Hide absolutely everything */
+  body * {
+    visibility: hidden !important;
+  }
+
+  /* Make ONLY our print layout visible and aligned at top left */
+  #printable-invoice-area,
+  #printable-invoice-area * {
+    visibility: visible !important;
+  }
+
+  #printable-invoice-area {
+    display: block !important;
+    position: absolute;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    color: #111111 !important;
+  }
+
+  /* High fidelity structural wrapper for invoice page */
+  .print-invoice-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+    background: #ffffff !important;
+  }
+
+  .print-invoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+
+  .print-brand h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24pt;
+    letter-spacing: 0.1em;
+    color: #000000 !important;
+    margin: 0 0 5px 0;
+  }
+
+  .print-brand-tag {
+    font-size: 9pt;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #555555 !important;
+    margin: 0;
+  }
+
+  .print-invoice-title {
+    text-align: right;
+  }
+
+  .print-invoice-title h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18pt;
+    letter-spacing: 0.05em;
+    margin: 0 0 10px 0;
+    color: #8a7657 !important; /* Elegant brass/gold touch */
+  }
+
+  .print-invoice-title p {
+    font-size: 10pt;
+    margin: 2px 0;
+    color: #333333 !important;
+  }
+
+  .print-divider {
+    border: none;
+    border-top: 1.5px solid #8a7657;
+    margin: 20px 0;
+  }
+
+  /* Details Grid */
+  .print-invoice-details-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 30px;
+  }
+
+  .print-billing-col,
+  .print-payment-col {
+    flex: 1;
+  }
+
+  .print-billing-col h3,
+  .print-payment-col h3 {
+    font-size: 11pt;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #8a7657 !important;
+    margin: 0 0 10px 0;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 5px;
+  }
+
+  .print-billing-col p,
+  .print-payment-col p {
+    font-size: 10pt;
+    margin: 4px 0;
+    color: #333333 !important;
+  }
+
+  .print-client-name {
+    font-size: 11pt !important;
+    color: #000000 !important;
+  }
+
+  /* Itemized Table */
+  .print-invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0 30px 0;
+  }
+
+  .print-invoice-table th {
+    background-color: #f7f7f7 !important;
+    color: #000000 !important;
+    font-weight: 600;
+    font-size: 10pt;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 2px solid #8a7657;
+  }
+
+  .print-invoice-table td {
+    padding: 12px 10px;
+    font-size: 10pt;
+    border-bottom: 1px solid #e5e5e5;
+    color: #333333 !important;
+  }
+
+  .print-invoice-table tr:last-child td {
+    border-bottom: 1px solid #8a7657;
+  }
+
+  /* Totals Section */
+  .print-invoice-totals {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-bottom: 30px;
+  }
+
+  .totals-row {
+    display: flex;
+    width: 320px;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 10pt;
+    color: #444444 !important;
+  }
+
+  .totals-row.grand-total {
+    border-top: 1.5px solid #8a7657;
+    padding-top: 10px;
+    font-size: 13pt;
+    font-weight: 700;
+    color: #000000 !important;
+  }
+
+  .totals-row.grand-total span:last-child {
+    color: #8a7657 !important;
+  }
+
+  /* Notes & Measurements */
+  .print-notes-section,
+  .print-measurements-section {
+    background-color: #fafaf8 !important;
+    border-left: 3px solid #8a7657;
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 2px;
+  }
+
+  .print-notes-section h3,
+  .print-measurements-section h3 {
+    font-size: 10pt;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #8a7657 !important;
+    margin: 0 0 8px 0;
+  }
+
+  .print-notes-section p {
+    font-size: 10pt;
+    margin: 0;
+    color: #333333 !important;
+  }
+
+  .measurements-grid-print {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+  }
+
+  .measurements-grid-print p {
+    font-size: 9.5pt;
+    margin: 0;
+    color: #333333 !important;
+  }
+
+  /* Invoice Footer & Signatures */
+  .print-invoice-footer {
+    margin-top: 50px;
+    border-top: 1px solid #e5e5e5;
+    padding-top: 20px;
+    text-align: center;
+  }
+
+  .print-invoice-footer p {
+    font-size: 9pt;
+    color: #666666 !important;
+    margin: 4px 0;
+  }
+
+  .footer-contact {
+    font-weight: 500;
+    color: #444444 !important;
+  }
+
+  .signature-line {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 40px;
+  }
+
+  .signature-box {
+    text-align: center;
+    width: 200px;
+  }
+
+  .sig-placeholder {
+    display: block;
+    height: 45px;
+    border-bottom: 1px solid #999999;
+    margin-bottom: 6px;
+  }
+
+  .signature-box p {
+    font-size: 9.5pt;
+    color: #444444 !important;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+}

@@ -21,6 +21,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
   });
   const [paymentMethod, setPaymentMethod] = useState('upi');
   const [copiedUpi, setCopiedUpi] = useState(false);
+  const [invoiceData, setInvoiceData] = useState(null);
 
   // Pre-fill form when user changes or modal opens
   useEffect(() => {
@@ -35,10 +36,13 @@ const CartDrawer = ({ isOpen, onClose }) => {
     }
   }, [user, isOpen]);
 
-  // Reset checkout state when modal closes
+  // Reset checkout and invoice state when modal closes
   useEffect(() => {
     if (!isOpen) {
-      setTimeout(() => setIsCheckingOut(false), 300);
+      setTimeout(() => {
+        setIsCheckingOut(false);
+        setInvoiceData(null);
+      }, 300);
     }
   }, [isOpen]);
 
@@ -60,14 +64,27 @@ const CartDrawer = ({ isOpen, onClose }) => {
     });
   };
 
+  const handlePrintInvoice = () => {
+    window.print();
+  };
+
+  const handleContinueShopping = () => {
+    clearCart();
+    setInvoiceData(null);
+    setIsCheckingOut(false);
+    onClose();
+  };
+
   const handleWhatsAppCheckout = (e) => {
     e.preventDefault();
     if (cart.length === 0) return;
 
     const phoneNumber = "919074450441"; // Owner's WhatsApp number
+    const generatedInvoiceId = `INV-${Date.now().toString().slice(-6)}-${Math.floor(1000 + Math.random() * 9000)}`;
     
     let orderText = `✨ *New Booking Order - Niara by Neenu* ✨\n\n`;
     orderText += `Hello Neenu, I would like to book the following custom designer items:\n\n`;
+    orderText += `🧾 *INVOICE ID:* *${generatedInvoiceId}*\n`;
     orderText += `🛍️ *ORDER DETAILS:*\n`;
     orderText += `------------------------------------------\n`;
     
@@ -127,10 +144,23 @@ const CartDrawer = ({ isOpen, onClose }) => {
     
     window.open(whatsappUrl, '_blank');
     
-    // Clear cart and close drawer after sending
-    clearCart();
-    setIsCheckingOut(false);
-    onClose();
+    // Capture invoice details to show success receipt screen
+    const generatedInvoice = {
+      invoiceId: generatedInvoiceId,
+      date: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' }),
+      clientName: formData.name,
+      clientMobile: formData.mobile,
+      clientAddress: formData.address,
+      clientPincode: formData.pincode,
+      notes: formData.notes,
+      items: cart.map(item => ({ ...item })),
+      total: totalAmount,
+      paymentMethod: paymentMethod === 'upi' ? 'Google Pay / UPI' : 
+                     paymentMethod === 'bank' ? 'Bank Transfer (IMPS/NEFT)' : 'WhatsApp Pay (In-Chat)',
+      transactionId: formData.transactionId || 'Pending Verification'
+    };
+    
+    setInvoiceData(generatedInvoice);
   };
 
   return (
@@ -155,7 +185,12 @@ const CartDrawer = ({ isOpen, onClose }) => {
             transition={{ type: 'tween', duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="cart-header">
-              {isCheckingOut ? (
+              {invoiceData ? (
+                <div className="cart-title-wrapper">
+                  <Check size={22} className="gold-icon animate-pulse-slow" />
+                  <h3>Order Confirmed</h3>
+                </div>
+              ) : isCheckingOut ? (
                 <div className="cart-title-wrapper">
                   <button onClick={() => setIsCheckingOut(false)} className="back-btn" aria-label="Back to cart">
                     <ArrowLeft size={20} />
@@ -168,13 +203,89 @@ const CartDrawer = ({ isOpen, onClose }) => {
                   <h3>Your Selection ({totalItems})</h3>
                 </div>
               )}
-              <button onClick={onClose} className="close-btn" aria-label="Close cart">
+              <button 
+                onClick={() => {
+                  if (invoiceData) {
+                    handleContinueShopping();
+                  } else {
+                    onClose();
+                  }
+                }} 
+                className="close-btn" 
+                aria-label="Close cart"
+              >
                 <X size={20} />
               </button>
             </div>
 
             <div className="cart-body">
-              {cart.length === 0 ? (
+              {invoiceData ? (
+                <div className="invoice-success-container">
+                  <div className="success-banner">
+                    <div className="success-icon-wrapper animate-bounce-slow">
+                      <Check size={36} />
+                    </div>
+                    <h4>Receipt Compiled</h4>
+                    <p className="success-desc">
+                      Your booking request has been sent to Neenu via WhatsApp. Please download your luxury invoice below for your records.
+                    </p>
+                  </div>
+
+                  <div className="receipt-preview-card animate-fade-in">
+                    <div className="receipt-header-row">
+                      <span className="brand-logo">NIARA BY NEENU</span>
+                      <span className="receipt-tag">Bespoke Fitting Receipt</span>
+                    </div>
+                    
+                    <div className="receipt-meta-grid">
+                      <div>
+                        <span className="label">Invoice No:</span>
+                        <span className="val">{invoiceData.invoiceId}</span>
+                      </div>
+                      <div>
+                        <span className="label">Date:</span>
+                        <span className="val">{invoiceData.date}</span>
+                      </div>
+                    </div>
+
+                    <div className="receipt-section-block">
+                      <h5>Client & Shipping Details</h5>
+                      <p className="highlight-client"><strong>{invoiceData.clientName}</strong></p>
+                      <p>{invoiceData.clientMobile}</p>
+                      <p className="receipt-address-text">{invoiceData.clientAddress}, {invoiceData.clientPincode}</p>
+                    </div>
+
+                    <div className="receipt-section-block">
+                      <h5>Payment Status</h5>
+                      <p>Method: <strong>{invoiceData.paymentMethod}</strong></p>
+                      <p>Ref ID: <code>{invoiceData.transactionId}</code></p>
+                    </div>
+
+                    <div className="receipt-summary-block">
+                      <h5>Itemized Summary</h5>
+                      {invoiceData.items.map((item) => (
+                        <div key={`${item.product_id}-${item.size}`} className="receipt-summary-row">
+                          <span className="item-name-qty">{item.name} ({item.size}) x{item.quantity}</span>
+                          <span className="item-price-val">{formatPrice(item.price * item.quantity)}</span>
+                        </div>
+                      ))}
+                      <div className="receipt-total-row">
+                        <span>Grand Total</span>
+                        <span className="grand-total-val">{formatPrice(invoiceData.total)}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="invoice-action-buttons">
+                    <button onClick={handlePrintInvoice} className="btn-primary print-invoice-btn">
+                      Download PDF Invoice
+                    </button>
+                    <button onClick={handleContinueShopping} className="btn-secondary continue-shopping-btn">
+                      Continue Shopping
+                    </button>
+                  </div>
+                </div>
+              ) : cart.length === 0 ? (
                 <div className="empty-cart-state">
                   <ShoppingBag size={48} className="empty-bag-icon floating-icon" />
                   <p className="empty-title">Your selection is empty</p>
@@ -359,7 +470,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
               )}
             </div>
 
-            {cart.length > 0 && (
+            {cart.length > 0 && !invoiceData && (
               <div className="cart-footer">
                 {!isCheckingOut && (
                   <>
@@ -385,6 +496,119 @@ const CartDrawer = ({ isOpen, onClose }) => {
                     Proceed to Checkout
                   </button>
                 )}
+              </div>
+            )}
+
+            {/* Hidden printable invoice container */}
+            {invoiceData && (
+              <div id="printable-invoice-area" className="hidden-print-invoice">
+                <div className="print-invoice-wrapper">
+                  <div className="print-invoice-header">
+                    <div className="print-brand">
+                      <h1>NIARA BY NEENU</h1>
+                      <p className="print-brand-tag">Luxury Handloom & Bespoke Bridal Couture</p>
+                    </div>
+                    <div className="print-invoice-title">
+                      <h2>BESPOKE INVOICE</h2>
+                      <p><strong>Invoice ID:</strong> {invoiceData.invoiceId}</p>
+                      <p><strong>Date:</strong> {invoiceData.date}</p>
+                    </div>
+                  </div>
+
+                  <hr className="print-divider" />
+
+                  <div className="print-invoice-details-grid">
+                    <div className="print-billing-col">
+                      <h3>Billed To:</h3>
+                      <p className="print-client-name"><strong>{invoiceData.clientName}</strong></p>
+                      <p><strong>Mobile:</strong> {invoiceData.clientMobile}</p>
+                      <p><strong>Address:</strong> {invoiceData.clientAddress}</p>
+                      <p><strong>Pincode:</strong> {invoiceData.clientPincode}</p>
+                    </div>
+                    <div className="print-payment-col">
+                      <h3>Payment Summary:</h3>
+                      <p><strong>Payment Status:</strong> Pending Verification via WhatsApp</p>
+                      <p><strong>Payment Method:</strong> {invoiceData.paymentMethod}</p>
+                      <p><strong>Transaction Ref:</strong> {invoiceData.transactionId}</p>
+                    </div>
+                  </div>
+
+                  <table className="print-invoice-table">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Design Name</th>
+                        <th>Bespoke Size</th>
+                        <th>Qty</th>
+                        <th>Unit Price</th>
+                        <th>Total Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {invoiceData.items.map((item, index) => (
+                        <tr key={index}>
+                          <td>{index + 1}</td>
+                          <td>{item.name}</td>
+                          <td>{item.size}</td>
+                          <td>{item.quantity}</td>
+                          <td>{formatPrice(item.price)}</td>
+                          <td>{formatPrice(item.price * item.quantity)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+
+                  <div className="print-invoice-totals">
+                    <div className="totals-row">
+                      <span>Subtotal:</span>
+                      <span>{formatPrice(invoiceData.total)}</span>
+                    </div>
+                    <div className="totals-row">
+                      <span>Custom Tailoring / Fit Adjustment:</span>
+                      <span>Free (Complimentary)</span>
+                    </div>
+                    <div className="totals-row">
+                      <span>Shipping / Packaging:</span>
+                      <span>Free (Complimentary)</span>
+                    </div>
+                    <div className="totals-row grand-total">
+                      <span>Grand Total:</span>
+                      <span>{formatPrice(invoiceData.total)}</span>
+                    </div>
+                  </div>
+
+                  {invoiceData.notes && (
+                    <div className="print-notes-section">
+                      <h3>Special Styling / Custom Fit Instructions:</h3>
+                      <p>{invoiceData.notes}</p>
+                    </div>
+                  )}
+
+                  {/* Tailoring measurements attachment */}
+                  {user && user.measurements && (
+                    <div className="print-measurements-section">
+                      <h3>Attached Sizing Profile (Bespoke Fitting):</h3>
+                      <div className="measurements-grid-print">
+                        {user.measurements.shoulder && <p><strong>Shoulder:</strong> {user.measurements.shoulder} in</p>}
+                        {user.measurements.bust && <p><strong>Bust:</strong> {user.measurements.bust} in</p>}
+                        {user.measurements.waist && <p><strong>Waist:</strong> {user.measurements.waist} in</p>}
+                        {user.measurements.hips && <p><strong>Hips:</strong> {user.measurements.hips} in</p>}
+                        {user.measurements.height && <p><strong>Height:</strong> {user.measurements.height}</p>}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="print-invoice-footer">
+                    <p>Thank you for supporting handcrafted luxury legacy and local Indian handloom artisans.</p>
+                    <p className="footer-contact">For any styling, customization, or shipping inquiries: contact@niarabynyenu.com | +91 90744 50441</p>
+                    <div className="signature-line">
+                      <div className="signature-box">
+                        <span className="sig-placeholder"></span>
+                        <p>Authorized Signature</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </motion.div>
