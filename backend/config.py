@@ -2,7 +2,12 @@ import os
 
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'super-secret-key-change-me'
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///boutique.db'
+    # Check for Vercel Postgres URL first, then fallback to standard DATABASE_URL, then local SQLite
+    db_url = os.environ.get('POSTGRES_URL') or os.environ.get('DATABASE_URL') or 'sqlite:///boutique.db'
+    if db_url and db_url.startswith("postgres://"):
+        db_url = db_url.replace("postgres://", "postgresql://", 1)
+    
+    SQLALCHEMY_DATABASE_URI = db_url
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY') or 'jwt-super-secret-key-change-me'
     JWT_ACCESS_TOKEN_EXPIRES = False
