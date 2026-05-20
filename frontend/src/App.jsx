@@ -1,38 +1,54 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
-import Shop from './pages/Shop';
-import Cart from './pages/Cart';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import AdminDashboard from './pages/AdminDashboard';
-import Payment from './pages/Payment';
-import { AuthProvider } from './context/AuthContext';
+import CartDrawer from './components/CartDrawer';
+import AuthModal from './components/AuthModal';
 import { CartProvider } from './context/CartContext';
+import { AuthProvider } from './context/AuthContext';
+import { WishlistProvider } from './context/WishlistContext';
+import WishlistDrawer from './components/WishlistDrawer';
+import UserProfileModal from './components/UserProfileModal';
 import './index.css';
 
 function App() {
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [isWishlistOpen, setIsWishlistOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
   return (
     <AuthProvider>
       <CartProvider>
-        <Router>
+        <WishlistProvider>
           <div className="app">
-            <Navbar />
-            <main className="main-content">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/shop" element={<Shop />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/admin" element={<AdminDashboard />} />
-                <Route path="/payment" element={<Payment />} />
-              </Routes>
-            </main>
-          </div>
-        </Router>
-      </CartProvider>
-    </AuthProvider>
+          {/* Global sticky navigation bar */}
+          <Navbar 
+            onCartOpen={() => setIsCartOpen(true)} 
+            onAuthOpen={() => setIsAuthOpen(true)}
+            onWishlistOpen={() => setIsWishlistOpen(true)}
+            onProfileOpen={() => setIsProfileOpen(true)}
+          />
+          
+          {/* Main single-page scroll view */}
+          <main className="main-content">
+            <Home />
+          </main>
+
+          {/* Global floating side cart panel */}
+          <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+          
+          {/* Global Wishlist Drawer */}
+          <WishlistDrawer isOpen={isWishlistOpen} onClose={() => setIsWishlistOpen(false)} />
+          
+          {/* Global Auth Modal */}
+          <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
+          
+          {/* Global Profile/Sizing Modal */}
+          <UserProfileModal isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
+        </div>
+      </WishlistProvider>
+    </CartProvider>
+  </AuthProvider>
   );
 }
 
