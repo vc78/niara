@@ -2282,4 +2282,14 @@
   transform: scale(1.08) rotate(360deg);
 }
 
+@media (max-width: 768px) {
+  .hero-logo-container {
+    justify-content: center;
+  }
+  .hero-logo-img {
+    width: 70px;
+    height: 70px;
+  }
+}
+
 

@@ -321,3 +321,20 @@
     transform: translateY(0);
   }
 }
+
+@media (max-width: 480px) {
+  .navbar-logo {
+    font-size: 18px;
+  }
+  .navbar-logo-img {
+    height: 36px;
+    width: 36px;
+    margin-right: 8px;
+  }
+  .navbar-actions {
+    gap: 8px;
+  }
+  .cart-trigger-btn {
+    padding: 6px;
+  }
+}
