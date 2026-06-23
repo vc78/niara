@@ -1121,3 +1121,34 @@
     font-family: Arial, sans-serif !important;
   }
 }
+/* New Checkout Flow Styles */
+.checkout-steps { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px; border-bottom: 1px solid rgba(250, 248, 244, 0.05); }
+.checkout-steps .step { font-family: var(--font-sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255, 255, 255, 0.4); font-weight: 500; transition: color 0.3s ease; }
+.checkout-steps .step.active { color: var(--accent-gold); }
+.step-separator { width: 30px; height: 1px; background: rgba(255, 255, 255, 0.1); }
+.btn-location { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px; margin-bottom: 15px; background: rgba(212, 175, 55, 0.1); border: 1px dashed var(--accent-gold); color: var(--accent-gold); border-radius: 4px; font-family: var(--font-sans); font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; }
+.btn-location:hover:not(:disabled) { background: rgba(212, 175, 55, 0.15); }
+.btn-location:disabled { opacity: 0.7; cursor: not-allowed; border-style: solid; }
+.location-status-badge { display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 4px; margin-bottom: 15px; font-family: var(--font-sans); font-size: 12px; }
+.location-status-badge.success { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
+.location-status-badge.error { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+.location-status-badge.fetching { background: rgba(255, 255, 255, 0.05); color: var(--white); border: 1px solid rgba(255, 255, 255, 0.1); }
+.form-row { display: flex; gap: 15px; }
+.form-group.half { flex: 1; }
+.payment-panel { display: flex; flex-direction: column; gap: 20px; }
+.payment-summary-box { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 6px; text-align: center; }
+.payment-summary-label { font-family: var(--font-sans); font-size: 12px; color: rgba(255, 255, 255, 0.6); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px; }
+.payment-summary-total { font-family: var(--font-serif); font-size: 28px; color: var(--accent-gold); font-weight: 300; margin: 0; }
+.upi-qr-card { background: var(--white); padding: 25px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+.upi-qr-card .qr-title { color: #333 !important; font-size: 13px !important; font-weight: 600; display: flex; align-items: center; gap: 6px; margin: 0 !important; }
+.qr-img-wrapper { background: #f8f9fa; padding: 10px; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+.qr-img-wrapper img { width: 180px; height: 180px; display: block; mix-blend-mode: multiply; }
+.upi-details-list { display: flex; flex-direction: column; gap: 12px; }
+.upi-detail-item { display: flex; align-items: center; justify-content: space-between; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); padding: 12px 15px; border-radius: 4px; }
+.upi-detail-text { display: flex; flex-direction: column; gap: 4px; }
+.upi-label { font-family: var(--font-sans); font-size: 10px; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 0.05em; }
+.upi-value { font-family: var(--font-mono); font-size: 13px; color: var(--white); letter-spacing: 0.02em; }
+.payment-instruction { font-family: var(--font-sans); font-size: 13px; color: rgba(255, 255, 255, 0.7); line-height: 1.6; text-align: center; background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.1); padding: 15px; border-radius: 4px; }
+.success-btn { background: #10b981 !important; color: white !important; border: none !important; display: flex; justify-content: center; align-items: center; gap: 8px; }
+.success-btn:hover { background: #059669 !important; }
+.delivery-estimate-badge { display: inline-block; background: rgba(212, 175, 55, 0.1); border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 6px 12px; border-radius: 20px; font-family: var(--font-sans); font-size: 12px; margin-top: 15px; }
