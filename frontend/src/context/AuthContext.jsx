@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
     // Default mock user if empty
     return saved ? JSON.parse(saved) : [{
       name: 'Neenu Sharma',
-      email: 'admin@niara.com',
+      email: 'admin@eedara.com',
       mobile: '9032306961',
       password: 'password123',
       address: '123 Luxury Avenue, Banjara Hills',
@@ -54,11 +54,11 @@ export const AuthProvider = ({ children }) => {
     }
     const newUser = { name, email, mobile, password };
     setRegisteredUsers(prev => [...prev, newUser]);
-    
+
     // Auto-login after registration
     const { password: _, ...userWithoutPassword } = newUser;
     setUser(userWithoutPassword);
-    
+
     return { success: true };
   };
 
@@ -68,7 +68,7 @@ export const AuthProvider = ({ children }) => {
 
   const updateMeasurements = (measurements) => {
     if (!user) return { success: false, message: 'No user logged in' };
-    
+
     // Update logged-in user state
     const updatedUser = { ...user, measurements };
     setUser(updatedUser);

@@ -5,13 +5,12 @@ import { X, Plus, Minus, Trash2, ShoppingBag, ArrowLeft, Copy, Check } from 'luc
 import { motion, AnimatePresence } from 'framer-motion';
 import BespokeImage from './BespokeImage';
 import culturalFooterPattern from '../assets/cultural_footer_pattern.png';
-import logo from '../assets/logo.jpg';
 import './CartDrawer.css';
 
 const CartDrawer = ({ isOpen, onClose }) => {
   const { cart, updateQuantity, removeFromCart, clearCart } = useCart();
   const { user } = useAuth();
-  
+
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -24,6 +23,28 @@ const CartDrawer = ({ isOpen, onClose }) => {
   const [paymentMethod, setPaymentMethod] = useState('upi');
   const [copiedUpi, setCopiedUpi] = useState(false);
   const [invoiceData, setInvoiceData] = useState(null);
+  
+  // Coupon State
+  const [couponCode, setCouponCode] = useState('');
+  const [appliedDiscount, setAppliedDiscount] = useState(0);
+  const [couponMessage, setCouponMessage] = useState('');
+
+  const applyCoupon = () => {
+    const code = couponCode.trim().toUpperCase();
+    if (code === 'FESTIVE20') {
+      setAppliedDiscount(20);
+      setCouponMessage('🎉 20% OFF applied!');
+    } else if (code === 'SAHITHI10') {
+      setAppliedDiscount(10);
+      setCouponMessage('✨ 10% OFF applied!');
+    } else if (code === '') {
+      setAppliedDiscount(0);
+      setCouponMessage('');
+    } else {
+      setAppliedDiscount(0);
+      setCouponMessage('Invalid coupon code.');
+    }
+  };
 
   // Pre-fill form when user changes or modal opens
   useEffect(() => {
@@ -48,7 +69,9 @@ const CartDrawer = ({ isOpen, onClose }) => {
     }
   }, [isOpen]);
 
-  const totalAmount = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  const subtotalAmount = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  const discountAmount = Math.floor(subtotalAmount * (appliedDiscount / 100));
+  const totalAmount = subtotalAmount - discountAmount;
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
 
   const formatPrice = (price) => {
@@ -81,7 +104,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
     e.preventDefault();
     if (cart.length === 0) return;
 
-    const phoneNumber = "919074450441"; // Owner's WhatsApp number
+    const phoneNumber = "919000164752"; // Owner's WhatsApp number
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -89,21 +112,25 @@ const CartDrawer = ({ isOpen, onClose }) => {
     const formattedDate = `${dd}-${mm}-${yyyy}`;
 
     const generatedInvoiceId = `INV-${yyyy}-${Math.floor(100 + Math.random() * 900)}`;
-    
-    let orderText = `✨ *New Booking Order - Niara by Neenu* ✨\n\n`;
-    orderText += `Hello Neenu, I would like to book the following custom designer items:\n\n`;
+
+    let orderText = `✨ *New Booking Order - Eedara* ✨\n\n`;
+    orderText += `Hello Eedara team, I would like to book the following custom designer items:\n\n`;
     orderText += `🧾 *INVOICE ID:* *${generatedInvoiceId}*\n`;
     orderText += `🛍️ *ORDER DETAILS:*\n`;
     orderText += `------------------------------------------\n`;
-    
+
     cart.forEach((item, index) => {
       orderText += `${index + 1}️⃣ *${item.name}*\n`;
       orderText += `   • Size: *${item.size}*\n`;
       orderText += `   • Qty: *${item.quantity}*\n`;
       orderText += `   • Price: *${formatPrice(item.price)}*\n\n`;
     });
-    
+
     orderText += `------------------------------------------\n`;
+    if (appliedDiscount > 0) {
+      orderText += `🧾 *Subtotal:* ${formatPrice(subtotalAmount)}\n`;
+      orderText += `🎁 *Discount (${appliedDiscount}% OFF):* -${formatPrice(discountAmount)} (Code: ${couponCode.toUpperCase()})\n`;
+    }
     orderText += `💰 *Total Estimated Value:* *${formatPrice(totalAmount)}*\n\n`;
     orderText += `📝 *MY SHIPPING DETAILS:*\n`;
     orderText += `• Name: ${formData.name}\n`;
@@ -114,13 +141,12 @@ const CartDrawer = ({ isOpen, onClose }) => {
       orderText += `• Notes: ${formData.notes}\n`;
     }
 
-    orderText += `💳 *PREFERRED PAYMENT METHOD:* ${
-      paymentMethod === 'upi' ? 'Google Pay / UPI' : 
+    orderText += `💳 *PREFERRED PAYMENT METHOD:* ${paymentMethod === 'upi' ? 'Google Pay / UPI' :
       paymentMethod === 'bank' ? 'Direct Bank Transfer' : 'WhatsApp Pay (In-Chat)'
-    }\n`;
+      }\n`;
 
     if (paymentMethod === 'upi') {
-      orderText += `   • Payee UPI ID: *neenu.niara@oksbi*\n`;
+      orderText += `   • Payee UPI ID: *eedara@oksbi*\n`;
       if (formData.transactionId) {
         orderText += `   • Transaction UTR / Ref No: *${formData.transactionId}*\n`;
       }
@@ -149,14 +175,14 @@ const CartDrawer = ({ isOpen, onClose }) => {
 
     const encodedText = encodeURIComponent(orderText);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedText}`;
-    const mailtoUrl = `mailto:venkatbodduluri78@gmail.com?subject=${encodeURIComponent(`New Booking Order ${generatedInvoiceId} - Niara by Neenu`)}&body=${encodeURIComponent(orderText)}`;
-    
+    const mailtoUrl = `mailto:venkatbodduluri78@gmail.com?subject=${encodeURIComponent(`New Booking Order ${generatedInvoiceId} - Eedara`)}&body=${encodeURIComponent(orderText)}`;
+
     // Open WhatsApp checkout in a new window/tab
     window.open(whatsappUrl, '_blank');
-    
+
     // Open Mail client directly
     window.location.href = mailtoUrl;
-    
+
     // Capture invoice details to show success receipt screen
     const generatedInvoice = {
       invoiceId: generatedInvoiceId,
@@ -168,11 +194,11 @@ const CartDrawer = ({ isOpen, onClose }) => {
       notes: formData.notes,
       items: cart.map(item => ({ ...item })),
       total: totalAmount,
-      paymentMethod: paymentMethod === 'upi' ? 'UPI' : 
-                     paymentMethod === 'bank' ? 'Bank Transfer' : 'Cash',
+      paymentMethod: paymentMethod === 'upi' ? 'UPI' :
+        paymentMethod === 'bank' ? 'Bank Transfer' : 'Cash',
       transactionId: formData.transactionId || 'Pending Verification'
     };
-    
+
     setInvoiceData(generatedInvoice);
   };
 
@@ -216,15 +242,15 @@ const CartDrawer = ({ isOpen, onClose }) => {
                   <h3>Your Selection ({totalItems})</h3>
                 </div>
               )}
-              <button 
+              <button
                 onClick={() => {
                   if (invoiceData) {
                     handleContinueShopping();
                   } else {
                     onClose();
                   }
-                }} 
-                className="close-btn" 
+                }}
+                className="close-btn"
                 aria-label="Close cart"
               >
                 <X size={20} />
@@ -246,10 +272,10 @@ const CartDrawer = ({ isOpen, onClose }) => {
 
                   <div className="receipt-preview-card animate-fade-in">
                     <div className="receipt-header-row">
-                      <span className="brand-logo">NIARA BY NEENU</span>
+                      <span className="brand-logo">EEDARA</span>
                       <span className="receipt-tag">Bespoke Fitting Receipt</span>
                     </div>
-                    
+
                     <div className="receipt-meta-grid">
                       <div>
                         <span className="label">Invoice No:</span>
@@ -331,15 +357,15 @@ const CartDrawer = ({ isOpen, onClose }) => {
                   <div className="form-group">
                     <label>Preferred Payment Method</label>
                     <div className="payment-options-grid">
-                      <div 
+                      <div
                         className={`payment-option-card ${paymentMethod === 'upi' ? 'active' : ''}`}
                         onClick={() => setPaymentMethod('upi')}
                       >
                         <span className="payment-title">GPay / UPI</span>
                         <span className="payment-desc">Scan & Pay</span>
                       </div>
-                      
-                      <div 
+
+                      <div
                         className={`payment-option-card ${paymentMethod === 'bank' ? 'active' : ''}`}
                         onClick={() => setPaymentMethod('bank')}
                       >
@@ -347,7 +373,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
                         <span className="payment-desc">IMPS/NEFT</span>
                       </div>
 
-                      <div 
+                      <div
                         className={`payment-option-card ${paymentMethod === 'whatsapp' ? 'active' : ''}`}
                         onClick={() => setPaymentMethod('whatsapp')}
                       >
@@ -359,11 +385,11 @@ const CartDrawer = ({ isOpen, onClose }) => {
                     {paymentMethod === 'upi' && (
                       <div className="payment-details-panel">
                         <div className="upi-info-row">
-                          <p><strong>UPI ID:</strong> neenu.niara@oksbi</p>
-                          <button 
+                          <p><strong>UPI ID:</strong> eedara@oksbi</p>
+                          <button
                             type="button"
                             onClick={() => {
-                              navigator.clipboard.writeText('neenu.niara@oksbi');
+                              navigator.clipboard.writeText('eedara@oksbi');
                               setCopiedUpi(true);
                               setTimeout(() => setCopiedUpi(false), 2000);
                             }}
@@ -373,31 +399,31 @@ const CartDrawer = ({ isOpen, onClose }) => {
                             <span>{copiedUpi ? 'Copied' : 'Copy'}</span>
                           </button>
                         </div>
-                        
+
                         <div className="upi-qr-wrapper">
                           <p className="qr-title">Scan to Pay via UPI</p>
                           <div className="qr-code-box">
-                            <img 
-                              src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(`upi://pay?pa=neenu.niara@oksbi&pn=Niara%20by%20Neenu&am=${totalAmount}&cu=INR`)}`} 
-                              alt="UPI QR Code Scanner" 
+                            <img
+                              src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(`upi://pay?pa=eedara@oksbi&pn=Eedara&am=${totalAmount}&cu=INR`)}`}
+                              alt="UPI QR Code Scanner"
                               className="upi-qr-image"
                             />
                           </div>
-                          <p className="qr-amount">Subtotal Amount: <strong>{formatPrice(totalAmount)}</strong></p>
+                          <p className="qr-amount">Total Amount: <strong>{formatPrice(totalAmount)}</strong></p>
                         </div>
 
                         <div className="form-group-sub">
                           <label className="sub-label">Transaction UTR / Ref No (Optional)</label>
-                          <input 
-                            type="text" 
-                            name="transactionId" 
-                            value={formData.transactionId} 
-                            onChange={handleInputChange} 
-                            placeholder="e.g. 12-digit UTR number" 
+                          <input
+                            type="text"
+                            name="transactionId"
+                            value={formData.transactionId}
+                            onChange={handleInputChange}
+                            placeholder="e.g. 12-digit UTR number"
                             className="ref-id-input"
                           />
                         </div>
-                        
+
                         <p className="payment-note">Or scan & pay using GPay, PhonePe, or Paytm, then send the payment confirmation screenshot on WhatsApp.</p>
                       </div>
                     )}
@@ -405,22 +431,22 @@ const CartDrawer = ({ isOpen, onClose }) => {
                     {paymentMethod === 'bank' && (
                       <div className="payment-details-panel">
                         <p><strong>Bank:</strong> HDFC Bank Ltd</p>
-                        <p><strong>A/c Name:</strong> NIARA BY NEENU</p>
+                        <p><strong>A/c Name:</strong> EEDARA</p>
                         <p><strong>A/c No:</strong> 50200084321094</p>
                         <p><strong>IFSC:</strong> HDFC0000102</p>
-                        
+
                         <div className="form-group-sub" style={{ marginTop: '10px' }}>
                           <label className="sub-label">Payment Transfer Ref No (Optional)</label>
-                          <input 
-                            type="text" 
-                            name="transactionId" 
-                            value={formData.transactionId} 
-                            onChange={handleInputChange} 
-                            placeholder="e.g. IMPS/NEFT Transaction ID" 
+                          <input
+                            type="text"
+                            name="transactionId"
+                            value={formData.transactionId}
+                            onChange={handleInputChange}
+                            placeholder="e.g. IMPS/NEFT Transaction ID"
                             className="ref-id-input"
                           />
                         </div>
-                        
+
                         <p className="payment-note">Transfer the exact subtotal value and share the reference screenshot on WhatsApp.</p>
                       </div>
                     )}
@@ -436,8 +462,8 @@ const CartDrawer = ({ isOpen, onClose }) => {
               ) : (
                 <div className="cart-items-list">
                   {cart.map((item) => (
-                    <motion.div 
-                      key={`${item.product_id}-${item.size}`} 
+                    <motion.div
+                      key={`${item.product_id}-${item.size}`}
                       className="cart-item"
                       layout
                     >
@@ -448,10 +474,10 @@ const CartDrawer = ({ isOpen, onClose }) => {
                           <span className="cart-item-size">Size: {item.size}</span>
                         </div>
                         <div className="cart-item-price">{formatPrice(item.price * item.quantity)}</div>
-                        
+
                         <div className="cart-item-actions">
                           <div className="qty-control">
-                            <button 
+                            <button
                               onClick={() => updateQuantity(item.product_id, item.size, -1)}
                               className="qty-btn"
                               aria-label="Decrease quantity"
@@ -459,7 +485,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
                               <Minus size={12} />
                             </button>
                             <span className="qty-num">{item.quantity}</span>
-                            <button 
+                            <button
                               onClick={() => updateQuantity(item.product_id, item.size, 1)}
                               className="qty-btn"
                               aria-label="Increase quantity"
@@ -467,8 +493,8 @@ const CartDrawer = ({ isOpen, onClose }) => {
                               <Plus size={12} />
                             </button>
                           </div>
-                          
-                          <button 
+
+                          <button
                             onClick={() => removeFromCart(item.product_id, item.size)}
                             className="remove-item-btn"
                             aria-label="Remove item"
@@ -487,16 +513,41 @@ const CartDrawer = ({ isOpen, onClose }) => {
               <div className="cart-footer">
                 {!isCheckingOut && (
                   <>
-                    <div className="total-summary">
-                      <span className="total-label">Subtotal Value</span>
-                      <span className="total-amount">{formatPrice(totalAmount)}</span>
+                    <div className="promo-code-container" style={{ display: 'flex', gap: '8px', marginBottom: '15px' }}>
+                      <input 
+                        type="text" 
+                        value={couponCode} 
+                        onChange={(e) => setCouponCode(e.target.value)} 
+                        placeholder="Promo Code" 
+                        style={{ flex: 1, padding: '10px', borderRadius: '4px', border: '1px solid rgba(250, 248, 244, 0.2)', background: 'transparent', color: 'var(--white)' }} 
+                      />
+                      <button onClick={applyCoupon} style={{ padding: '0 15px', borderRadius: '4px', background: 'rgba(255,255,255,0.1)', color: 'var(--accent-gold)', border: '1px solid var(--accent-gold)', cursor: 'pointer' }}>Apply</button>
+                    </div>
+                    {couponMessage && (
+                      <p style={{ fontSize: '12px', color: appliedDiscount > 0 ? 'var(--accent-gold)' : '#ff6b6b', marginBottom: '15px', marginTop: '-10px' }}>
+                        {couponMessage}
+                      </p>
+                    )}
+                    <div className="total-summary" style={{ paddingBottom: appliedDiscount > 0 ? '5px' : '0' }}>
+                      <span className="total-label">Subtotal</span>
+                      <span className="total-amount">{formatPrice(subtotalAmount)}</span>
+                    </div>
+                    {appliedDiscount > 0 && (
+                      <div className="total-summary" style={{ color: 'var(--accent-gold)', paddingBottom: '10px' }}>
+                        <span className="total-label">Discount ({appliedDiscount}%)</span>
+                        <span className="total-amount">-{formatPrice(discountAmount)}</span>
+                      </div>
+                    )}
+                    <div className="total-summary" style={{ borderTop: appliedDiscount > 0 ? '1px solid rgba(250, 248, 244, 0.1)' : 'none', paddingTop: appliedDiscount > 0 ? '10px' : '0' }}>
+                      <span className="total-label" style={{ fontWeight: '600' }}>Estimated Total</span>
+                      <span className="total-amount" style={{ fontWeight: '600' }}>{formatPrice(totalAmount)}</span>
                     </div>
                     <p className="cart-disclaimer">
                       Tailoring, customization details, and final delivery quotes will be discussed upon booking confirmation.
                     </p>
                   </>
                 )}
-                
+
                 {isCheckingOut ? (
                   <button type="submit" form="checkout-form" className="whatsapp-checkout-btn">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" className="whatsapp-icon">
@@ -517,18 +568,17 @@ const CartDrawer = ({ isOpen, onClose }) => {
               <div id="printable-invoice-area" className="hidden-print-invoice">
                 <div className="print-invoice-wrapper">
                   <div className="print-logo-header" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '20px' }}>
-                    <img src={logo} alt="Niara by Neenu Logo" style={{ width: '80px', height: '80px', borderRadius: '50%', marginBottom: '10px', border: '1.5px solid #25D366', objectFit: 'cover' }} />
-                    <h1 className="print-main-title" style={{ margin: '0' }}>WhatsApp Business Invoice</h1>
+                    <h1 className="print-main-title" style={{ margin: '0' }}>Eedara Invoice</h1>
                     <p className="print-date-line" style={{ margin: '4px 0 0 0' }}>Invoice Date: {invoiceData.date}</p>
                   </div>
-                  
+
                   <div className="print-green-divider"></div>
 
                   <table className="print-details-table">
                     <tbody>
                       <tr>
                         <td className="detail-header">Business Name:</td>
-                        <td>Niara by Neenu</td>
+                        <td>Eedara</td>
                       </tr>
                       <tr>
                         <td className="detail-header">Customer Name:</td>

@@ -11,7 +11,7 @@ const WishlistDrawer = ({ isOpen, onClose }) => {
   const { wishlist, toggleWishlist, clearWishlist } = useWishlist();
   const { addToCart } = useCart();
   const { user } = useAuth();
-  
+
   const [isConsulting, setIsConsulting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -63,19 +63,19 @@ const WishlistDrawer = ({ isOpen, onClose }) => {
     e.preventDefault();
     if (wishlist.length === 0) return;
 
-    const phoneNumber = "919074450441"; // Owner's WhatsApp number
-    
-    let messageText = `✨ *Bespoke Consultation - Niara by Neenu* ✨\n\n`;
-    messageText += `Hello Neenu, I have curated a selection of beautiful designs from your gallery and would love to consult with you on their custom crafting:\n\n`;
+    const phoneNumber = "919000164752"; // Owner's WhatsApp number
+
+    let messageText = `✨ *Bespoke Consultation - Eedara* ✨\n\n`;
+    messageText += `Hello Eedara team, I have curated a selection of beautiful designs from your gallery and would love to consult with you on their custom crafting:\n\n`;
     messageText += `💖 *MY TROUSSEAU SELECTION:*\n`;
     messageText += `------------------------------------------\n`;
-    
+
     wishlist.forEach((item, index) => {
       messageText += `${index + 1}️⃣ *${item.name}*\n`;
       messageText += `   • Category: *${item.category}*\n`;
       messageText += `   • Price: *${formatPrice(item.price)}*\n\n`;
     });
-    
+
     messageText += `------------------------------------------\n`;
     messageText += `💰 *Total Estimated Value:* *${formatPrice(totalAmount)}*\n\n`;
     messageText += `📝 *CLIENT INFORMATION:*\n`;
@@ -84,7 +84,7 @@ const WishlistDrawer = ({ isOpen, onClose }) => {
     if (formData.notes) {
       messageText += `• Consultation Notes: ${formData.notes}\n`;
     }
-    
+
     // Add client measurements if they exist in the logged-in user profile
     if (user && user.measurements) {
       const { shoulder, bust, waist, hips } = user.measurements;
@@ -96,14 +96,14 @@ const WishlistDrawer = ({ isOpen, onClose }) => {
         if (hips) messageText += `   • Hips: ${hips} in\n`;
       }
     }
-    
+
     messageText += `\nPlease let me know your availability for a custom design consultation to discuss fabrics, embellishments, and delivery timelines. Thank you!`;
 
     const encodedText = encodeURIComponent(messageText);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedText}`;
-    
+
     window.open(whatsappUrl, '_blank');
-    
+
     clearWishlist();
     setIsConsulting(false);
     onClose();
@@ -171,7 +171,7 @@ const WishlistDrawer = ({ isOpen, onClose }) => {
                     <label>Preferred Consultation Topics / Special Requests</label>
                     <textarea name="notes" value={formData.notes} onChange={handleInputChange} placeholder="e.g. Fabric alterations, wedding date, matching outfits..." rows="4"></textarea>
                   </div>
-                  
+
                   {user && user.measurements && (
                     <div className="measurements-preview-box">
                       <h5>📐 Saved Measurement Profile Attached</h5>
@@ -182,8 +182,8 @@ const WishlistDrawer = ({ isOpen, onClose }) => {
               ) : (
                 <div className="wishlist-items-list">
                   {wishlist.map((item) => (
-                    <motion.div 
-                      key={item.id} 
+                    <motion.div
+                      key={item.id}
                       className="wishlist-item"
                       layout
                     >
@@ -192,17 +192,17 @@ const WishlistDrawer = ({ isOpen, onClose }) => {
                         <h4 className="wishlist-item-name">{item.name}</h4>
                         <div className="wishlist-item-category">{item.category}</div>
                         <div className="wishlist-item-price">{formatPrice(item.price)}</div>
-                        
+
                         <div className="wishlist-item-actions">
-                          <button 
+                          <button
                             onClick={() => handleMoveToCart(item)}
                             className="move-to-cart-btn btn-secondary-mini"
                           >
                             <ShoppingBag size={14} />
                             Move to Cart
                           </button>
-                          
-                          <button 
+
+                          <button
                             onClick={() => toggleWishlist(item)}
                             className="remove-wishlist-btn"
                             aria-label="Remove from wishlist"
@@ -225,7 +225,7 @@ const WishlistDrawer = ({ isOpen, onClose }) => {
                     <span className="total-amount">{formatPrice(totalAmount)}</span>
                   </div>
                 )}
-                
+
                 {isConsulting ? (
                   <button type="submit" form="consultation-form" className="whatsapp-consult-btn">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" className="whatsapp-icon">

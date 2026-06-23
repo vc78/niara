@@ -152,3 +152,12 @@
   padding: 0.5rem;
   border-radius: 4px;
 }
+
+@media (max-width: 480px) {
+  .auth-modal {
+    padding: 1.5rem;
+  }
+  .auth-header h2 {
+    font-size: 1.5rem;
+  }
+}

@@ -8,6 +8,7 @@ import { AuthProvider } from './context/AuthContext';
 import { WishlistProvider } from './context/WishlistContext';
 import WishlistDrawer from './components/WishlistDrawer';
 import UserProfileModal from './components/UserProfileModal';
+import CollectionPage from './pages/CollectionPage';
 import './index.css';
 
 function App() {
@@ -15,6 +16,21 @@ function App() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  
+  // SPA Routing State
+  const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'collection'
+  const [activeCategory, setActiveCategory] = useState('all');
+
+  const navigateToCollection = (category = 'all') => {
+    setActiveCategory(category);
+    setCurrentRoute('collection');
+    window.scrollTo(0, 0);
+  };
+
+  const navigateToHome = () => {
+    setCurrentRoute('home');
+    window.scrollTo(0, 0);
+  };
 
   return (
     <AuthProvider>
@@ -29,9 +45,20 @@ function App() {
             onProfileOpen={() => setIsProfileOpen(true)}
           />
           
-          {/* Main single-page scroll view */}
+          {/* Main single-page scroll view or Collection view */}
           <main className="main-content">
-            <Home />
+            {currentRoute === 'home' ? (
+              <Home 
+                onAuthOpen={() => setIsAuthOpen(true)}
+                onProfileOpen={() => setIsProfileOpen(true)}
+                onNavigateToCollection={navigateToCollection}
+              />
+            ) : (
+              <CollectionPage 
+                initialCategory={activeCategory}
+                onBack={navigateToHome}
+              />
+            )}
           </main>
 
           {/* Global floating side cart panel */}

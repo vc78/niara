@@ -1,5 +1,8 @@
 .footer {
-  background-color: var(--primary-color);
+  background: linear-gradient(rgba(18, 53, 36, 0.94), rgba(18, 53, 36, 0.94)), url('../assets/cultural_footer_pattern.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: var(--white);
   padding: 60px 4% 20px;
   border-top: 1px solid rgba(197, 168, 128, 0.15);

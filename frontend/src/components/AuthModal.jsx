@@ -7,7 +7,7 @@ import './AuthModal.css';
 const AuthModal = ({ isOpen, onClose }) => {
   const [isLogin, setIsLogin] = useState(true);
   const { login, register } = useAuth();
-  
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -49,14 +49,14 @@ const AuthModal = ({ isOpen, onClose }) => {
 
   return (
     <AnimatePresence>
-      <motion.div 
+      <motion.div
         className="auth-modal-overlay"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
       >
-        <motion.div 
+        <motion.div
           className="auth-modal"
           initial={{ y: 50, opacity: 0, scale: 0.95 }}
           animate={{ y: 0, opacity: 1, scale: 1 }}
@@ -70,9 +70,9 @@ const AuthModal = ({ isOpen, onClose }) => {
           <div className="auth-header">
             <h2>{isLogin ? 'Sign In' : 'Create Account'}</h2>
             <p>
-              {isLogin 
-                ? 'Access your bespoke wishlist and personalized orders.' 
-                : 'Join Niara by Neenu for exclusive collections.'}
+              {isLogin
+                ? 'Access your bespoke wishlist and personalized orders.'
+                : 'Join Eedara for exclusive curated couture and styling services.'}
             </p>
           </div>
 
@@ -83,24 +83,24 @@ const AuthModal = ({ isOpen, onClose }) => {
               <>
                 <div className="form-group">
                   <label htmlFor="name">Full Name</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     id="name"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    required 
+                    required
                   />
                 </div>
                 <div className="form-group">
                   <label htmlFor="mobile">Mobile Number</label>
-                  <input 
-                    type="tel" 
+                  <input
+                    type="tel"
                     id="mobile"
                     name="mobile"
                     value={formData.mobile}
                     onChange={handleChange}
-                    required 
+                    required
                   />
                 </div>
               </>
@@ -108,25 +108,25 @@ const AuthModal = ({ isOpen, onClose }) => {
 
             <div className="form-group">
               <label htmlFor="email">Email Address</label>
-              <input 
-                type="email" 
+              <input
+                type="email"
                 id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                required 
+                required
               />
             </div>
 
             <div className="form-group">
               <label htmlFor="password">Password</label>
-              <input 
-                type="password" 
+              <input
+                type="password"
                 id="password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                required 
+                required
               />
             </div>
 
@@ -138,12 +138,12 @@ const AuthModal = ({ isOpen, onClose }) => {
           <div className="auth-toggle">
             {isLogin ? (
               <p>
-                Don't have an account? 
+                Don't have an account?
                 <button onClick={() => setIsLogin(false)}>Register</button>
               </p>
             ) : (
               <p>
-                Already have an account? 
+                Already have an account?
                 <button onClick={() => setIsLogin(true)}>Sign In</button>
               </p>
             )}

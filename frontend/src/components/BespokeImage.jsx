@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Diamond } from 'lucide-react';
+import heroImg from '../assets/hero.png';
 import './BespokeImage.css';
 
 const BespokeImage = ({ src, alt, className, style, ...props }) => {
@@ -17,11 +18,11 @@ const BespokeImage = ({ src, alt, className, style, ...props }) => {
   if (hasError || !src) {
     return (
       <div className={`bespoke-image-container ${className || ''}`} style={style}>
-        <div className="bespoke-fallback">
-          <Diamond size={32} className="bespoke-fallback-icon" />
-          <div className="bespoke-fallback-text">NIARA</div>
-          <div className="bespoke-fallback-sub">Exclusive Collection</div>
-        </div>
+        <img
+          src={heroImg}
+          alt={alt || 'Eedara Collection Item'}
+          className="bespoke-image loaded"
+        />
       </div>
     );
   }
@@ -30,7 +31,7 @@ const BespokeImage = ({ src, alt, className, style, ...props }) => {
     <div className={`bespoke-image-container ${className || ''}`} style={style}>
       <img
         src={src}
-        alt={alt || "Niara Collection Item"}
+        alt={alt || "Eedara Collection Item"}
         className={`bespoke-image ${isLoaded ? 'loaded' : 'loading'}`}
         onError={handleError}
         onLoad={handleLoad}
