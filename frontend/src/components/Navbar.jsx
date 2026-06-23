@@ -146,7 +146,7 @@ const Navbar = ({ onCartOpen, onWishlistOpen, onAuthOpen, onProfileOpen }) => {
           </a>
 
           {/* Desktop Navigation Links (Middle) */}
-          <div className="navbar-links" style={{ display: 'flex', gap: '28px' }}>
+          <div className="navbar-links">
             <a href="#home" className="nav-link">Home</a>
             <a href="#shop" className="nav-link">Collection</a>
             <a href="#how-to-order" className="nav-link">Order</a>
