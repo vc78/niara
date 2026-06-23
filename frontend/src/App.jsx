@@ -10,6 +10,9 @@ import WishlistDrawer from './components/WishlistDrawer';
 import UserProfileModal from './components/UserProfileModal';
 import CollectionPage from './pages/CollectionPage';
 import ProductPage from './components/ProductPage';
+import WelcomePopup from './components/WelcomePopup';
+import HotPicksDrawer from './components/HotPicksDrawer';
+import HotPicksTab from './components/HotPicksTab';
 import './index.css';
 
 function App() {
@@ -17,6 +20,7 @@ function App() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isHotPicksOpen, setIsHotPicksOpen] = useState(false);
   
   const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'collection' | 'product'
   const [activeCategory, setActiveCategory] = useState('all');
@@ -89,6 +93,15 @@ function App() {
           
           {/* Global Profile/Sizing Modal */}
           <UserProfileModal isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
+
+          {/* New Features: Welcome Popup & Hot Picks */}
+          <WelcomePopup onCartOpen={() => setIsCartOpen(true)} />
+          <HotPicksTab onClick={() => setIsHotPicksOpen(true)} />
+          <HotPicksDrawer 
+            isOpen={isHotPicksOpen} 
+            onClose={() => setIsHotPicksOpen(false)} 
+            onCartOpen={() => setIsCartOpen(true)} 
+          />
         </div>
       </WishlistProvider>
     </CartProvider>

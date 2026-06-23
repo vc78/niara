@@ -1,0 +1,169 @@
+.welcome-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.welcome-popup-content {
+  background: #1A1A1A;
+  color: #FDF8F2;
+  width: 100%;
+  max-width: 800px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 25px 50px -12px rgba(192, 135, 42, 0.2);
+  border: 1px solid rgba(192, 135, 42, 0.3);
+  animation: scaleUp 0.4s ease-out;
+}
+
+.welcome-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(253, 248, 242, 0.1);
+  border: none;
+  color: #FDF8F2;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.welcome-close-btn:hover {
+  background: #C0872A;
+  transform: rotate(90deg);
+}
+
+.welcome-popup-split {
+  display: flex;
+  flex-direction: row;
+}
+
+.welcome-image-side {
+  flex: 1;
+  position: relative;
+}
+
+.welcome-image-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  min-height: 400px;
+}
+
+.welcome-tag {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: #C0872A;
+  color: #1A1A1A;
+  padding: 6px 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 4px;
+}
+
+.welcome-text-side {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.welcome-text-side h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  color: #C0872A;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.welcome-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(253, 248, 242, 0.8);
+  margin-bottom: 30px;
+}
+
+.welcome-product-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.welcome-price {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #C0872A;
+  margin-bottom: 30px;
+}
+
+.welcome-order-btn {
+  background: #C0872A;
+  color: #1A1A1A;
+  border: none;
+  padding: 15px 30px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.welcome-order-btn:hover {
+  background: #FDF8F2;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(192, 135, 42, 0.2);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .welcome-popup-split {
+    flex-direction: column;
+  }
+  
+  .welcome-image-side img {
+    min-height: 250px;
+    height: 250px;
+  }
+
+  .welcome-text-side {
+    padding: 30px 20px;
+  }
+
+  .welcome-text-side h2 {
+    font-size: 26px;
+  }
+}
