@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Play, ArrowRight, Heart, MessageSquare, Globe, Video, Scissors, RefreshCcw, Star, X, Package } from 'lucide-react';
+import { Play, ArrowRight, Heart, MessageSquare, Globe, Video, Scissors, RefreshCcw, Star, X, Package, ShoppingBag } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { products } from '../data/products';
 import { useCart } from '../context/CartContext';
@@ -349,6 +349,13 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
                     handleWhatsAppContact(`Hello, I am interested in ordering the ${product.name}. Could you please guide me on the next steps?`);
                   }}>
                     <MessageSquare size={16} /> WhatsApp to Order
+                  </button>
+                  <button className="add-to-cart-btn-overlay" onClick={(e) => {
+                    e.stopPropagation();
+                    addToCart(product, "Free Size", 1);
+                    alert("Added to cart!");
+                  }}>
+                    <ShoppingBag size={16} /> Add to Cart
                   </button>
                 </div>
               </div>

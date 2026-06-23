@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { ArrowLeft, Filter, Heart, MessageSquare } from 'lucide-react';
+import { ArrowLeft, Filter, Heart, MessageSquare, ShoppingBag } from 'lucide-react';
 import { products } from '../data/products';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
@@ -195,6 +195,13 @@ const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => 
                         handleWhatsAppOrder(product);
                       }}>
                         <MessageSquare size={16} /> WhatsApp to Order
+                      </button>
+                      <button className="add-to-cart-btn-overlay" onClick={(e) => {
+                        e.stopPropagation();
+                        addToCart(product, "Free Size", 1);
+                        alert("Added to cart!");
+                      }}>
+                        <ShoppingBag size={16} /> Add to Cart
                       </button>
                     </div>
                   </div>
