@@ -190,19 +190,21 @@ const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => 
                       >
                         <Heart fill={isInWishlist(product.id) ? "currentColor" : "none"} />
                       </button>
-                      <button className="whatsapp-btn-overlay" onClick={(e) => {
-                        e.stopPropagation();
-                        handleWhatsAppOrder(product);
-                      }}>
-                        <MessageSquare size={16} /> WhatsApp to Order
-                      </button>
-                      <button className="add-to-cart-btn-overlay" onClick={(e) => {
-                        e.stopPropagation();
-                        addToCart(product, "Free Size", 1);
-                        alert("Added to cart!");
-                      }}>
-                        <ShoppingBag size={16} /> Add to Cart
-                      </button>
+                      <div className="overlay-actions-row">
+                        <button className="add-to-cart-btn-overlay" onClick={(e) => {
+                          e.stopPropagation();
+                          addToCart(product, "Free Size", 1);
+                          alert("Added to cart!");
+                        }}>
+                          <ShoppingBag size={16} /> Add to Cart
+                        </button>
+                        <button className="whatsapp-btn-overlay" onClick={(e) => {
+                          e.stopPropagation();
+                          handleWhatsAppOrder(product);
+                        }}>
+                          <MessageSquare size={16} /> WhatsApp
+                        </button>
+                      </div>
                     </div>
                   </div>
                   <div className="product-info">

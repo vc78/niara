@@ -1049,3 +1049,11 @@
   background: var(--accent-gold);
   color: var(--white);
 }
+
+.overlay-actions-row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}

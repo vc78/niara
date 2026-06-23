@@ -344,19 +344,21 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
                   >
                     <Heart fill={isInWishlist(product.id) ? "currentColor" : "none"} />
                   </button>
-                  <button className="whatsapp-btn-overlay" onClick={(e) => {
-                    e.stopPropagation();
-                    handleWhatsAppContact(`Hello, I am interested in ordering the ${product.name}. Could you please guide me on the next steps?`);
-                  }}>
-                    <MessageSquare size={16} /> WhatsApp to Order
-                  </button>
-                  <button className="add-to-cart-btn-overlay" onClick={(e) => {
-                    e.stopPropagation();
-                    addToCart(product, "Free Size", 1);
-                    alert("Added to cart!");
-                  }}>
-                    <ShoppingBag size={16} /> Add to Cart
-                  </button>
+                  <div className="overlay-actions-row">
+                    <button className="add-to-cart-btn-overlay" onClick={(e) => {
+                      e.stopPropagation();
+                      addToCart(product, "Free Size", 1);
+                      alert("Added to cart!");
+                    }}>
+                      <ShoppingBag size={16} /> Add to Cart
+                    </button>
+                    <button className="whatsapp-btn-overlay" onClick={(e) => {
+                      e.stopPropagation();
+                      handleWhatsAppContact(`Hello, I am interested in ordering the ${product.name}. Could you please guide me on the next steps?`);
+                    }}>
+                      <MessageSquare size={16} /> WhatsApp
+                    </button>
+                  </div>
                 </div>
               </div>
               <div className="product-info">
