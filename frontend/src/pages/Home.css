@@ -967,10 +967,12 @@
     width: 100%;
   }
   .masonry-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
   }
   .featured-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
   }
   .hero-content h1 {
     font-size: 40px;
@@ -1000,5 +1002,25 @@
   }
   .hero-content {
     text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  }
+  .masonry-grid, .featured-grid {
+    gap: 10px;
+  }
+  .masonry-item h3 {
+    font-size: 16px;
+  }
+  .product-title {
+    font-size: 14px;
+  }
+  .booking-modal {
+    padding: 30px 20px;
+  }
+  .modal-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 15px;
+  }
+  .modal-header h3 {
+    font-size: 22px;
   }
 }

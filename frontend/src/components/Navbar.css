@@ -410,6 +410,26 @@
   .cart-trigger-btn {
     padding: 6px;
   }
+
+  .mobile-menu-overlay {
+    align-items: flex-start;
+    padding-top: 20px;
+    height: 100vh;
+  }
+  .mobile-menu-links {
+    gap: 15px;
+    padding-bottom: 20px;
+  }
+  .mobile-nav-link {
+    font-size: 20px;
+  }
+  .mobile-social-panel {
+    margin-top: 10px;
+  }
+  .social-action-button {
+    padding: 10px 14px;
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 360px) {
