@@ -9,6 +9,7 @@ import { WishlistProvider } from './context/WishlistContext';
 import WishlistDrawer from './components/WishlistDrawer';
 import UserProfileModal from './components/UserProfileModal';
 import CollectionPage from './pages/CollectionPage';
+import ProductPage from './components/ProductPage';
 import './index.css';
 
 function App() {
@@ -17,13 +18,19 @@ function App() {
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   
-  // SPA Routing State
-  const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'collection'
+  const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'collection' | 'product'
   const [activeCategory, setActiveCategory] = useState('all');
+  const [activeProduct, setActiveProduct] = useState(null);
 
   const navigateToCollection = (category = 'all') => {
     setActiveCategory(category);
     setCurrentRoute('collection');
+    window.scrollTo(0, 0);
+  };
+
+  const navigateToProduct = (product) => {
+    setActiveProduct(product);
+    setCurrentRoute('product');
     window.scrollTo(0, 0);
   };
 
@@ -52,13 +59,23 @@ function App() {
                 onAuthOpen={() => setIsAuthOpen(true)}
                 onProfileOpen={() => setIsProfileOpen(true)}
                 onNavigateToCollection={navigateToCollection}
+                onProductClick={navigateToProduct}
               />
-            ) : (
+            ) : currentRoute === 'collection' ? (
               <CollectionPage 
                 initialCategory={activeCategory}
                 onBack={navigateToHome}
+                onProductClick={navigateToProduct}
               />
-            )}
+            ) : currentRoute === 'product' && activeProduct ? (
+              <ProductPage
+                product={activeProduct}
+                onBack={() => {
+                  setCurrentRoute(activeCategory ? 'collection' : 'home');
+                  window.scrollTo(0, 0);
+                }}
+              />
+            ) : null}
           </main>
 
           {/* Global floating side cart panel */}

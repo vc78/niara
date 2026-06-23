@@ -6,7 +6,7 @@ import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import './Home.css';
 
-const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection }) => {
+const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClick }) => {
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
   
@@ -324,7 +324,7 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection }) => {
 
         <div className="products-grid featured-grid">
           {featuredProducts.map(product => (
-            <div key={product.id} className="product-card">
+            <div key={product.id} className="product-card" onClick={() => onProductClick && onProductClick(product)}>
               <div className="product-image-wrap">
                 <img src={product.image} alt={product.name} loading="lazy" />
                 {product.discountPercent > 0 && (
@@ -337,11 +337,17 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection }) => {
                 <div className="product-hover-overlay">
                   <button 
                     className="wishlist-btn-overlay"
-                    onClick={() => toggleWishlist(product)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleWishlist(product);
+                    }}
                   >
                     <Heart fill={isInWishlist(product.id) ? "currentColor" : "none"} />
                   </button>
-                  <button className="whatsapp-btn-overlay" onClick={() => handleWhatsAppContact(`Hello, I am interested in ordering the ${product.name}. Could you please guide me on the next steps?`)}>
+                  <button className="whatsapp-btn-overlay" onClick={(e) => {
+                    e.stopPropagation();
+                    handleWhatsAppContact(`Hello, I am interested in ordering the ${product.name}. Could you please guide me on the next steps?`);
+                  }}>
                     <MessageSquare size={16} /> WhatsApp to Order
                   </button>
                 </div>

@@ -3,9 +3,10 @@ import { ArrowLeft, Filter, Heart, MessageSquare } from 'lucide-react';
 import { products } from '../data/products';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
+import { ProductGridSkeleton, ProductGridError } from '../components/Skeletons';
 import './CollectionPage.css';
 
-const CollectionPage = ({ initialCategory = 'all', onBack }) => {
+const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => {
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
 
@@ -13,6 +14,19 @@ const CollectionPage = ({ initialCategory = 'all', onBack }) => {
   const [priceRange, setPriceRange] = useState(20000);
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [sortOption, setSortOption] = useState('newest');
+  
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    setHasError(false);
+    // Simulate network delay for fetching products
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, [activeCategory]);
 
   const categories = [
     { id: 'all', name: 'All Pieces' },
@@ -150,8 +164,13 @@ const CollectionPage = ({ initialCategory = 'all', onBack }) => {
             </p>
 
             <div className="products-grid">
-              {filteredProducts.map(product => (
-                <div key={product.id} className="product-card">
+              {isLoading ? (
+                <ProductGridSkeleton count={6} />
+              ) : hasError ? (
+                <ProductGridError onRetry={() => setIsLoading(true)} />
+              ) : (
+                filteredProducts.map(product => (
+                  <div key={product.id} className="product-card" onClick={() => onProductClick && onProductClick(product)} style={{ cursor: 'pointer' }}>
                   <div className="product-image-wrap">
                     <img src={product.image} alt={product.name} loading="lazy" />
                     {product.discountPercent > 0 && (
@@ -164,11 +183,17 @@ const CollectionPage = ({ initialCategory = 'all', onBack }) => {
                     <div className="product-hover-overlay">
                       <button 
                         className="wishlist-btn-overlay"
-                        onClick={() => toggleWishlist(product)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleWishlist(product);
+                        }}
                       >
                         <Heart fill={isInWishlist(product.id) ? "currentColor" : "none"} />
                       </button>
-                      <button className="whatsapp-btn-overlay" onClick={() => handleWhatsAppOrder(product)}>
+                      <button className="whatsapp-btn-overlay" onClick={(e) => {
+                        e.stopPropagation();
+                        handleWhatsAppOrder(product);
+                      }}>
                         <MessageSquare size={16} /> WhatsApp to Order
                       </button>
                     </div>
@@ -183,7 +208,7 @@ const CollectionPage = ({ initialCategory = 'all', onBack }) => {
                     </div>
                   </div>
                 </div>
-              ))}
+              )))}
             </div>
           </main>
         </div>
