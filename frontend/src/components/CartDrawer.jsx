@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import emailjs from '@emailjs/browser';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { X, Plus, Minus, Trash2, ShoppingBag, ArrowLeft, Copy, Check, MapPin, AlertCircle, QrCode } from 'lucide-react';
@@ -20,6 +21,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
 
   const [formData, setFormData] = useState({
     name: '',
+    email: '',
     mobile: '',
     address: '',
     pincode: '',
@@ -64,6 +66,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
       setFormData(prev => ({
         ...prev,
         name: user.name || '',
+        email: user.email || '',
         mobile: user.mobile || '',
         address: user.address || '',
         pincode: user.pincode || ''
@@ -184,7 +187,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
 
   const handleDeliverySubmit = (e) => {
     e.preventDefault();
-    if (formData.name && formData.mobile && formData.address && formData.pincode && formData.city && formData.state) {
+    if (formData.name && formData.email && formData.mobile && formData.address && formData.pincode && formData.city && formData.state) {
       setCheckoutStep(2);
     }
   };
@@ -206,10 +209,33 @@ const CartDrawer = ({ isOpen, onClose }) => {
     if (DELIVERY_CHARGE > 0) orderText += `🚚 *Delivery:* ${formatPrice(DELIVERY_CHARGE)}\n`;
     orderText += `💳 *Payment Method:* ${paymentMethod === 'cod' ? 'Cash on Delivery (COD)' : 'UPI / Online Payment'}\n`;
     orderText += `\n*TOTAL TO PAY:* ${formatPrice(totalAmount)}\n`;
-    orderText += `✅ Customer confirmed payment.`;
+    orderText += `*Please review your order:*`;
     
     const encodedText = encodeURIComponent(orderText);
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText}`;
+    
+    // --- EMAIL JS INTEGRATION ---
+    // The user needs to create an EmailJS account (https://www.emailjs.com/)
+    // and replace these placeholder strings with their actual keys.
+    const serviceID = 'YOUR_SERVICE_ID';
+    const templateID = 'YOUR_TEMPLATE_ID';
+    const publicKey = 'YOUR_PUBLIC_KEY';
+    
+    const emailParams = {
+      to_email: formData.email,
+      to_name: formData.name,
+      order_details: orderText.replace(/\n/g, '<br>'),
+      total_amount: totalAmount,
+      payment_method: paymentMethod === 'upi' ? 'Online/UPI' : 'Cash on Delivery (COD)'
+    };
+
+    emailjs.send(serviceID, templateID, emailParams, publicKey)
+      .then((response) => {
+        console.log('Email sent successfully!', response.status, response.text);
+      })
+      .catch((err) => {
+        console.error('Failed to send email. Ensure you have added your EmailJS keys.', err);
+      });
     
     window.open(whatsappUrl, '_blank');
     setCheckoutStep(3);
@@ -373,6 +399,10 @@ const CartDrawer = ({ isOpen, onClose }) => {
                   <div className="form-group">
                     <label>Full Name *</label>
                     <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
+                  </div>
+                  <div className="form-group">
+                    <label>Email Address *</label>
+                    <input type="email" name="email" value={formData.email} onChange={handleInputChange} required placeholder="For order confirmation" />
                   </div>
                   <div className="form-group">
                     <label>Phone Number (10-digit) *</label>
