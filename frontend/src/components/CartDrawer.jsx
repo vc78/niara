@@ -215,11 +215,9 @@ const CartDrawer = ({ isOpen, onClose }) => {
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText}`;
     
     // --- EMAIL JS INTEGRATION ---
-    // The user needs to create an EmailJS account (https://www.emailjs.com/)
-    // and replace these placeholder strings with their actual keys.
-    const serviceID = 'YOUR_SERVICE_ID';
-    const templateID = 'YOUR_TEMPLATE_ID';
-    const publicKey = 'YOUR_PUBLIC_KEY';
+    const serviceID = 'service_a8hacno';
+    const templateID = 'template_3nvh0mg';
+    const publicKey = 'Ajl2ifuyP51qtZZMX';
     
     const emailParams = {
       to_email: formData.email,
