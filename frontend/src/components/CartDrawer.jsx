@@ -217,7 +217,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
     // --- EMAIL JS INTEGRATION ---
     const serviceID = 'service_a8hacno';
     const templateID = 'template_3nvh0mg';
-    const publicKey = 'Ajl2ifuyP51qtZZMX';
+    const publicKey = 'AjI2ifuyP51qtZZMX';
     
     const emailParams = {
       to_email: formData.email,
@@ -232,7 +232,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
         console.log('Email sent successfully!', response.status, response.text);
       })
       .catch((err) => {
-        console.error('Failed to send email. Ensure you have added your EmailJS keys.', err);
+        console.error('Failed to send email.', err);
       });
     
     window.open(whatsappUrl, '_blank');
