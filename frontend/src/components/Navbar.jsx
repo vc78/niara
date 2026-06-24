@@ -12,7 +12,7 @@ const announcements = [
   "✨ New Festive Collection dropping soon — DM to pre-order"
 ];
 
-const Navbar = ({ onCartOpen, onWishlistOpen, onAuthOpen, onProfileOpen, onContactOpen }) => {
+const Navbar = ({ onCartOpen, onWishlistOpen, onAuthOpen, onProfileOpen, onContactOpen, onNavigateToGallery }) => {
   const { cart } = useCart();
   const { user, logout } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -151,7 +151,7 @@ const Navbar = ({ onCartOpen, onWishlistOpen, onAuthOpen, onProfileOpen, onConta
             <a href="#shop" className="nav-link">Collection</a>
             <a href="#how-to-order" className="nav-link">Order</a>
             <a href="#international" className="nav-link">International</a>
-            <a href="#about" className="nav-link">Designer</a>
+            <button onClick={onNavigateToGallery} className="nav-link" style={{background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: '15px', color: 'var(--text-color)'}}>Ideology & Gallery</button>
             <button onClick={onContactOpen} className="nav-link" style={{background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: '15px', color: 'var(--text-color)'}}>Contact</button>
           </div>
 
@@ -222,7 +222,7 @@ const Navbar = ({ onCartOpen, onWishlistOpen, onAuthOpen, onProfileOpen, onConta
               <a href="#shop" onClick={handleMobileLinkClick} className="mobile-nav-link">Collection</a>
               <a href="#how-to-order" onClick={handleMobileLinkClick} className="mobile-nav-link">How to Order</a>
               <a href="#international" onClick={handleMobileLinkClick} className="mobile-nav-link">International Orders</a>
-              <a href="#about" className="mobile-link" onClick={handleMobileLinkClick}>Designer</a>
+              <button className="mobile-link" onClick={() => { handleMobileLinkClick(); onNavigateToGallery(); }} style={{background: 'none', border: 'none', textAlign: 'left', padding: '15px 0', width: '100%', fontFamily: 'var(--font-sans)', fontSize: '18px', color: 'var(--text-color)'}}>Ideology & Gallery</button>
               <button className="mobile-link" onClick={() => { handleMobileLinkClick(); onContactOpen(); }} style={{background: 'none', border: 'none', textAlign: 'left', padding: '15px 0', width: '100%', fontFamily: 'var(--font-sans)', fontSize: '18px', color: 'var(--text-color)'}}>Contact</button>
 
               {/* WhatsApp + Social Actions */}

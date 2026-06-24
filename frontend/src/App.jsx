@@ -11,6 +11,7 @@ import WishlistDrawer from './components/WishlistDrawer';
 import UserProfileModal from './components/UserProfileModal';
 import CollectionPage from './pages/CollectionPage';
 import ProductPage from './components/ProductPage';
+import GalleryPage from './pages/GalleryPage';
 import WelcomePopup from './components/WelcomePopup';
 import HotPicksDrawer from './components/HotPicksDrawer';
 import HotPicksTab from './components/HotPicksTab';
@@ -46,6 +47,11 @@ function App() {
     window.scrollTo(0, 0);
   };
 
+  const navigateToGallery = () => {
+    setCurrentRoute('gallery');
+    window.scrollTo(0, 0);
+  };
+
   return (
     <AuthProvider>
       <CartProvider>
@@ -59,6 +65,7 @@ function App() {
             onWishlistOpen={() => setIsWishlistOpen(true)}
             onProfileOpen={() => setIsProfileOpen(true)}
             onContactOpen={() => setIsContactOpen(true)}
+            onNavigateToGallery={navigateToGallery}
           />
           
           {/* Main single-page scroll view or Collection view */}
@@ -84,6 +91,8 @@ function App() {
                   window.scrollTo(0, 0);
                 }}
               />
+            ) : currentRoute === 'gallery' ? (
+              <GalleryPage onBack={navigateToHome} />
             ) : null}
           </main>
 
