@@ -12,6 +12,7 @@ import UserProfileModal from './components/UserProfileModal';
 import CollectionPage from './pages/CollectionPage';
 import ProductPage from './components/ProductPage';
 import GalleryPage from './pages/GalleryPage';
+import AboutPage from './pages/AboutPage';
 import WelcomePopup from './components/WelcomePopup';
 import HotPicksDrawer from './components/HotPicksDrawer';
 import HotPicksTab from './components/HotPicksTab';
@@ -52,6 +53,11 @@ function App() {
     window.scrollTo(0, 0);
   };
 
+  const navigateToAbout = () => {
+    setCurrentRoute('about');
+    window.scrollTo(0, 0);
+  };
+
   return (
     <AuthProvider>
       <CartProvider>
@@ -66,6 +72,7 @@ function App() {
             onProfileOpen={() => setIsProfileOpen(true)}
             onContactOpen={() => setIsContactOpen(true)}
             onNavigateToGallery={navigateToGallery}
+            onNavigateToAbout={navigateToAbout}
           />
           
           {/* Main single-page scroll view or Collection view */}
@@ -93,6 +100,8 @@ function App() {
               />
             ) : currentRoute === 'gallery' ? (
               <GalleryPage onBack={navigateToHome} />
+            ) : currentRoute === 'about' ? (
+              <AboutPage onBack={navigateToHome} />
             ) : null}
           </main>
 

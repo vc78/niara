@@ -29,61 +29,6 @@
   color: var(--accent-gold, #C0872A);
 }
 
-/* Ideology Section */
-.ideology-section {
-  display: flex;
-  align-items: center;
-  gap: 60px;
-  max-width: 1200px;
-  margin: 40px auto 100px;
-  padding: 0 5%;
-}
-
-.ideology-content {
-  flex: 1;
-}
-
-.ideology-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 48px;
-  color: var(--accent-gold, #C0872A);
-  margin: 0 0 20px 0;
-  font-weight: 500;
-}
-
-.ideology-divider {
-  width: 60px;
-  height: 2px;
-  background-color: var(--accent-gold, #C0872A);
-  margin-bottom: 30px;
-}
-
-.ideology-text {
-  font-size: 16px;
-  line-height: 1.8;
-  color: rgba(253, 248, 242, 0.85);
-  margin-bottom: 20px;
-}
-
-.ideology-image {
-  flex: 1;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(192, 135, 42, 0.2);
-}
-
-.ideology-image img {
-  width: 100%;
-  height: auto;
-  display: block;
-  transition: transform 0.5s ease;
-}
-
-.ideology-image:hover img {
-  transform: scale(1.05);
-}
-
 /* Reels Grid Section */
 .reels-section {
   max-width: 1400px;
@@ -197,20 +142,9 @@
 }
 
 /* Mobile Responsiveness */
-@media (max-width: 900px) {
-  .ideology-section {
-    flex-direction: column;
-    gap: 40px;
-  }
-}
-
 @media (max-width: 600px) {
   .gallery-page {
     padding-top: 60px;
-  }
-
-  .ideology-title {
-    font-size: 36px;
   }
 
   .reels-grid {

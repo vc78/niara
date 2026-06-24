@@ -2,30 +2,36 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Play, Pause, Volume2, VolumeX, ArrowLeft } from 'lucide-react';
 import './GalleryPage.css';
 
+// Using extremely reliable static MP4s to prevent 403 errors and red screens.
+// These are standard open-source demo videos hosted on reliable Google storage.
 const videos = [
   {
     id: 1,
-    url: 'https://player.vimeo.com/external/498263599.sd.mp4?s=d0023a105eb9f22c6bd42d1e21b711e6ed443fb7&profile_id=165&oauth2_token_id=57447761',
+    url: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     title: 'The Making of the Royal Crimson Lehenga',
-    description: 'A look into the meticulous hand-embroidery process.'
+    description: 'A look into the meticulous hand-embroidery process.',
+    poster: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600&q=80'
   },
   {
     id: 2,
-    url: 'https://player.vimeo.com/external/477435163.sd.mp4?s=7b9264426f849b82875152a2ef4950e3262cc291&profile_id=165&oauth2_token_id=57447761',
+    url: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
     title: 'Spring Summer Collection Showcase',
-    description: 'Vibrant colors and flowing fabrics for the festive season.'
+    description: 'Vibrant colors and flowing fabrics for the festive season.',
+    poster: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&q=80'
   },
   {
     id: 3,
-    url: 'https://player.vimeo.com/external/434045526.sd.mp4?s=c27ee3b4e6b52dcbb268cd155c56c2534ce644be&profile_id=165&oauth2_token_id=57447761',
+    url: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     title: 'Bespoke Tailoring Details',
-    description: 'Precision in every stitch.'
+    description: 'Precision in every stitch.',
+    poster: 'https://images.unsplash.com/photo-1584444569344-77e8a9f68809?w=600&q=80'
   },
   {
     id: 4,
-    url: 'https://player.vimeo.com/external/416035987.sd.mp4?s=404222cd81a0279611db70a30b6528d227c28dd6&profile_id=165&oauth2_token_id=57447761',
+    url: 'https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
     title: 'Client Diaries',
-    description: 'Real brides, real elegance.'
+    description: 'Real brides, real elegance.',
+    poster: 'https://images.unsplash.com/photo-1594938298596-f00192e212f0?w=600&q=80'
   }
 ];
 
@@ -39,7 +45,10 @@ const VideoCard = ({ video }) => {
     if (isPlaying) {
       videoRef.current.pause();
     } else {
-      videoRef.current.play();
+      // Catch potential play() promise rejections to prevent crashing
+      videoRef.current.play().catch(error => {
+        console.error("Video playback failed:", error);
+      });
     }
     setIsPlaying(!isPlaying);
   };
@@ -50,7 +59,7 @@ const VideoCard = ({ video }) => {
     setIsMuted(!isMuted);
   };
 
-  // Auto pause when out of viewport (simple intersection observer)
+  // Auto pause when out of viewport
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -80,7 +89,7 @@ const VideoCard = ({ video }) => {
         muted={isMuted}
         playsInline
         className="gallery-video"
-        poster="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600&q=80"
+        poster={video.poster}
       />
       <div className="video-controls">
         <button className="control-btn" onClick={togglePlay}>
@@ -111,28 +120,9 @@ const GalleryPage = ({ onBack }) => {
         </button>
       </div>
 
-      <section className="ideology-section">
-        <div className="ideology-content">
-          <h1 className="ideology-title">Our Ideology</h1>
-          <div className="ideology-divider"></div>
-          <p className="ideology-text">
-            At <strong>Label by Sahithi Nandhan</strong>, we believe that fashion is an intimate expression of identity. Our journey began with a simple vision: to create heirloom pieces that transcend fleeting trends.
-          </p>
-          <p className="ideology-text">
-            Every garment is a labor of love, marrying centuries-old Indian craftsmanship with contemporary silhouettes. We champion ethical sourcing, bespoke tailoring, and an uncompromising commitment to detail. 
-          </p>
-          <p className="ideology-text">
-            When you wear a piece from our collection, you aren't just wearing fabric—you are wearing art, passion, and a legacy woven into every thread.
-          </p>
-        </div>
-        <div className="ideology-image">
-          <img src="https://images.unsplash.com/photo-1596455607563-ad6193f76b17?w=1200&q=80" alt="Brand Ideology" />
-        </div>
-      </section>
-
-      <section className="reels-section">
+      <section className="reels-section" style={{ marginTop: '40px' }}>
         <div className="reels-header">
-          <h2>Behind the Seams</h2>
+          <h2>Video Gallery</h2>
           <p>Shorts, Reels, and Studio Diaries</p>
         </div>
         
