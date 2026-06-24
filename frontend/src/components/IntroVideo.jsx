@@ -3,9 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import './IntroVideo.css';
 
 const IntroVideo = ({ onComplete }) => {
-  const [isMuted, setIsMuted] = useState(true);
   const [isVisible, setIsVisible] = useState(true);
-  const [playError, setPlayError] = useState(true);
   const videoRef = useRef(null);
 
   // Lock scrolling when the video is visible
@@ -32,13 +30,6 @@ const IntroVideo = ({ onComplete }) => {
     }, 800); // Wait for fade out animation
   };
 
-  const handleManualPlay = () => {
-    if (videoRef.current) {
-      videoRef.current.play();
-      setPlayError(false);
-    }
-  };
-
   return (
     <AnimatePresence>
       {isVisible && (
@@ -52,24 +43,11 @@ const IntroVideo = ({ onComplete }) => {
             ref={videoRef}
             className="intro-video-player"
             src="/videos/intro-video.mp4"
+            autoPlay
+            muted
             playsInline
             onEnded={handleVideoEnd}
           />
-          {playError && (
-            <div 
-              onClick={handleManualPlay}
-              style={{
-                position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-                display: 'flex', justifyContent: 'center', alignItems: 'center',
-                backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 10, cursor: 'pointer',
-                color: 'white', fontSize: '24px', fontWeight: 'bold'
-              }}
-            >
-              <div style={{ background: 'var(--accent-gold)', padding: '15px 30px', borderRadius: '30px' }}>
-                Tap to Play Audio
-              </div>
-            </div>
-          )}
         </motion.div>
       )}
     </AnimatePresence>
