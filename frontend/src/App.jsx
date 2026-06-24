@@ -6,6 +6,7 @@ import AuthModal from './components/AuthModal';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
 import { WishlistProvider } from './context/WishlistContext';
+import { ToastProvider } from './context/ToastContext';
 import WishlistDrawer from './components/WishlistDrawer';
 import UserProfileModal from './components/UserProfileModal';
 import CollectionPage from './pages/CollectionPage';
@@ -13,6 +14,7 @@ import ProductPage from './components/ProductPage';
 import WelcomePopup from './components/WelcomePopup';
 import HotPicksDrawer from './components/HotPicksDrawer';
 import HotPicksTab from './components/HotPicksTab';
+import ContactModal from './components/ContactModal';
 import './index.css';
 
 function App() {
@@ -21,6 +23,7 @@ function App() {
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isHotPicksOpen, setIsHotPicksOpen] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
   
   const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'collection' | 'product'
   const [activeCategory, setActiveCategory] = useState('all');
@@ -47,13 +50,15 @@ function App() {
     <AuthProvider>
       <CartProvider>
         <WishlistProvider>
-          <div className="app">
+          <ToastProvider>
+            <div className="app">
           {/* Global sticky navigation bar */}
           <Navbar 
             onCartOpen={() => setIsCartOpen(true)} 
             onAuthOpen={() => setIsAuthOpen(true)}
             onWishlistOpen={() => setIsWishlistOpen(true)}
             onProfileOpen={() => setIsProfileOpen(true)}
+            onContactOpen={() => setIsContactOpen(true)}
           />
           
           {/* Main single-page scroll view or Collection view */}
@@ -94,6 +99,9 @@ function App() {
           {/* Global Profile/Sizing Modal */}
           <UserProfileModal isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
 
+          {/* Global Contact Modal */}
+          <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
+          
           {/* New Features: Welcome Popup & Hot Picks */}
           <WelcomePopup onCartOpen={() => setIsCartOpen(true)} />
           <HotPicksTab onClick={() => setIsHotPicksOpen(true)} />
@@ -102,10 +110,11 @@ function App() {
             onClose={() => setIsHotPicksOpen(false)} 
             onCartOpen={() => setIsCartOpen(true)} 
           />
-        </div>
-      </WishlistProvider>
-    </CartProvider>
-  </AuthProvider>
+            </div>
+          </ToastProvider>
+        </WishlistProvider>
+      </CartProvider>
+    </AuthProvider>
   );
 }
 

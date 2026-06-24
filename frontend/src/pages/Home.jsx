@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Play, ArrowRight, Heart, MessageSquare, Globe, Video, Scissors, RefreshCcw, Star, X, Package, ShoppingBag } from 'lucide-react';
+import { Play, ArrowRight, Heart, MessageSquare, Globe, Video, Scissors, RefreshCcw, Star, X, Package, ShoppingBag, Eye } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { products } from '../data/products';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
+import { useToast } from '../context/ToastContext';
+import QuickViewModal from '../components/QuickViewModal';
 import './Home.css';
 
 const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClick }) => {
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
+  const { addToast } = useToast();
+  
+  // Quick View State
+  const [quickViewProduct, setQuickViewProduct] = useState(null);
+  const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   
   // Hero Carousel State
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -127,6 +134,13 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
           <Video size={18} /> Book a Styling Call
         </button>
       </div>
+
+      <QuickViewModal 
+        isOpen={isQuickViewOpen} 
+        onClose={() => setIsQuickViewOpen(false)} 
+        product={quickViewProduct}
+        onNavigateToProduct={onProductClick}
+      />
 
       {isBookingModalOpen && (
         <div className="modal-overlay" onClick={() => setIsBookingModalOpen(false)}>
@@ -348,15 +362,16 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
                     <button className="add-to-cart-btn-overlay" onClick={(e) => {
                       e.stopPropagation();
                       addToCart(product, "Free Size", 1);
-                      alert("Added to cart!");
+                      addToast(`${product.name} added to cart!`, 'success');
                     }}>
                       <ShoppingBag size={16} /> Add to Cart
                     </button>
                     <button className="whatsapp-btn-overlay" onClick={(e) => {
                       e.stopPropagation();
-                      handleWhatsAppContact(`Hello, I am interested in ordering the ${product.name}. Could you please guide me on the next steps?`);
+                      setQuickViewProduct(product);
+                      setIsQuickViewOpen(true);
                     }}>
-                      <MessageSquare size={16} /> WhatsApp
+                      <Eye size={16} /> Quick View
                     </button>
                   </div>
                 </div>

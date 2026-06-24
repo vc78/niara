@@ -1,14 +1,20 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { ArrowLeft, Filter, Heart, MessageSquare, ShoppingBag } from 'lucide-react';
+import { ArrowLeft, Filter, Heart, MessageSquare, ShoppingBag, Eye } from 'lucide-react';
 import { products } from '../data/products';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { ProductGridSkeleton, ProductGridError } from '../components/Skeletons';
+import { useToast } from '../context/ToastContext';
+import QuickViewModal from '../components/QuickViewModal';
 import './CollectionPage.css';
 
 const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => {
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
+  const { addToast } = useToast();
+  
+  const [quickViewProduct, setQuickViewProduct] = useState(null);
+  const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
 
   const [activeCategory, setActiveCategory] = useState(initialCategory);
   const [priceRange, setPriceRange] = useState(20000);
@@ -194,15 +200,16 @@ const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => 
                         <button className="add-to-cart-btn-overlay" onClick={(e) => {
                           e.stopPropagation();
                           addToCart(product, "Free Size", 1);
-                          alert("Added to cart!");
+                          addToast(`${product.name} added to cart!`, 'success');
                         }}>
                           <ShoppingBag size={16} /> Add to Cart
                         </button>
                         <button className="whatsapp-btn-overlay" onClick={(e) => {
                           e.stopPropagation();
-                          handleWhatsAppOrder(product);
+                          setQuickViewProduct(product);
+                          setIsQuickViewOpen(true);
                         }}>
-                          <MessageSquare size={16} /> WhatsApp
+                          <Eye size={16} /> Quick View
                         </button>
                       </div>
                     </div>
@@ -222,6 +229,12 @@ const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => 
           </main>
         </div>
       </div>
+      <QuickViewModal 
+        isOpen={isQuickViewOpen} 
+        onClose={() => setIsQuickViewOpen(false)} 
+        product={quickViewProduct}
+        onNavigateToProduct={onProductClick}
+      />
     </div>
   );
 };

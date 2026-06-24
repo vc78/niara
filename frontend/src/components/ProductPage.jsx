@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { ArrowLeft, ShoppingBag, Heart, Ruler, Check } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useToast } from '../context/ToastContext';
 import BespokeImage from './BespokeImage';
 import './ProductPage.css';
 
 const ProductPage = ({ product, onBack }) => {
   const { addToCart } = useCart();
+  const { addToast } = useToast();
   const [selectedSize, setSelectedSize] = useState('');
   const [added, setAdded] = useState(false);
 
@@ -17,12 +19,13 @@ const ProductPage = ({ product, onBack }) => {
 
   const handleAddToCart = () => {
     if (!selectedSize) {
-      alert("Please select a size first.");
+      addToast("Please select a size first.", "info");
       return;
     }
     
     addToCart(product, selectedSize, 1);
     setAdded(true);
+    addToast(`${product.name} added to cart!`, 'success');
     setTimeout(() => setAdded(false), 2000);
   };
 
