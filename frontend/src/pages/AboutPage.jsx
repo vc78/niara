@@ -40,7 +40,8 @@ const AboutPage = ({ onBack }) => {
           className="about-hero-image-container"
           style={{ y: y1, opacity: opacity1 }}
         >
-          <img src="https://images.unsplash.com/photo-1596455607563-ad6193f76b17?w=1600&q=80" alt="Boutique Ideology Hero" />
+          {/* Using highly reliable image CDNs */}
+          <img src="https://images.pexels.com/photos/14440125/pexels-photo-14440125.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Boutique Ideology Hero" />
         </motion.div>
         <div className="about-hero-overlay">
           <motion.h1 
@@ -73,10 +74,13 @@ const AboutPage = ({ onBack }) => {
           <h2>The Craft of Identity</h2>
           <div className="accent-line"></div>
           <p>
-            At <strong>Label by Sahithi Nandhan</strong>, we believe that fashion is an intimate expression of identity. Our journey began with a simple vision: to create heirloom pieces that transcend fleeting trends.
+            At <strong>Label by Sahithi Nandhan</strong>, we believe that fashion is an intimate expression of identity. Our journey began with a simple vision: to create heirloom pieces that transcend fleeting trends and celebrate the true essence of the modern Indian woman.
           </p>
           <p>
-            Every garment is a labor of love, marrying centuries-old Indian craftsmanship with contemporary silhouettes. We champion ethical sourcing, bespoke tailoring, and an uncompromising commitment to detail.
+            Every garment is a labor of love, marrying centuries-old Indian craftsmanship with contemporary, fluid silhouettes. From the delicate weaving of pure silks to the meticulous zardosi and aari embroidery, our collections are designed to make you feel royal, confident, and deeply connected to your roots.
+          </p>
+          <p>
+            We champion ethical sourcing, bespoke tailoring, and an uncompromising commitment to detail. Whether it is a bridal lehenga for your big day or an elegant draped saree for a festive evening, we craft garments that tell your unique story.
           </p>
         </motion.section>
 
@@ -89,18 +93,18 @@ const AboutPage = ({ onBack }) => {
         >
           <motion.div className="about-grid-item" variants={fadeInUp}>
             <div className="grid-image-wrapper">
-              <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=800&q=80" alt="Craftsmanship" />
+              <img src="https://images.pexels.com/photos/13086903/pexels-photo-13086903.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Craftsmanship" />
             </div>
             <h3>Artisanal Craftsmanship</h3>
-            <p>Our artisans employ traditional techniques passed down through generations, ensuring every piece carries the soul of true artistry.</p>
+            <p>Our master artisans employ traditional hand-embroidery techniques passed down through generations. Hours of painstaking precision go into every motif, ensuring every piece carries the soul of true artistry and heritage.</p>
           </motion.div>
 
           <motion.div className="about-grid-item" variants={fadeInUp}>
             <div className="grid-image-wrapper">
-              <img src="https://images.unsplash.com/photo-1584444569344-77e8a9f68809?w=800&q=80" alt="Bespoke" />
+              <img src="https://images.pexels.com/photos/1055691/pexels-photo-1055691.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Bespoke Tailoring" />
             </div>
             <h3>Bespoke Tailoring</h3>
-            <p>We tailor dreams into reality. Our bespoke service is an intimate collaboration, ensuring your garment is as unique as your fingerprint.</p>
+            <p>We tailor dreams into reality. Our bespoke service is an intimate collaboration from sketch to final fitting. We carefully drape and construct every layer, ensuring your garment fits flawlessly and feels as unique as your fingerprint.</p>
           </motion.div>
         </motion.section>
 
