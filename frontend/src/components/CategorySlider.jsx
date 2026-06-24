@@ -9,8 +9,8 @@ const categories = [
   { id: 'dresses', name: 'Dresses', image: 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=300&q=80' },
   { id: 'kurta-sets', name: 'Kurta', image: 'https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=300&q=80' },
   { id: 'lehengas', name: 'Lehenga', image: 'https://images.unsplash.com/photo-1585914924626-15adac1e6402?auto=format&fit=crop&w=300&q=80' },
-  { id: 'men', name: 'Men', image: 'https://images.unsplash.com/photo-1550614000-4b95dd2458ae?auto=format&fit=crop&w=300&q=80' },
-  { id: 'festive-wear', name: 'Combo', image: 'https://images.unsplash.com/photo-1594938298596-f00192e212f0?auto=format&fit=crop&w=300&q=80' }
+  { id: 'men', name: 'Men', image: 'https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=300&q=80' },
+  { id: 'festive-wear', name: 'Combo', image: 'https://images.unsplash.com/photo-1585914924626-15adac1e6402?auto=format&fit=crop&w=300&q=80' }
 ];
 
 const CategorySlider = ({ onNavigateToCollection }) => {

@@ -241,7 +241,7 @@
 }
 
 /* Mobile Responsiveness */
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .about-hero-title {
     font-size: 56px;
   }

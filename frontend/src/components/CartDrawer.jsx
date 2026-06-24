@@ -34,6 +34,8 @@ const CartDrawer = ({ isOpen, onClose }) => {
   const [copiedUpi, setCopiedUpi] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
   
+  const [paymentMethod, setPaymentMethod] = useState('upi');
+  
   // Coupon State
   const [couponCode, setCouponCode] = useState('');
   const [appliedDiscount, setAppliedDiscount] = useState(0);
@@ -199,12 +201,11 @@ const CartDrawer = ({ isOpen, onClose }) => {
       orderText += `• ${item.name} | Size: ${item.size} | Qty: ${item.quantity} | ${formatPrice(item.price)}\n`;
     });
     
-    if (appliedDiscount > 0) {
-      orderText += `\n🎁 Discount Applied: ${appliedDiscount}% OFF\n`;
-    }
-    
-    orderText += `\n💰 *Total Paid: ${formatPrice(totalAmount)}*\n`;
-    orderText += `💳 Payment Mode: UPI\n\n`;
+    orderText += `💰 *Subtotal:* ${formatPrice(subtotalAmount)}\n`;
+    if (appliedDiscount > 0) orderText += `🏷️ *Discount (${couponCode}):* -${formatPrice(discountAmount)}\n`;
+    if (DELIVERY_CHARGE > 0) orderText += `🚚 *Delivery:* ${formatPrice(DELIVERY_CHARGE)}\n`;
+    orderText += `💳 *Payment Method:* ${paymentMethod === 'cod' ? 'Cash on Delivery (COD)' : 'UPI / Online Payment'}\n`;
+    orderText += `\n*TOTAL TO PAY:* ${formatPrice(totalAmount)}\n`;
     orderText += `✅ Customer confirmed payment.`;
     
     const encodedText = encodeURIComponent(orderText);
@@ -278,55 +279,77 @@ const CartDrawer = ({ isOpen, onClose }) => {
                     <h2 className="payment-summary-total">{formatPrice(totalAmount)}</h2>
                   </div>
 
-                  <div className="upi-qr-card">
-                    <p className="qr-title"><QrCode size={18} /> Scan QR with any UPI App</p>
-                    <div className="qr-img-wrapper">
-                      <img 
-                        src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(BRAND_NAME)}&am=${totalAmount}&cu=INR&tn=ClothingOrder`} 
-                        alt="UPI Payment QR Code" 
-                      />
-                    </div>
+                  <h3 className="checkout-title">Payment Method</h3>
+
+                  <div className="payment-methods" style={{ display: 'flex', gap: '15px', marginBottom: '25px' }}>
+                    <label style={{ flex: 1, padding: '15px', border: `2px solid ${paymentMethod === 'upi' ? 'var(--accent-gold)' : '#eee'}`, borderRadius: '8px', cursor: 'pointer', textAlign: 'center' }}>
+                      <input type="radio" name="payment" value="upi" checked={paymentMethod === 'upi'} onChange={() => setPaymentMethod('upi')} style={{ display: 'none' }} />
+                      <div style={{ fontWeight: 600 }}>UPI / Online</div>
+                    </label>
+                    <label style={{ flex: 1, padding: '15px', border: `2px solid ${paymentMethod === 'cod' ? 'var(--accent-gold)' : '#eee'}`, borderRadius: '8px', cursor: 'pointer', textAlign: 'center' }}>
+                      <input type="radio" name="payment" value="cod" checked={paymentMethod === 'cod'} onChange={() => setPaymentMethod('cod')} style={{ display: 'none' }} />
+                      <div style={{ fontWeight: 600 }}>Cash on Delivery</div>
+                    </label>
                   </div>
 
-                  <div className="upi-details-list">
-                    <div className="upi-detail-item">
-                      <div className="upi-detail-text">
-                        <span className="upi-label">UPI ID</span>
-                        <span className="upi-value">{UPI_ID}</span>
+                  {paymentMethod === 'upi' ? (
+                    <>
+                      <div className="upi-qr-card">
+                        <p className="qr-title"><QrCode size={18} /> Scan QR with any UPI App</p>
+                        <div className="qr-img-wrapper">
+                          <img 
+                            src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(BRAND_NAME)}&am=${totalAmount}&cu=INR&tn=ClothingOrder`} 
+                            alt="UPI Payment QR Code" 
+                          />
+                        </div>
                       </div>
-                      <button 
-                        className="upi-copy-btn" 
-                        onClick={() => {
-                          navigator.clipboard.writeText(UPI_ID);
-                          setCopiedUpi(true);
-                          setTimeout(() => setCopiedUpi(false), 2000);
-                        }}
-                      >
-                        {copiedUpi ? <Check size={16} /> : <Copy size={16} />}
-                      </button>
-                    </div>
 
-                    <div className="upi-detail-item">
-                      <div className="upi-detail-text">
-                        <span className="upi-label">Phone Number (GPay/PhonePe)</span>
-                        <span className="upi-value">+{WHATSAPP_NUMBER.slice(0, 2)}-{WHATSAPP_NUMBER.slice(2)}</span>
+                      <div className="upi-details-list">
+                        <div className="upi-detail-item">
+                          <div className="upi-detail-text">
+                            <span className="upi-label">UPI ID</span>
+                            <span className="upi-value">{UPI_ID}</span>
+                          </div>
+                          <button 
+                            className="upi-copy-btn" 
+                            onClick={() => {
+                              navigator.clipboard.writeText(UPI_ID);
+                              setCopiedUpi(true);
+                              setTimeout(() => setCopiedUpi(false), 2000);
+                            }}
+                          >
+                            {copiedUpi ? <Check size={16} /> : <Copy size={16} />}
+                          </button>
+                        </div>
+
+                        <div className="upi-detail-item">
+                          <div className="upi-detail-text">
+                            <span className="upi-label">Phone Number (GPay/PhonePe)</span>
+                            <span className="upi-value">+{WHATSAPP_NUMBER.slice(0, 2)}-{WHATSAPP_NUMBER.slice(2)}</span>
+                          </div>
+                          <button 
+                            className="upi-copy-btn"
+                            onClick={() => {
+                              navigator.clipboard.writeText(WHATSAPP_NUMBER);
+                              setCopiedPhone(true);
+                              setTimeout(() => setCopiedPhone(false), 2000);
+                            }}
+                          >
+                            {copiedPhone ? <Check size={16} /> : <Copy size={16} />}
+                          </button>
+                        </div>
                       </div>
-                      <button 
-                        className="upi-copy-btn"
-                        onClick={() => {
-                          navigator.clipboard.writeText(WHATSAPP_NUMBER);
-                          setCopiedPhone(true);
-                          setTimeout(() => setCopiedPhone(false), 2000);
-                        }}
-                      >
-                        {copiedPhone ? <Check size={16} /> : <Copy size={16} />}
-                      </button>
-                    </div>
-                  </div>
 
-                  <div className="payment-instruction">
-                    <p>Scan QR or open any UPI app and pay <strong>{formatPrice(totalAmount)}</strong>. After payment, click 'I have paid' below to confirm your order.</p>
-                  </div>
+                      <div className="payment-instruction">
+                        <p>Scan QR or open any UPI app and pay <strong>{formatPrice(totalAmount)}</strong>. After payment, click 'I have paid' below to confirm your order.</p>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="payment-instruction" style={{ textAlign: 'center', padding: '30px 20px', background: 'rgba(212, 175, 55, 0.05)', borderRadius: '12px' }}>
+                      <p style={{ fontSize: '16px', fontWeight: 500, color: '#333' }}>You have selected <strong>Cash on Delivery</strong>.</p>
+                      <p style={{ marginTop: '10px', color: '#666' }}>You will pay <strong>{formatPrice(totalAmount)}</strong> directly to our delivery executive when your order arrives.</p>
+                    </div>
+                  )}
                 </div>
               ) : checkoutStep === 1 ? (
                 <form id="delivery-form" className="checkout-form" onSubmit={handleDeliverySubmit}>
@@ -484,7 +507,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
 
                 {checkoutStep === 2 && (
                   <button onClick={handleWhatsAppCheckout} className="whatsapp-checkout-btn success-btn">
-                    ✅ I Have Paid — Send Order via WhatsApp
+                    {paymentMethod === 'upi' ? '✅ I Have Paid - Send Order via WhatsApp' : '✅ Place Order (COD) via WhatsApp'}
                   </button>
                 )}
               </div>

@@ -237,7 +237,7 @@
   font-size: 18px;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
   .collection-layout {
     flex-direction: column;
   }

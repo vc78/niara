@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
+import IntroVideo from './components/IntroVideo';
 import Home from './pages/Home';
 import CartDrawer from './components/CartDrawer';
 import AuthModal from './components/AuthModal';
@@ -30,6 +31,11 @@ function App() {
   const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'collection' | 'product'
   const [activeCategory, setActiveCategory] = useState('all');
   const [activeProduct, setActiveProduct] = useState(null);
+  const [showIntro, setShowIntro] = useState(true);
+
+  const handleIntroComplete = () => {
+    setShowIntro(false);
+  };
 
   const navigateToCollection = (category = 'all') => {
     setActiveCategory(category);
@@ -64,6 +70,8 @@ function App() {
         <WishlistProvider>
           <ToastProvider>
             <div className="app">
+              {showIntro && <IntroVideo onComplete={handleIntroComplete} />}
+              
           {/* Global sticky navigation bar */}
           <Navbar 
             onCartOpen={() => setIsCartOpen(true)} 
@@ -121,7 +129,7 @@ function App() {
           <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
           
           {/* New Features: Welcome Popup & Hot Picks */}
-          <WelcomePopup onCartOpen={() => setIsCartOpen(true)} />
+          {!showIntro && <WelcomePopup onCartOpen={() => setIsCartOpen(true)} />}
           <HotPicksTab onClick={() => setIsHotPicksOpen(true)} />
           <HotPicksDrawer 
             isOpen={isHotPicksOpen} 
