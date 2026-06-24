@@ -41,7 +41,7 @@ const AboutPage = ({ onBack }) => {
           style={{ y: y1, opacity: opacity1 }}
         >
           {/* Using reliable Unsplash images of Indian bridal wear */}
-          <img src="https://images.unsplash.com/photo-1583391733958-d15024b45501?auto=format&fit=crop&w=1600&q=80" alt="Boutique Ideology Hero" />
+          <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=1600&q=80" alt="Boutique Ideology Hero" />
         </motion.div>
         <div className="about-hero-overlay">
           <motion.h1 
@@ -93,7 +93,7 @@ const AboutPage = ({ onBack }) => {
         >
           <motion.div className="about-grid-item" variants={fadeInUp}>
             <div className="grid-image-wrapper">
-              <img src="https://images.unsplash.com/photo-1605001001115-c2ee06821d3f?auto=format&fit=crop&w=800&q=80" alt="Craftsmanship" />
+              <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80" alt="Craftsmanship" />
             </div>
             <h3>Artisanal Craftsmanship</h3>
             <p>Our master artisans employ traditional hand-embroidery techniques passed down through generations. Hours of painstaking precision go into every motif, ensuring every piece carries the soul of true artistry and heritage.</p>
@@ -101,7 +101,7 @@ const AboutPage = ({ onBack }) => {
 
           <motion.div className="about-grid-item" variants={fadeInUp}>
             <div className="grid-image-wrapper">
-              <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=800&q=80" alt="Bespoke Tailoring" />
+              <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80" alt="Bespoke Tailoring" />
             </div>
             <h3>Bespoke Tailoring</h3>
             <p>We tailor dreams into reality. Our bespoke service is an intimate collaboration from sketch to final fitting. We carefully drape and construct every layer, ensuring your garment fits flawlessly and feels as unique as your fingerprint.</p>

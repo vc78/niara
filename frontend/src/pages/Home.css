@@ -970,7 +970,7 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
   }
-  .featured-grid {
+  .products-grid.featured-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
   }
@@ -1003,7 +1003,7 @@
   .hero-content {
     text-shadow: 0 2px 10px rgba(0,0,0,0.5);
   }
-  .masonry-grid, .featured-grid {
+  .masonry-grid, .products-grid.featured-grid {
     gap: 10px;
   }
   .masonry-item h3 {

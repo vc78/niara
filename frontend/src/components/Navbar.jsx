@@ -223,9 +223,9 @@ const Navbar = ({ onCartOpen, onWishlistOpen, onAuthOpen, onProfileOpen, onConta
               <a href="#shop" onClick={handleMobileLinkClick} className="mobile-nav-link">Collection</a>
               <a href="#how-to-order" onClick={handleMobileLinkClick} className="mobile-nav-link">How to Order</a>
               <a href="#international" onClick={handleMobileLinkClick} className="mobile-nav-link">International Orders</a>
-              <button className="mobile-link" onClick={() => { handleMobileLinkClick(); onNavigateToAbout(); }} style={{background: 'none', border: 'none', textAlign: 'left', padding: '15px 0', width: '100%', fontFamily: 'var(--font-sans)', fontSize: '18px', color: 'var(--text-dark)'}}>About</button>
-              <button className="mobile-link" onClick={() => { handleMobileLinkClick(); onNavigateToGallery(); }} style={{background: 'none', border: 'none', textAlign: 'left', padding: '15px 0', width: '100%', fontFamily: 'var(--font-sans)', fontSize: '18px', color: 'var(--text-dark)'}}>Gallery</button>
-              <button className="mobile-link" onClick={() => { handleMobileLinkClick(); onContactOpen(); }} style={{background: 'none', border: 'none', textAlign: 'left', padding: '15px 0', width: '100%', fontFamily: 'var(--font-sans)', fontSize: '18px', color: 'var(--text-dark)'}}>Contact</button>
+              <button onClick={() => { handleMobileLinkClick(); onNavigateToAbout(); }} className="mobile-nav-link" style={{background: 'none', border: 'none', cursor: 'pointer'}}>About</button>
+              <button onClick={() => { handleMobileLinkClick(); onNavigateToGallery(); }} className="mobile-nav-link" style={{background: 'none', border: 'none', cursor: 'pointer'}}>Gallery</button>
+              <button onClick={() => { handleMobileLinkClick(); onContactOpen(); }} className="mobile-nav-link" style={{background: 'none', border: 'none', cursor: 'pointer'}}>Contact</button>
 
               {/* WhatsApp + Social Actions */}
               <div className="mobile-social-panel">
