@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Camera, Globe, MessageCircle, Mail } from 'lucide-react';
 import './AboutPage.css';
 
 const AboutPage = ({ onBack }) => {
@@ -40,8 +40,8 @@ const AboutPage = ({ onBack }) => {
           className="about-hero-image-container"
           style={{ y: y1, opacity: opacity1 }}
         >
-          {/* Using highly reliable image CDNs */}
-          <img src="https://images.pexels.com/photos/14440125/pexels-photo-14440125.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Boutique Ideology Hero" />
+          {/* Using reliable Unsplash images of Indian bridal wear */}
+          <img src="https://images.unsplash.com/photo-1583391733958-d15024b45501?auto=format&fit=crop&w=1600&q=80" alt="Boutique Ideology Hero" />
         </motion.div>
         <div className="about-hero-overlay">
           <motion.h1 
@@ -93,7 +93,7 @@ const AboutPage = ({ onBack }) => {
         >
           <motion.div className="about-grid-item" variants={fadeInUp}>
             <div className="grid-image-wrapper">
-              <img src="https://images.pexels.com/photos/13086903/pexels-photo-13086903.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Craftsmanship" />
+              <img src="https://images.unsplash.com/photo-1605001001115-c2ee06821d3f?auto=format&fit=crop&w=800&q=80" alt="Craftsmanship" />
             </div>
             <h3>Artisanal Craftsmanship</h3>
             <p>Our master artisans employ traditional hand-embroidery techniques passed down through generations. Hours of painstaking precision go into every motif, ensuring every piece carries the soul of true artistry and heritage.</p>
@@ -101,7 +101,7 @@ const AboutPage = ({ onBack }) => {
 
           <motion.div className="about-grid-item" variants={fadeInUp}>
             <div className="grid-image-wrapper">
-              <img src="https://images.pexels.com/photos/1055691/pexels-photo-1055691.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Bespoke Tailoring" />
+              <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=800&q=80" alt="Bespoke Tailoring" />
             </div>
             <h3>Bespoke Tailoring</h3>
             <p>We tailor dreams into reality. Our bespoke service is an intimate collaboration from sketch to final fitting. We carefully drape and construct every layer, ensuring your garment fits flawlessly and feels as unique as your fingerprint.</p>
@@ -119,6 +119,30 @@ const AboutPage = ({ onBack }) => {
             "When you wear a piece from our collection, you aren't just wearing fabric—you are wearing art, passion, and a legacy."
           </blockquote>
           <cite>— Sahithi Nandhan</cite>
+        </motion.section>
+
+        <motion.section 
+          className="about-social"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
+          <h3>Connect With Us</h3>
+          <div className="social-links">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <Camera size={24} />
+            </a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <Globe size={24} />
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <MessageCircle size={24} />
+            </a>
+            <a href="mailto:contact@sahithinandhan.com" className="social-icon">
+              <Mail size={24} />
+            </a>
+          </div>
         </motion.section>
       </div>
     </div>
