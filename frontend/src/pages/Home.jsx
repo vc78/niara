@@ -117,10 +117,7 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
         </div>
       </section>
 
-      {/* SECTION 1.5: CATEGORY SLIDER (DIPPED IN LOVE) */}
-      <CategorySlider onNavigateToCollection={onNavigateToCollection} />
-
-      {/* SECTION 2: TRUST STRIP & BOOKING MODAL */}
+      {/* SECTION 1.5: TRUST STRIP & BOOKING MODAL */}
       <div className="trust-strip" id="book-call">
         <div className="trust-item">
           <Globe size={24} />
@@ -138,6 +135,10 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
           <Video size={18} /> Book a Styling Call
         </button>
       </div>
+
+      {/* SECTION 2: CATEGORY SLIDER (DIPPED IN LOVE) */}
+      <CategorySlider onNavigateToCollection={onNavigateToCollection} />
+
 
       <QuickViewModal 
         isOpen={isQuickViewOpen} 
