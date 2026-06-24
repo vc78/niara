@@ -5,21 +5,8 @@ import './IntroVideo.css';
 const IntroVideo = ({ onComplete }) => {
   const [isMuted, setIsMuted] = useState(true);
   const [isVisible, setIsVisible] = useState(true);
-  const [playError, setPlayError] = useState(false);
+  const [playError, setPlayError] = useState(true);
   const videoRef = useRef(null);
-
-  useEffect(() => {
-    if (isVisible && videoRef.current) {
-      const playPromise = videoRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          // Autoplay with sound was blocked by browser. 
-          // Show a play button overlay so the user can interact.
-          setPlayError(true);
-        });
-      }
-    }
-  }, [isVisible]);
 
   // Lock scrolling when the video is visible
   useEffect(() => {

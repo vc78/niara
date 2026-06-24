@@ -31,7 +31,7 @@ function App() {
   const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'collection' | 'product'
   const [activeCategory, setActiveCategory] = useState('all');
   const [activeProduct, setActiveProduct] = useState(null);
-  const [showIntro, setShowIntro] = useState(true);
+  const [showIntro, setShowIntro] = useState(window.innerWidth <= 768);
 
   const handleIntroComplete = () => {
     setShowIntro(false);
