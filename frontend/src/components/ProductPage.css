@@ -20,6 +20,7 @@
   font-size: 14px;
   cursor: pointer;
   transition: color 0.3s ease;
+  padding: 8px 0;
 }
 
 .back-btn-ghost:hover {
@@ -44,7 +45,7 @@
   aspect-ratio: 3/4;
   overflow: hidden;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(0, 0, 0, 0.02);
 }
 
 .product-main-image {
@@ -59,6 +60,7 @@
   gap: 15px;
   overflow-x: auto;
   padding-bottom: 10px;
+  scrollbar-width: thin;
 }
 
 .thumbnail-btn {
@@ -92,7 +94,7 @@
 .product-title-large {
   font-family: var(--font-serif);
   font-size: 42px;
-  color: var(--white);
+  color: var(--text-dark);
   margin: 0 0 10px;
 }
 
@@ -106,7 +108,7 @@
 .product-description-block {
   font-family: var(--font-sans);
   font-size: 15px;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-muted);
   line-height: 1.6;
   margin-bottom: 40px;
 }
@@ -127,7 +129,7 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-size: 13px;
-  color: var(--white);
+  color: var(--text-dark);
 }
 
 .size-guide-btn {
@@ -154,9 +156,9 @@
 .size-pill {
   min-width: 60px;
   padding: 10px 15px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--border-light);
   background: transparent;
-  color: var(--white);
+  color: var(--text-dark);
   font-family: var(--font-sans);
   border-radius: 30px;
   cursor: pointer;
@@ -168,9 +170,9 @@
 }
 
 .size-pill.selected {
-  background: var(--accent-gold);
-  border-color: var(--accent-gold);
-  color: #121212;
+  background: var(--text-dark);
+  border-color: var(--text-dark);
+  color: var(--white);
   font-weight: 600;
 }
 
@@ -181,8 +183,8 @@
 .add-to-cart-cta {
   width: 100%;
   padding: 18px;
-  background: var(--white);
-  color: #121212;
+  background: var(--primary-color);
+  color: var(--white);
   border: none;
   border-radius: 4px;
   font-family: var(--font-sans);
@@ -199,66 +201,98 @@
 }
 
 .add-to-cart-cta:hover {
-  background: var(--accent-gold);
-  color: white;
+  background: var(--text-dark);
 }
 
-.add-to-cart-cta.added {
-  background: #10b981;
-  color: white;
+.shipping-info {
+  margin-bottom: 40px;
 }
 
-.product-details-accordion {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 20px;
-}
-
-.accordion-item {
-  margin-bottom: 20px;
-}
-
-.accordion-item h4 {
+.shipping-info h4 {
   font-family: var(--font-sans);
-  font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--white);
+  font-size: 12px;
+  color: var(--text-dark);
   margin-bottom: 10px;
 }
 
-.accordion-item p {
+.shipping-info p {
   font-family: var(--font-sans);
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.6);
-  line-height: 1.5;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
 }
 
-@media (max-width: 992px) {
+.product-accordion {
+  border-top: 1px solid var(--border-light);
+}
+
+.accordion-item {
+  border-bottom: 1px solid var(--border-light);
+}
+
+.accordion-btn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  background: none;
+  border: none;
+  color: var(--text-dark);
+  font-family: var(--font-serif);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.accordion-btn:hover {
+  color: var(--accent-gold);
+}
+
+.accordion-content {
+  padding: 0 0 20px 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 900px) {
   .product-main-grid {
     grid-template-columns: 1fr;
     gap: 40px;
   }
-}
-
-@media (max-width: 768px) {
+  
   .product-title-large {
     font-size: 32px;
   }
-  
-  .product-actions-sticky {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 15px;
-    background: rgba(18, 18, 18, 0.95);
-    backdrop-filter: blur(10px);
-    z-index: 50;
-    margin: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 600px) {
+  .product-page-container {
+    padding: 110px 5% 40px;
   }
   
-  .product-info-panel {
-    padding-bottom: 80px; /* Space for sticky CTA */
+  .product-main-grid {
+    gap: 30px;
+  }
+
+  .main-image-wrapper {
+    aspect-ratio: 4/5;
+  }
+
+  .product-title-large {
+    font-size: 28px;
+  }
+  
+  .product-price-large {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .thumbnail-btn {
+    width: 60px;
   }
 }

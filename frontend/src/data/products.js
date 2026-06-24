@@ -4,11 +4,10 @@
 const generateProducts = () => {
   const products = [];
   
-  // KURTA SETS (15 items)
   const kurtaImages = [
-    'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=600',
-    'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600',
-    'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600'
+    'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80',
+    'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80',
+    'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=600&q=80'
   ];
 
   for(let i=1; i<=15; i++) {
@@ -31,11 +30,10 @@ const generateProducts = () => {
     });
   }
 
-  // CO-ORDS (15 items)
   const coordImages = [
-    'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600',
-    'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=600',
-    'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600'
+    'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80',
+    'https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=600&q=80',
+    'https://images.unsplash.com/photo-1585914924626-15adac1e6402?auto=format&fit=crop&w=600&q=80'
   ];
 
   for(let i=1; i<=15; i++) {
@@ -58,11 +56,10 @@ const generateProducts = () => {
     });
   }
 
-  // LEHENGAS (15 items)
   const lehengaImages = [
-    'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600',
-    'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600',
-    'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=600'
+    'https://images.unsplash.com/photo-1550614000-4b95dd2458ae?auto=format&fit=crop&w=600&q=80',
+    'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=600&q=80',
+    'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80'
   ];
 
   for(let i=1; i<=15; i++) {
@@ -85,11 +82,10 @@ const generateProducts = () => {
     });
   }
 
-  // FESTIVE WEAR (15 items)
   const festiveImages = [
-    'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600',
-    'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600',
-    'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=600'
+    'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80',
+    'https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=600&q=80',
+    'https://images.unsplash.com/photo-1585914924626-15adac1e6402?auto=format&fit=crop&w=600&q=80'
   ];
 
   for(let i=1; i<=15; i++) {
