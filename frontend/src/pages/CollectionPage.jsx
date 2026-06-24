@@ -36,10 +36,14 @@ const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => 
 
   const categories = [
     { id: 'all', name: 'All Pieces' },
-    { id: 'kurta-sets', name: 'Kurta Sets' },
-    { id: 'co-ords', name: 'Co-ords' },
-    { id: 'lehengas', name: 'Lehengas' },
-    { id: 'festive-wear', name: 'Festive Wear' }
+    { id: 'sarees', name: 'Saree' },
+    { id: 'blouses', name: 'Blouse' },
+    { id: 'co-ords', name: 'Pre Draped' },
+    { id: 'dresses', name: 'Dresses' },
+    { id: 'kurta-sets', name: 'Kurta' },
+    { id: 'lehengas', name: 'Lehenga' },
+    { id: 'men', name: 'Men' },
+    { id: 'festive-wear', name: 'Combo' }
   ];
 
   const handleSizeToggle = (size) => {

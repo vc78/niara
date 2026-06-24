@@ -6,6 +6,7 @@ import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useToast } from '../context/ToastContext';
 import QuickViewModal from '../components/QuickViewModal';
+import CategorySlider from '../components/CategorySlider';
 import './Home.css';
 
 const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClick }) => {
@@ -115,6 +116,9 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
           ))}
         </div>
       </section>
+
+      {/* SECTION 1.5: CATEGORY SLIDER (DIPPED IN LOVE) */}
+      <CategorySlider onNavigateToCollection={onNavigateToCollection} />
 
       {/* SECTION 2: TRUST STRIP & BOOKING MODAL */}
       <div className="trust-strip" id="book-call">
