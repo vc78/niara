@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { ArrowLeft, Filter, Heart, MessageSquare, ShoppingBag } from 'lucide-react';
 import { products } from '../data/products';
 import { useCart } from '../context/CartContext';

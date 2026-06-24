@@ -32,10 +32,10 @@ export const CartProvider = ({ children }) => {
         {
           product_id: product.id,
           name: product.name,
-          price: product.price,
+          price: product.price !== undefined ? product.price : product.sellingPrice,
           size,
           quantity: qty,
-          image_url: product.image_url,
+          image_url: product.image_url || product.image,
         },
       ];
     });

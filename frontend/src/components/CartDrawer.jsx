@@ -81,7 +81,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
     }
   }, [isOpen, checkoutStep, clearCart]);
 
-  const subtotalAmount = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  const subtotalAmount = cart.reduce((total, item) => total + (item.price || 0) * item.quantity, 0);
   const discountAmount = Math.floor(subtotalAmount * (appliedDiscount / 100));
   const totalAmount = subtotalAmount - discountAmount + DELIVERY_CHARGE;
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
@@ -393,13 +393,15 @@ const CartDrawer = ({ isOpen, onClose }) => {
                       className="cart-item"
                       layout
                     >
-                      <BespokeImage src={item.image_url} alt={item.name} className="cart-item-image" />
+                      <div className="cart-item-image">
+                        <img src={item.image_url || 'https://via.placeholder.com/150'} alt={item.name} />
+                      </div>
                       <div className="cart-item-details">
                         <h4 className="cart-item-name">{item.name}</h4>
                         <div className="cart-item-meta">
                           <span className="cart-item-size">Size: {item.size}</span>
                         </div>
-                        <div className="cart-item-price">{formatPrice(item.price * item.quantity)}</div>
+                        <div className="cart-item-price">{formatPrice((item.price || 0) * item.quantity)}</div>
 
                         <div className="cart-item-actions">
                           <div className="qty-control">
