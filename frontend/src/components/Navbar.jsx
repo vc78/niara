@@ -45,12 +45,12 @@ const Navbar = ({ onCartOpen, onWishlistOpen, onAuthOpen, onProfileOpen, onConta
 
   const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
   const wishlistCount = wishlist.length;
-  const whatsappPhone = '919000164752';
+  const whatsappPhone = '919030423317';
   const emailAddress = 'contactshubriti@gmail.com';
   const instagramUrl = 'https://www.instagram.com/label_by_sahithi_nandan/reels/';
 
   const handleWhatsAppContact = () => {
-    const message = encodeURIComponent('Hello Label by Sahithi Nandhan team, I would like to inquire about a custom order.');
+    const message = encodeURIComponent('Hello SREE VASTRA team, I would like to inquire about a custom order.');
     window.open(`https://wa.me/${whatsappPhone}?text=${message}`, '_blank');
   };
 
@@ -136,7 +136,7 @@ const Navbar = ({ onCartOpen, onWishlistOpen, onAuthOpen, onProfileOpen, onConta
           <a href="#home" className="navbar-logo" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
             <img 
               src="/logo.png" 
-              alt="Label by Sahithi Nandhan" 
+              alt="SREE VASTRA" 
               style={{ 
                 height: isScrolled ? '48px' : '64px',
                 objectFit: 'contain',

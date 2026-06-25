@@ -7,8 +7,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import BespokeImage from './BespokeImage';
 import './CartDrawer.css';
 
-const BRAND_NAME = 'Label by Sahithi Nandhan';
-const WHATSAPP_NUMBER = '919000164752';
+const BRAND_NAME = 'SREE VASTRA';
+const WHATSAPP_NUMBER = '919030423317';
 const UPI_ID = 'contactshubriti@okaxis'; // Placeholder UPI ID
 const DELIVERY_CHARGE = 0;
 

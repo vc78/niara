@@ -74,7 +74,7 @@ const AboutPage = ({ onBack }) => {
           <h2>The Craft of Identity</h2>
           <div className="accent-line"></div>
           <p>
-            At <strong>Label by Sahithi Nandhan</strong>, we believe that fashion is an intimate expression of identity. Our journey began with a simple vision: to create heirloom pieces that transcend fleeting trends and celebrate the true essence of the modern Indian woman.
+            At <strong>SREE VASTRA</strong>, we believe that fashion is an intimate expression of identity. Our journey began with a simple vision: to create heirloom pieces that transcend fleeting trends and celebrate the true essence of the modern Indian woman.
           </p>
           <p>
             Every garment is a labor of love, marrying centuries-old Indian craftsmanship with contemporary, fluid silhouettes. From the delicate weaving of pure silks to the meticulous zardosi and aari embroidery, our collections are designed to make you feel royal, confident, and deeply connected to your roots.
@@ -118,7 +118,7 @@ const AboutPage = ({ onBack }) => {
           <blockquote>
             "When you wear a piece from our collection, you aren't just wearing fabric—you are wearing art, passion, and a legacy."
           </blockquote>
-          <cite>— Sahithi Nandhan</cite>
+          <cite>— Navya Sri Namburi</cite>
         </motion.section>
 
         <motion.section 

@@ -72,7 +72,7 @@ const ProductPage = ({ product, onBack }) => {
           <p className="product-price-large">{formatPrice(product.sellingPrice || product.price)}</p>
           
           <div className="product-description-block">
-            <p>{product.description || "A luxury handcrafted piece by Sahithi Nandhan. Intricate detailing and premium fabrics create a timeless silhouette."}</p>
+            <p>{product.description || "A luxury handcrafted piece by Navya Sri Namburi. Intricate detailing and premium fabrics create a timeless silhouette."}</p>
           </div>
 
           <div className="size-selector-section">

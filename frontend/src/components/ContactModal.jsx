@@ -98,7 +98,7 @@ const ContactModal = ({ isOpen, onClose }) => {
                   <MapPin size={20} className="info-icon" />
                   <div className="info-text">
                     <strong>Flagship Studio</strong>
-                    <span>Sahithi Nandhan Label<br/>Hyderabad, India</span>
+                    <span>Navya Sri Namburi Label<br/>Hyderabad, India</span>
                   </div>
                 </li>
                 <li>

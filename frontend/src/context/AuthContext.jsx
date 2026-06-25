@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
     return saved ? JSON.parse(saved) : [{
       name: 'Neenu Sharma',
       email: 'admin@eedara.com',
-      mobile: '9000164752',
+      mobile: '9030423317',
       password: 'password123',
       address: '123 Luxury Avenue, Banjara Hills',
       pincode: '500034'

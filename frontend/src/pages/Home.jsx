@@ -53,8 +53,8 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
 
   // Helper for WhatsApp
   const handleWhatsAppContact = (messageParam) => {
-    const message = encodeURIComponent(messageParam || 'Hello Label by Sahithi Nandhan team, I would like to inquire about a custom order.');
-    window.open(`https://wa.me/919000164752?text=${message}`, '_blank');
+    const message = encodeURIComponent(messageParam || 'Hello SREE VASTRA team, I would like to inquire about a custom order.');
+    window.open(`https://wa.me/919030423317?text=${message}`, '_blank');
   };
 
   // Get featured products
@@ -267,28 +267,24 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
         </div>
       </section>
 
-      {/* SECTION 3: EDITORIAL ABOUT & MARQUEE */}
-      <section className="editorial-about" id="about">
-        <div className="about-grid">
-          <div className="about-image">
-            <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=800&auto=format&fit=crop" alt="Sahithi Nandan" />
+      {/* SECTION 3: MEET THE FOUNDER */}
+      <section className="w-full px-4 sm:px-6 md:px-10 lg:px-16 py-10 md:py-16 bg-[#FAF7F2]" id="about">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-16">
+          <div className="w-full md:w-1/2 flex justify-center">
+            <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full border-8 border-white shadow-xl overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=800&auto=format&fit=crop" alt="Navya Sri Namburi" className="w-full h-full object-cover" />
+            </div>
           </div>
-          <div className="about-text">
-            <h2>The Art of Elegance</h2>
-            <p className="subtitle">Crafted in Hyderabad, Worn Worldwide</p>
-            <p className="body">
-              Label by Sahithi Nandhan was born from a desire to blend traditional Indian craftsmanship with modern, wearable silhouettes. Every piece tells a story of heritage, reimagined for the contemporary woman.
+          <div className="w-full md:w-1/2 flex flex-col gap-4 text-center md:text-left">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 font-[Playfair Display]">From Passion to Profession</h2>
+            <h3 className="text-lg text-rose-600 font-medium italic">Meet Navya Sri Namburi — the heart behind Sree Vastra</h3>
+            <p className="text-gray-700 text-sm md:text-base leading-relaxed">
+              Sree Vastra was born from a deep love for quality fabrics and authentic Indian fashion. Navya Sri Namburi — a passionate entrepreneur — built this brand with her own hands, from curating every fabric to personally connecting with each customer. At Sree Vastra, quality isn't just a promise — it's our foundation.
             </p>
-            <p className="body">
-              We believe in slow fashion, meticulous embroidery, and fabrics that feel as luxurious as they look. Whether it's a vibrant festive co-ord or a bespoke bridal lehenga, our commitment is to make you feel extraordinary.
-            </p>
-            <img src="/assets/signature.png" alt="Sahithi Nandhan" className="signature-img" onError={(e) => e.target.style.display='none'} />
-          </div>
-        </div>
-        
-        <div className="marquee-container">
-          <div className="marquee-content">
-            {marqueeText}
+            <blockquote className="mt-4 p-4 border-l-4 border-[#F9A825] bg-white shadow-sm rounded-r-lg">
+              <p className="text-gray-800 italic font-medium">"Quality is most important — that's our motto."</p>
+              <footer className="text-sm text-gray-500 mt-2">— Navya Sri Namburi</footer>
+            </blockquote>
           </div>
         </div>
       </section>

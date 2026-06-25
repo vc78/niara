@@ -17,6 +17,7 @@ import WelcomePopup from './components/WelcomePopup';
 import HotPicksDrawer from './components/HotPicksDrawer';
 import HotPicksTab from './components/HotPicksTab';
 import ContactModal from './components/ContactModal';
+import WhatsAppFloat from './components/WhatsAppFloat';
 import './index.css';
 
 function App() {
@@ -129,6 +130,7 @@ function App() {
             onClose={() => setIsHotPicksOpen(false)} 
             onCartOpen={() => setIsCartOpen(true)} 
           />
+          <WhatsAppFloat />
             </div>
           </ToastProvider>
         </WishlistProvider>
