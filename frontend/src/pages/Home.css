@@ -1223,4 +1223,86 @@
   .offer-card {
     min-height: 280px;
   }
+}/* ============================================================ */
+/* INNOVATIVE UNIQUE THEMES FOR TRUST STRIP AND OFFER CARDS */
+/* ============================================================ */
+
+/* 1. Innovative Trust Strip */
+.trust-strip {
+  background: linear-gradient(90deg, #252560, #151535, #252560) !important;
+  background-size: 200% 100% !important;
+  animation: gradientShine 5s ease infinite !important;
+  color: #B8C4DC !important;
+  border-top: 1px solid var(--accent-gold) !important;
+  border-bottom: 1px solid var(--accent-gold) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
+}
+
+.trust-item svg {
+  color: var(--accent-gold) !important;
+}
+
+@keyframes gradientShine {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 2. Innovative Offer Cards */
+.offer-card {
+  border: none !important;
+}
+
+.offer-card.gold-theme {
+  background: linear-gradient(135deg, var(--accent-gold) 0%, #9e7f2b 100%) !important;
+  color: var(--white) !important;
+  position: relative !important;
+}
+
+.offer-card.gold-theme::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+  transform: skewX(-25deg);
+  animation: cardShine 3s infinite;
+}
+
+@keyframes cardShine {
+  0% { left: -100%; }
+  20% { left: 200%; }
+  100% { left: 200%; }
+}
+
+.offer-card.blue-theme {
+  background: linear-gradient(135deg, #B8C4DC 0%, #9aa9c8 100%) !important;
+  color: #252560 !important;
+  box-shadow: 0 15px 35px rgba(37, 37, 96, 0.15) !important;
+}
+
+.offer-card.blue-theme .offer-badge {
+  background: #252560 !important;
+  color: #B8C4DC !important;
+}
+
+.offer-card.blue-theme .promo-code-box {
+  background: rgba(255, 255, 255, 0.4) !important;
+  border-color: #252560 !important;
+  color: #252560 !important;
+}
+
+.offer-card.blue-theme .copy-btn {
+  background: #252560 !important;
+  color: #B8C4DC !important;
+}
+
+.offer-card.blue-theme .copy-btn:hover {
+  background: #151535 !important;
+  color: #FFF !important;
+}
+
+.offer-card.light-theme {
+  background: var(--bg-color) !important;
+  border: 1px solid var(--accent-gold) !important;
 }
