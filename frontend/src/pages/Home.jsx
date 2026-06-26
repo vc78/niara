@@ -13,11 +13,11 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
   const { addToast } = useToast();
-  
+
   // Quick View State
   const [quickViewProduct, setQuickViewProduct] = useState(null);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
-  
+
   // Hero Carousel State
   const [currentSlide, setCurrentSlide] = useState(0);
   const heroSlides = [
@@ -62,7 +62,7 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
 
   return (
     <div className="home-container">
-      
+
       {/* SECTION 1: HERO CAROUSEL */}
       <section className="hero-carousel" id="home">
         <AnimatePresence mode="wait">
@@ -76,9 +76,9 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
             style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url(${heroSlides[currentSlide].image})` }}
           />
         </AnimatePresence>
-        
+
         <div className="hero-content">
-          <motion.h1 
+          <motion.h1
             key={`title-${currentSlide}`}
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -94,7 +94,7 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
           >
             {heroSlides[currentSlide].subtitle}
           </motion.p>
-          <motion.button 
+          <motion.button
             className="hero-cta"
             onClick={() => onNavigateToCollection('all')}
             initial={{ y: 30, opacity: 0 }}
@@ -107,8 +107,8 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
 
         <div className="carousel-indicators">
           {heroSlides.map((_, index) => (
-            <button 
-              key={index} 
+            <button
+              key={index}
               className={`indicator-dot ${currentSlide === index ? 'active' : ''}`}
               onClick={() => setCurrentSlide(index)}
               aria-label={`Go to slide ${index + 1}`}
@@ -140,16 +140,16 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
       <CategorySlider onNavigateToCollection={onNavigateToCollection} />
 
 
-      <QuickViewModal 
-        isOpen={isQuickViewOpen} 
-        onClose={() => setIsQuickViewOpen(false)} 
+      <QuickViewModal
+        isOpen={isQuickViewOpen}
+        onClose={() => setIsQuickViewOpen(false)}
         product={quickViewProduct}
         onNavigateToProduct={onProductClick}
       />
 
       {isBookingModalOpen && (
         <div className="modal-overlay" onClick={() => setIsBookingModalOpen(false)}>
-          <motion.div 
+          <motion.div
             className="booking-modal"
             onClick={e => e.stopPropagation()}
             initial={{ y: 50, opacity: 0 }}
@@ -157,7 +157,7 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
             exit={{ y: 50, opacity: 0 }}
           >
             <button className="modal-close" onClick={() => setIsBookingModalOpen(false)}><X size={24} /></button>
-            
+
             <div className="modal-header">
               <div className="modal-icon-wrapper">
                 <Video size={32} color="var(--primary-color)" />
@@ -167,21 +167,21 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
             </div>
 
             <div className="modal-actions-container">
-              <a 
-                href="https://meet.google.com/new" 
-                target="_blank" 
+              <a
+                href="https://meet.google.com/new"
+                target="_blank"
                 rel="noreferrer"
-                className="btn-instant-meet" 
+                className="btn-instant-meet"
               >
                 <Video size={18} /> Start Instant Google Meet
               </a>
-              
+
               <div className="modal-divider"><span>OR SCHEDULE FOR LATER</span></div>
 
-              <form className="booking-form" onSubmit={(e) => { 
-                e.preventDefault(); 
-                alert("Booking confirmed! A Google Meet link has been sent to your email."); 
-                setIsBookingModalOpen(false); 
+              <form className="booking-form" onSubmit={(e) => {
+                e.preventDefault();
+                alert("Booking confirmed! A Google Meet link has been sent to your email.");
+                setIsBookingModalOpen(false);
               }}>
                 <div className="input-group">
                   <input type="text" className="premium-input" placeholder="Full Name" required />
@@ -203,15 +203,29 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
         {/* Headline Scroller */}
         <div className="promo-scroller-container">
           <div className="promo-scroller-content">
-            <span className="scroller-item">✨ EXCLUSIVE FESTIVE OFFERS LIVE ✨</span>
-            <span className="scroller-item">FLAT 20% OFF ON ALL LEHENGAS</span>
-            <span className="scroller-item">✨ FREE WORLDWIDE SHIPPING ON ORDERS OVER $500 ✨</span>
-            <span className="scroller-item">USE CODE: SAHITHI10 FOR 10% OFF YOUR FIRST ORDER</span>
+            <span className="scroller-item">WORLDWIDE SHIPPING</span>
+            <span className="scroller-separator">•</span>
+            <span className="scroller-item">PREMIUM FABRICS</span>
+            <span className="scroller-separator">•</span>
+            <span className="scroller-item">BESPOKE BRIDAL WEAR</span>
+            <span className="scroller-separator">•</span>
+            <span className="scroller-item">CUSTOM TAILORING AVAILABLE</span>
+            <span className="scroller-separator">•</span>
+            <span className="scroller-item">CHOWDARY EXCLUSIVE COLLECTION</span>
+            <span className="scroller-separator">•</span>
+            <span className="scroller-item">PREMIUM HANDCRAFTED QUALITY</span>
             {/* Duplicate for infinite effect */}
-            <span className="scroller-item" aria-hidden="true">✨ EXCLUSIVE FESTIVE OFFERS LIVE ✨</span>
-            <span className="scroller-item" aria-hidden="true">FLAT 20% OFF ON ALL LEHENGAS</span>
-            <span className="scroller-item" aria-hidden="true">✨ FREE WORLDWIDE SHIPPING ON ORDERS OVER $500 ✨</span>
-            <span className="scroller-item" aria-hidden="true">USE CODE: SAHITHI10 FOR 10% OFF YOUR FIRST ORDER</span>
+            <span className="scroller-item" aria-hidden="true">WORLDWIDE SHIPPING</span>
+            <span className="scroller-separator" aria-hidden="true">•</span>
+            <span className="scroller-item" aria-hidden="true">PREMIUM FABRICS</span>
+            <span className="scroller-separator" aria-hidden="true">•</span>
+            <span className="scroller-item" aria-hidden="true">BESPOKE BRIDAL WEAR</span>
+            <span className="scroller-separator" aria-hidden="true">•</span>
+            <span className="scroller-item" aria-hidden="true">CUSTOM TAILORING AVAILABLE</span>
+            <span className="scroller-separator" aria-hidden="true">•</span>
+            <span className="scroller-item" aria-hidden="true">CHOWDARY EXCLUSIVE COLLECTION</span>
+            <span className="scroller-separator" aria-hidden="true">•</span>
+            <span className="scroller-item" aria-hidden="true">PREMIUM HANDCRAFTED QUALITY</span>
           </div>
         </div>
 
@@ -220,31 +234,31 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
           <div className="offer-card gold-theme">
             <div className="offer-card-inner">
               <span className="offer-badge">Limited Time</span>
-              <h3>Festive Special</h3>
+              <h3>Chowdary Special</h3>
               <div className="offer-discount">
                 <span className="discount-value">20%</span>
                 <span className="discount-text">OFF</span>
               </div>
-              <p>On all Handcrafted Lehengas</p>
+              <p>On all Handcrafted Collections</p>
               <div className="promo-code-box">
-                <span className="code">FESTIVE20</span>
-                <button className="copy-btn" onClick={() => navigator.clipboard.writeText('FESTIVE20')}>Copy</button>
+                <span className="code">CHOWDARY20</span>
+                <button className="copy-btn" onClick={() => navigator.clipboard.writeText('CHOWDARY20')}>Copy</button>
               </div>
             </div>
           </div>
 
-          <div className="offer-card green-theme">
+          <div className="offer-card blue-theme">
             <div className="offer-card-inner">
               <span className="offer-badge">New Users</span>
               <h3>Welcome Offer</h3>
               <div className="offer-discount">
-                <span className="discount-value">10%</span>
+                <span className="discount-value">15%</span>
                 <span className="discount-text">OFF</span>
               </div>
               <p>On your very first purchase</p>
               <div className="promo-code-box">
-                <span className="code">SAHITHI10</span>
-                <button className="copy-btn" onClick={() => navigator.clipboard.writeText('SAHITHI10')}>Copy</button>
+                <span className="code">CHOWDARY15</span>
+                <button className="copy-btn" onClick={() => navigator.clipboard.writeText('CHOWDARY15')}>Copy</button>
               </div>
             </div>
           </div>
@@ -267,24 +281,28 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
         </div>
       </section>
 
-      {/* SECTION 3: MEET THE FOUNDER */}
-      <section className="w-full px-4 sm:px-6 md:px-10 lg:px-16 py-10 md:py-16 bg-[#FAF7F2]" id="about">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-16">
-          <div className="w-full md:w-1/2 flex justify-center">
-            <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full border-8 border-white shadow-xl overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=800&auto=format&fit=crop" alt="Navya Sri Namburi" className="w-full h-full object-cover" />
-            </div>
+      {/* SECTION 3: EDITORIAL ABOUT & MARQUEE */}
+      <section className="editorial-about" id="about">
+        <div className="about-grid">
+          <div className="about-image">
+            <img src="/images/founder.jpg" alt="Navya Sri Namburi" />
           </div>
-          <div className="w-full md:w-1/2 flex flex-col gap-4 text-center md:text-left">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 font-[Playfair Display]">From Passion to Profession</h2>
-            <h3 className="text-lg text-rose-600 font-medium italic">Meet Navya Sri Namburi — the heart behind Sree Vastra</h3>
-            <p className="text-gray-700 text-sm md:text-base leading-relaxed">
-              Sree Vastra was born from a deep love for quality fabrics and authentic Indian fashion. Navya Sri Namburi — a passionate entrepreneur — built this brand with her own hands, from curating every fabric to personally connecting with each customer. At Sree Vastra, quality isn't just a promise — it's our foundation.
+          <div className="about-text">
+            <h2>From Passion to Profession</h2>
+            <p className="subtitle">Meet Navya Sri Namburi — the heart behind Sree Vastra</p>
+            <p className="body">
+              SREE VASTRA was born from a deep love for quality fabrics and authentic Indian fashion. Navya Sri Namburi — a passionate entrepreneur — built this brand with her own hands, from curating every fabric to personally connecting with each customer. At SREE VASTRA, quality isn't just a promise — it's our foundation.
             </p>
-            <blockquote className="mt-4 p-4 border-l-4 border-[#F9A825] bg-white shadow-sm rounded-r-lg">
-              <p className="text-gray-800 italic font-medium">"Quality is most important — that's our motto."</p>
-              <footer className="text-sm text-gray-500 mt-2">— Navya Sri Namburi</footer>
+            <blockquote style={{ borderLeft: '2px solid var(--accent-gold)', paddingLeft: '15px', margin: '20px 0', fontStyle: 'italic', color: 'var(--accent-gold)' }}>
+              "Quality is most important — that's our motto." — Navya Sri Namburi
             </blockquote>
+            <img src="/assets/signature.png" alt="Navya Sri Namburi" className="signature-img" onError={(e) => e.target.style.display = 'none'} />
+          </div>
+        </div>
+
+        <div className="marquee-container">
+          <div className="marquee-content">
+            {marqueeText}
           </div>
         </div>
       </section>
@@ -297,7 +315,7 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
             View Full Collection <ArrowRight size={16} />
           </button>
         </div>
-        
+
         <div className="masonry-grid">
           <div className="masonry-item item-large" onClick={() => onNavigateToCollection('kurta-sets')}>
             <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=600" alt="Kurta Sets" />
@@ -348,9 +366,9 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
                 {(product.tag || product.isNew) && (
                   <span className="product-tag">{product.tag || 'New'}</span>
                 )}
-                
+
                 <div className="product-hover-overlay">
-                  <button 
+                  <button
                     className="wishlist-btn-overlay"
                     onClick={(e) => {
                       e.stopPropagation();
@@ -397,28 +415,28 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
           <h2>How It Works</h2>
           <p>From screen to your wardrobe in 4 simple steps</p>
         </div>
-        
+
         <div className="timeline-container">
           <div className="timeline-line"></div>
-          
+
           <div className="timeline-step">
             <div className="step-number">1</div>
             <h3>Explore</h3>
             <p>Browse our collection and find the perfect outfit.</p>
           </div>
-          
+
           <div className="timeline-step">
             <div className="step-number">2</div>
             <h3>Connect</h3>
             <p>Click "WhatsApp to Order" to speak directly with our team.</p>
           </div>
-          
+
           <div className="timeline-step">
             <div className="step-number">3</div>
             <h3>Customize</h3>
             <p>Share your measurements or book a free video styling call.</p>
           </div>
-          
+
           <div className="timeline-step">
             <div className="step-number">4</div>
             <h3>Receive</h3>
@@ -450,16 +468,16 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
       <section className="social-proof-section">
         <div className="instagram-feed">
           <div className="section-header">
-            <h2>@label_by_sahithi_nandan</h2>
-            <a href="https://www.instagram.com/label_by_sahithi_nandan/reels/" target="_blank" rel="noopener noreferrer" className="view-all-link">
+            <h2>@sreevastrakhammam</h2>
+            <a href="https://www.instagram.com/sreevastrakhammam?igsh=MWpteWRiZ2xuOTVmcg==" target="_blank" rel="noopener noreferrer" className="view-all-link">
               Follow Us <ArrowRight size={16} />
             </a>
           </div>
           <div className="insta-grid">
-            <div className="insta-item"><img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400" alt="Insta 1"/></div>
-            <div className="insta-item"><img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=400" alt="Insta 2"/></div>
-            <div className="insta-item"><img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=400" alt="Insta 3"/></div>
-            <div className="insta-item"><img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400" alt="Insta 4"/></div>
+            <div className="insta-item"><img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400" alt="Insta 1" /></div>
+            <div className="insta-item"><img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=400" alt="Insta 2" /></div>
+            <div className="insta-item"><img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=400" alt="Insta 3" /></div>
+            <div className="insta-item"><img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400" alt="Insta 4" /></div>
           </div>
         </div>
 
@@ -469,12 +487,12 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
           </div>
           <div className="testimonial-cards">
             <div className="test-card">
-              <div className="stars"><Star size={16}/><Star size={16}/><Star size={16}/><Star size={16}/><Star size={16}/></div>
+              <div className="stars"><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /></div>
               <p className="test-text">"The lehenga I ordered was absolutely breathtaking. The fit was perfect even though we only did measurements over video call!"</p>
               <p className="test-author">- Priya S., London</p>
             </div>
             <div className="test-card staggered">
-              <div className="stars"><Star size={16}/><Star size={16}/><Star size={16}/><Star size={16}/><Star size={16}/></div>
+              <div className="stars"><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /></div>
               <p className="test-text">"Amazing quality and such a seamless process ordering from the US. Sahithi's team was super responsive."</p>
               <p className="test-author">- Anjali R., New York</p>
             </div>

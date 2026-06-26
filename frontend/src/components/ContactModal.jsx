@@ -135,7 +135,7 @@ const ContactModal = ({ isOpen, onClose }) => {
                 <a href="https://share.google/2eXexwWrCqR9lZgRX" target="_blank" rel="noopener noreferrer" className="directions-btn">
                   <MapPin size={18} /> Get Directions
                 </a>
-                <a href="https://www.instagram.com/label_by_sahithi_nandan/reels/" target="_blank" rel="noopener noreferrer" className="social-btn">
+                <a href="https://www.instagram.com/sreevastrakhammam?igsh=MWpteWRiZ2xuOTVmcg==" target="_blank" rel="noopener noreferrer" className="social-btn">
                   <Camera size={18} /> Follow Us
                 </a>
               </div>

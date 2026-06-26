@@ -1,20 +1,21 @@
-// Label by Sahithi Nandan - 60 Item Product Database
+// SREE VASTRA - 60 Item Product Database
+// Curated by Navya Sri Namburi - Premium Indian Fashion
 // Categories: kurta-sets, co-ords, lehengas, festive-wear (15 items each)
 
 const generateProducts = () => {
   const products = [];
-  
+
   const kurtaImages = [
     'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80',
     'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80',
     'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=600&q=80'
   ];
 
-  for(let i=1; i<=15; i++) {
+  for (let i = 1; i <= 15; i++) {
     const originalPrice = 5000 + (i * 500);
     const discountPercent = i % 3 === 0 ? 15 : (i % 5 === 0 ? 25 : 0);
-    const sellingPrice = originalPrice - (originalPrice * (discountPercent/100));
-    
+    const sellingPrice = originalPrice - (originalPrice * (discountPercent / 100));
+
     products.push({
       id: `kurta-${i}`,
       name: `Hand-Embroidered Kurta Set ${i}`,
@@ -36,11 +37,11 @@ const generateProducts = () => {
     'https://images.unsplash.com/photo-1585914924626-15adac1e6402?auto=format&fit=crop&w=600&q=80'
   ];
 
-  for(let i=1; i<=15; i++) {
+  for (let i = 1; i <= 15; i++) {
     const originalPrice = 6000 + (i * 300);
     const discountPercent = i % 4 === 0 ? 20 : (i % 7 === 0 ? 30 : 0);
-    const sellingPrice = originalPrice - (originalPrice * (discountPercent/100));
-    
+    const sellingPrice = originalPrice - (originalPrice * (discountPercent / 100));
+
     products.push({
       id: `coord-${i}`,
       name: `Festive Silk Co-ord Set ${i}`,
@@ -62,11 +63,11 @@ const generateProducts = () => {
     'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80'
   ];
 
-  for(let i=1; i<=15; i++) {
+  for (let i = 1; i <= 15; i++) {
     const originalPrice = 15000 + (i * 1500);
     const discountPercent = i % 2 === 0 ? 10 : (i % 5 === 0 ? 40 : 0);
-    const sellingPrice = originalPrice - (originalPrice * (discountPercent/100));
-    
+    const sellingPrice = originalPrice - (originalPrice * (discountPercent / 100));
+
     products.push({
       id: `lehenga-${i}`,
       name: `Bridal Chanderi Lehenga ${i}`,
@@ -88,11 +89,11 @@ const generateProducts = () => {
     'https://images.unsplash.com/photo-1585914924626-15adac1e6402?auto=format&fit=crop&w=600&q=80'
   ];
 
-  for(let i=1; i<=15; i++) {
+  for (let i = 1; i <= 15; i++) {
     const originalPrice = 8000 + (i * 800);
     const discountPercent = i % 3 === 0 ? 15 : 0;
-    const sellingPrice = originalPrice - (originalPrice * (discountPercent/100));
-    
+    const sellingPrice = originalPrice - (originalPrice * (discountPercent / 100));
+
     products.push({
       id: `festive-${i}`,
       name: `Zardozi Tissue Drape ${i}`,

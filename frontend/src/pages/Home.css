@@ -127,7 +127,7 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.4);
+  background: rgba(255, 255, 255, 0.4);
   border: none;
   cursor: pointer;
   transition: var(--transition-smooth);
@@ -140,14 +140,14 @@
 
 /* ---------- 2. TRUST STRIP & MODAL ---------- */
 .trust-strip {
-  background: var(--primary-color);
-  color: var(--accent-gold);
-  padding: 20px 5%;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: var(--white);
+  padding: clamp(12px, 3vw, 20px) clamp(15px, 4vw, 5%);
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: clamp(12px, 2vw, 20px);
   position: relative;
   z-index: 10;
   margin-top: -80px;
@@ -157,34 +157,62 @@
 .trust-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 16px;
+  gap: 8px;
+  font-size: clamp(12px, 2vw, 16px);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.trust-item svg {
+  width: clamp(16px, 3vw, 24px);
+  height: clamp(16px, 3vw, 24px);
 }
 
 .book-call-btn {
-  background: var(--accent-gold);
-  color: var(--white);
+  background: var(--white);
+  color: #2563eb;
   border: none;
-  padding: 12px 24px;
+  padding: clamp(8px, 2vw, 12px) clamp(12px, 2vw, 24px);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-family: var(--font-sans);
   font-weight: 600;
+  font-size: clamp(11px, 2vw, 14px);
   cursor: pointer;
   transition: var(--transition-smooth);
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .book-call-btn:hover {
-  background: var(--white);
-  color: var(--primary-color);
+  background: #f0f0f0;
+  color: #2563eb;
+}
+
+@media (max-width: 768px) {
+  .trust-strip {
+    justify-content: center;
+    margin-top: -60px;
+  }
+
+  .trust-item {
+    flex-basis: 45%;
+    justify-content: center;
+  }
+
+  .book-call-btn {
+    flex-basis: 100%;
+    justify-content: center;
+  }
 }
 
 /* Modal */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
   z-index: 2000;
   display: flex;
   align-items: center;
@@ -383,49 +411,82 @@
 
 .promo-scroller-container {
   width: 100%;
-  background: var(--primary-color);
-  color: var(--accent-gold);
-  padding: 15px 0;
+  background: var(--bg-color);
+  color: var(--primary-color);
+  padding: 16px 0;
   overflow: hidden;
   white-space: nowrap;
   display: flex;
   align-items: center;
+  border-top: 1px solid rgba(28, 58, 43, 0.1);
+  border-bottom: 1px solid rgba(28, 58, 43, 0.1);
 }
 
 .promo-scroller-content {
   display: flex;
-  animation: promoScroll 25s linear infinite;
+  align-items: center;
+  animation: promoScroll 40s linear infinite;
 }
 
 .scroller-item {
-  font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 600;
+  font-family: var(--font-serif);
+  font-size: clamp(11px, 2vw, 16px);
+  font-weight: 500;
   letter-spacing: 2px;
-  padding: 0 40px;
+  padding: 0 clamp(12px, 2vw, 24px);
+  text-transform: uppercase;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.scroller-separator {
+  font-family: var(--font-serif);
+  font-size: clamp(10px, 2vw, 14px);
+  color: var(--accent-gold);
+  padding: 0 clamp(8px, 1.5vw, 16px);
+  display: inline-block;
+  white-space: nowrap;
 }
 
 @keyframes promoScroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .offers-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-  padding: 60px 5%;
+  grid-template-columns: 1fr;
+  gap: clamp(15px, 3vw, 30px);
+  padding: clamp(30px, 5vw, 60px) clamp(15px, 5vw, 5%);
   max-width: 1400px;
   margin: 0 auto;
 }
 
+@media (min-width: 768px) {
+  .offers-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .offers-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 .offer-card {
   border-radius: 12px;
-  padding: 30px;
+  padding: clamp(20px, 4vw, 30px);
   position: relative;
   overflow: hidden;
   box-shadow: var(--shadow-sm);
   transition: var(--transition-smooth);
+  min-height: 300px;
 }
 
 .offer-card:hover {
@@ -436,8 +497,11 @@
 .offer-card::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-image: radial-gradient(circle at top right, rgba(255,255,255,0.2) 0%, transparent 60%);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(circle at top right, rgba(255, 255, 255, 0.2) 0%, transparent 60%);
   pointer-events: none;
 }
 
@@ -446,15 +510,24 @@
   color: var(--white);
 }
 
-.offer-card.green-theme {
-  background: linear-gradient(135deg, var(--primary-color) 0%, #11251b 100%);
-  color: var(--accent-gold);
+.offer-card.blue-theme {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: var(--white);
 }
 
 .offer-card.light-theme {
   background: var(--white);
   color: var(--primary-color);
   border: 1px solid var(--border-light);
+}
+
+.offer-card.blue-theme .offer-badge {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.offer-card.blue-theme .promo-code-box {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 .offer-card-inner {
@@ -467,7 +540,7 @@
 
 .offer-badge {
   align-self: flex-start;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   padding: 4px 12px;
   border-radius: 20px;
   font-family: var(--font-sans);
@@ -484,7 +557,7 @@
 
 .offer-card h3 {
   font-family: var(--font-serif);
-  font-size: 28px;
+  font-size: clamp(20px, 4vw, 28px);
   margin-bottom: 10px;
 }
 
@@ -497,7 +570,7 @@
 
 .discount-value {
   font-family: var(--font-serif);
-  font-size: 56px;
+  font-size: clamp(40px, 8vw, 56px);
   font-weight: 600;
   line-height: 1;
 }
@@ -510,18 +583,19 @@
 
 .offer-card p {
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: clamp(13px, 2vw, 15px);
   margin-bottom: 30px;
   opacity: 0.9;
   flex-grow: 1;
+  line-height: 1.5;
 }
 
 .promo-code-box {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(255,255,255,0.15);
-  border: 1px dashed rgba(255,255,255,0.4);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px dashed rgba(255, 255, 255, 0.4);
   padding: 10px 15px;
   border-radius: 8px;
 }
@@ -533,9 +607,10 @@
 
 .promo-code-box .code {
   font-family: monospace;
-  font-size: 16px;
+  font-size: clamp(12px, 2vw, 16px);
   font-weight: 700;
   letter-spacing: 1px;
+  word-break: break-word;
 }
 
 .promo-code-box .copy-btn {
@@ -621,24 +696,34 @@
 .marquee-container {
   width: 100vw;
   margin-left: -5%;
-  background: var(--primary-color);
-  padding: 15px 0;
+  background: var(--card-bg);
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+  padding: 25px 0;
   overflow: hidden;
   white-space: nowrap;
 }
 
 .marquee-content {
   display: inline-block;
-  font-family: var(--font-sans);
-  color: var(--accent-gold);
-  font-size: 14px;
-  letter-spacing: 2px;
-  animation: marquee 20s linear infinite;
+  font-family: var(--font-serif);
+  color: var(--primary-color);
+  font-size: 18px;
+  letter-spacing: 3px;
+  font-style: italic;
+  font-weight: 500;
+  text-transform: uppercase;
+  animation: marquee 30s linear infinite;
 }
 
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 /* ---------- 4. CURATED COLLECTIONS (Masonry) ---------- */
@@ -680,7 +765,7 @@
 .masonry-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(transparent, rgba(28,58,43,0.8));
+  background: linear-gradient(transparent, rgba(28, 58, 43, 0.8));
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -928,24 +1013,32 @@
 
 /* RESPONSIVE */
 @media (max-width: 1024px) {
-  .about-grid, .social-proof-section {
+
+  .about-grid,
+  .social-proof-section {
     grid-template-columns: 1fr;
   }
+
   .international-shipping {
     flex-direction: column;
   }
+
   .shipping-map {
     height: 300px;
   }
+
   .test-card.staggered {
     margin-left: 0;
   }
+
   .featured-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .masonry-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .masonry-item.item-large {
     grid-column: span 1;
     grid-row: span 1;
@@ -956,70 +1049,90 @@
   .trust-strip {
     justify-content: center;
   }
+
   .timeline-container {
     flex-direction: column;
     gap: 40px;
   }
+
   .timeline-line {
     display: none;
   }
+
   .timeline-step {
     width: 100%;
   }
+
   .masonry-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
   }
+
   .products-grid.featured-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
   }
+
   .hero-content h1 {
     font-size: 40px;
   }
 }
+
 @media (max-width: 480px) {
   .section-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 15px;
   }
+
   .section-header.center {
     align-items: center;
   }
+
   .section-header h2 {
     font-size: 26px;
     word-break: break-word;
   }
+
   .view-all-link {
     font-size: 14px;
   }
+
   .test-card {
     padding: 24px;
   }
+
   .test-text {
     font-size: 16px;
   }
+
   .hero-content {
-    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
   }
-  .masonry-grid, .products-grid.featured-grid {
+
+  .masonry-grid,
+  .products-grid.featured-grid {
     gap: 10px;
   }
+
   .masonry-item h3 {
     font-size: 16px;
   }
+
   .product-title {
     font-size: 14px;
   }
+
   .booking-modal {
     padding: 30px 20px;
   }
+
   .modal-icon-wrapper {
     width: 48px;
     height: 48px;
     margin: 0 auto 15px;
   }
+
   .modal-header h3 {
     font-size: 22px;
   }
@@ -1056,4 +1169,58 @@
   gap: 10px;
   justify-content: center;
   align-items: center;
+}
+
+/* MOBILE RESPONSIVE: Promotional Offers */
+@media (max-width: 480px) {
+  .offers-grid {
+    grid-template-columns: 1fr !important;
+    padding: clamp(20px, 3vw, 30px) clamp(12px, 4vw, 5%);
+  }
+
+  .offer-card {
+    min-height: auto;
+    padding: clamp(15px, 3vw, 25px);
+  }
+
+  .promo-scroller-item {
+    font-size: 10px;
+    padding: 0 clamp(8px, 2vw, 15px);
+  }
+
+  .offer-discount {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .discount-value {
+    font-size: 32px !important;
+  }
+
+  .discount-text {
+    font-size: 14px;
+  }
+
+  .promo-code-box {
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 10px;
+  }
+
+  .copy-btn {
+    width: 100%;
+  }
+}
+
+/* TABLET RESPONSIVE: Promotional Offers */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .offers-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: clamp(15px, 3vw, 25px);
+  }
+
+  .offer-card {
+    min-height: 280px;
+  }
 }

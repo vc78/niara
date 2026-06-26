@@ -29,15 +29,15 @@ const CartDrawer = ({ isOpen, onClose }) => {
     state: '',
     landmark: ''
   });
-  
+
   const [locationStatus, setLocationStatus] = useState(''); // 'fetching', 'success', 'error'
   const [locationMessage, setLocationMessage] = useState('');
-  
+
   const [copiedUpi, setCopiedUpi] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
-  
+
   const [paymentMethod, setPaymentMethod] = useState('upi');
-  
+
   // Coupon State
   const [couponCode, setCouponCode] = useState('');
   const [appliedDiscount, setAppliedDiscount] = useState(0);
@@ -48,9 +48,12 @@ const CartDrawer = ({ isOpen, onClose }) => {
     if (code === 'FESTIVE20') {
       setAppliedDiscount(20);
       setCouponMessage('🎉 20% OFF applied!');
-    } else if (code === 'SAHITHI10') {
-      setAppliedDiscount(10);
-      setCouponMessage('✨ 10% OFF applied!');
+    } else if (code === 'CHOWDARY20') {
+      setAppliedDiscount(20);
+      setCouponMessage('🎉 20% OFF applied!');
+    } else if (code === 'CHOWDARY15') {
+      setAppliedDiscount(15);
+      setCouponMessage('✨ 15% OFF applied!');
     } else if (code === '') {
       setAppliedDiscount(0);
       setCouponMessage('');
@@ -110,7 +113,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
   const handlePincodeChange = async (e) => {
     const value = e.target.value;
     setFormData(prev => ({ ...prev, pincode: value }));
-    
+
     if (value.length === 6 && /^\d+$/.test(value)) {
       try {
         const res = await fetch(`https://api.postalpincode.in/pincode/${value}`);
@@ -136,30 +139,30 @@ const CartDrawer = ({ isOpen, onClose }) => {
       setLocationMessage('Geolocation is not supported by your browser');
       return;
     }
-    
+
     setLocationStatus('fetching');
     setLocationMessage('Detecting location...');
-    
+
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         try {
           const { latitude, longitude } = position.coords;
           const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
           const data = await res.json();
-          
+
           if (data && data.address) {
             const addressObj = data.address;
             const pincode = addressObj.postcode || '';
             const city = addressObj.city || addressObj.state_district || addressObj.town || addressObj.county || '';
             const state = addressObj.state || '';
-            
+
             // Format a clean display name without the overly verbose parts if possible
             const fullAddress = [
               addressObj.road,
               addressObj.suburb,
               addressObj.neighbourhood
             ].filter(Boolean).join(', ');
-            
+
             setFormData(prev => ({
               ...prev,
               address: fullAddress || data.display_name || '',
@@ -167,7 +170,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
               city,
               state
             }));
-            
+
             setLocationStatus('success');
             setLocationMessage('✅ Location detected');
           } else {
@@ -198,27 +201,27 @@ const CartDrawer = ({ isOpen, onClose }) => {
     orderText += `📞 Phone: ${formData.mobile}\n`;
     orderText += `📍 Address: ${formData.address}, ${formData.city}, ${formData.state} — ${formData.pincode}\n`;
     orderText += `🏷️ Landmark: ${formData.landmark || 'N/A'}\n\n`;
-    
+
     orderText += `🛒 *Order Details:*\n`;
     cart.forEach((item) => {
       orderText += `• ${item.name} | Size: ${item.size} | Qty: ${item.quantity} | ${formatPrice(item.price)}\n`;
     });
-    
+
     orderText += `💰 *Subtotal:* ${formatPrice(subtotalAmount)}\n`;
     if (appliedDiscount > 0) orderText += `🏷️ *Discount (${couponCode}):* -${formatPrice(discountAmount)}\n`;
     if (DELIVERY_CHARGE > 0) orderText += `🚚 *Delivery:* ${formatPrice(DELIVERY_CHARGE)}\n`;
     orderText += `💳 *Payment Method:* ${paymentMethod === 'cod' ? 'Cash on Delivery (COD)' : 'UPI / Online Payment'}\n`;
     orderText += `\n*TOTAL TO PAY:* ${formatPrice(totalAmount)}\n`;
     orderText += `*Please review your order:*`;
-    
+
     const encodedText = encodeURIComponent(orderText);
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText}`;
-    
+
     // --- EMAIL JS INTEGRATION ---
     const serviceID = 'service_a8hacno';
     const templateID = 'template_3nvh0mg';
     const publicKey = 'AjI2ifuyP51qtZZMX';
-    
+
     const emailParams = {
       to_email: formData.email,
       to_name: formData.name,
@@ -234,7 +237,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
       .catch((err) => {
         console.error('Failed to send email.', err);
       });
-    
+
     window.open(whatsappUrl, '_blank');
     setCheckoutStep(3);
   };
@@ -294,7 +297,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
                   <p className="empty-title">🎉 Order Placed!</p>
                   <p className="empty-subtitle">Thank you, {formData.name}. We'll confirm your order shortly on WhatsApp.</p>
                   <div className="delivery-estimate-badge">Estimated Delivery: 3–5 business days</div>
-                  <button onClick={handleContinueShopping} className="btn-secondary shop-btn" style={{marginTop: '20px'}}>Continue Shopping</button>
+                  <button onClick={handleContinueShopping} className="btn-secondary shop-btn" style={{ marginTop: '20px' }}>Continue Shopping</button>
                 </div>
               ) : checkoutStep === 2 ? (
                 <div className="payment-panel">
@@ -321,9 +324,9 @@ const CartDrawer = ({ isOpen, onClose }) => {
                       <div className="upi-qr-card">
                         <p className="qr-title"><QrCode size={18} /> Scan QR with any UPI App</p>
                         <div className="qr-img-wrapper">
-                          <img 
-                            src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(BRAND_NAME)}&am=${totalAmount}&cu=INR&tn=ClothingOrder`} 
-                            alt="UPI Payment QR Code" 
+                          <img
+                            src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(BRAND_NAME)}&am=${totalAmount}&cu=INR&tn=ClothingOrder`}
+                            alt="UPI Payment QR Code"
                           />
                         </div>
                       </div>
@@ -334,8 +337,8 @@ const CartDrawer = ({ isOpen, onClose }) => {
                             <span className="upi-label">UPI ID</span>
                             <span className="upi-value">{UPI_ID}</span>
                           </div>
-                          <button 
-                            className="upi-copy-btn" 
+                          <button
+                            className="upi-copy-btn"
                             onClick={() => {
                               navigator.clipboard.writeText(UPI_ID);
                               setCopiedUpi(true);
@@ -351,7 +354,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
                             <span className="upi-label">Phone Number (GPay/PhonePe)</span>
                             <span className="upi-value">+{WHATSAPP_NUMBER.slice(0, 2)}-{WHATSAPP_NUMBER.slice(2)}</span>
                           </div>
-                          <button 
+                          <button
                             className="upi-copy-btn"
                             onClick={() => {
                               navigator.clipboard.writeText(WHATSAPP_NUMBER);
@@ -377,16 +380,16 @@ const CartDrawer = ({ isOpen, onClose }) => {
                 </div>
               ) : checkoutStep === 1 ? (
                 <form id="delivery-form" className="checkout-form" onSubmit={handleDeliverySubmit}>
-                  <button 
-                    type="button" 
-                    className="btn-location" 
+                  <button
+                    type="button"
+                    className="btn-location"
                     onClick={handleUseCurrentLocation}
                     disabled={locationStatus === 'fetching'}
                   >
-                    <MapPin size={16} /> 
+                    <MapPin size={16} />
                     {locationStatus === 'fetching' ? 'Detecting Location...' : 'Use My Current Location'}
                   </button>
-                  
+
                   {locationMessage && (
                     <div className={`location-status-badge ${locationStatus}`}>
                       {locationStatus === 'error' ? <AlertCircle size={14} /> : null}
@@ -482,12 +485,12 @@ const CartDrawer = ({ isOpen, onClose }) => {
                 {checkoutStep === 0 && (
                   <>
                     <div className="promo-code-container" style={{ display: 'flex', gap: '8px', marginBottom: '15px' }}>
-                      <input 
-                        type="text" 
-                        value={couponCode} 
-                        onChange={(e) => setCouponCode(e.target.value)} 
-                        placeholder="Promo Code" 
-                        style={{ flex: 1, padding: '10px', borderRadius: '4px', border: '1px solid rgba(250, 248, 244, 0.2)', background: 'transparent', color: 'var(--white)' }} 
+                      <input
+                        type="text"
+                        value={couponCode}
+                        onChange={(e) => setCouponCode(e.target.value)}
+                        placeholder="Promo Code"
+                        style={{ flex: 1, padding: '10px', borderRadius: '4px', border: '1px solid rgba(250, 248, 244, 0.2)', background: 'transparent', color: 'var(--white)' }}
                       />
                       <button onClick={applyCoupon} style={{ padding: '0 15px', borderRadius: '4px', background: 'rgba(255,255,255,0.1)', color: 'var(--accent-gold)', border: '1px solid var(--accent-gold)', cursor: 'pointer' }}>Apply</button>
                     </div>
@@ -496,32 +499,32 @@ const CartDrawer = ({ isOpen, onClose }) => {
                         {couponMessage}
                       </p>
                     )}
-                    
+
                     <div className="total-summary" style={{ paddingBottom: appliedDiscount > 0 ? '5px' : '0' }}>
                       <span className="total-label">Subtotal</span>
                       <span className="total-amount">{formatPrice(subtotalAmount)}</span>
                     </div>
-                    
+
                     {appliedDiscount > 0 && (
                       <div className="total-summary" style={{ color: 'var(--accent-gold)', paddingBottom: '5px' }}>
                         <span className="total-label">Discount ({appliedDiscount}%)</span>
                         <span className="total-amount">-{formatPrice(discountAmount)}</span>
                       </div>
                     )}
-                    
+
                     {DELIVERY_CHARGE > 0 && (
                       <div className="total-summary" style={{ paddingBottom: '10px' }}>
                         <span className="total-label">Delivery Fee</span>
                         <span className="total-amount">{formatPrice(DELIVERY_CHARGE)}</span>
                       </div>
                     )}
-                    
+
                     <div className="total-summary" style={{ borderTop: '1px solid rgba(250, 248, 244, 0.1)', paddingTop: '10px' }}>
                       <span className="total-label" style={{ fontWeight: '600' }}>Order Total</span>
                       <span className="total-amount" style={{ fontWeight: '600', color: 'var(--accent-gold)' }}>{formatPrice(totalAmount)}</span>
                     </div>
-                    
-                    <button onClick={() => setCheckoutStep(1)} className="whatsapp-checkout-btn" style={{marginTop: '15px'}}>
+
+                    <button onClick={() => setCheckoutStep(1)} className="whatsapp-checkout-btn" style={{ marginTop: '15px' }}>
                       Proceed to Order
                     </button>
                   </>

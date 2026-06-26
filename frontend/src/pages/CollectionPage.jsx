@@ -12,7 +12,7 @@ const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => 
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
   const { addToast } = useToast();
-  
+
   const [quickViewProduct, setQuickViewProduct] = useState(null);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
 
@@ -20,7 +20,7 @@ const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => 
   const [priceRange, setPriceRange] = useState(20000);
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [sortOption, setSortOption] = useState('newest');
-  
+
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
@@ -47,7 +47,7 @@ const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => 
   ];
 
   const handleSizeToggle = (size) => {
-    setSelectedSizes(prev => 
+    setSelectedSizes(prev =>
       prev.includes(size) ? prev.filter(s => s !== size) : [...prev, size]
     );
   };
@@ -85,14 +85,14 @@ const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => 
   }, [activeCategory, priceRange, selectedSizes, sortOption]);
 
   const handleWhatsAppOrder = (product) => {
-    const message = encodeURIComponent(`Hi Sahithi, I would like to order the ${product.name} (₹${product.sellingPrice}).`);
+    const message = encodeURIComponent(`Hi! I'm interested in the ${product.name} (₹${product.sellingPrice}). Use code CHOWDARY20 for 20% off!`);
     window.open(`https://wa.me/919030423317?text=${message}`, '_blank');
   };
 
   return (
     <div className="collection-page" style={{ paddingTop: '100px', minHeight: '100vh', backgroundColor: 'var(--bg-color)' }}>
       <div className="collection-container" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 5%' }}>
-        
+
         {/* Header & Breadcrumb */}
         <div className="collection-header" style={{ marginBottom: '40px', display: 'flex', alignItems: 'center', gap: '20px' }}>
           <button onClick={onBack} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontFamily: 'var(--font-sans)', color: 'var(--text-muted)' }}>
@@ -109,7 +109,7 @@ const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => 
         </div>
 
         <div className="collection-layout" style={{ display: 'flex', gap: '40px', alignItems: 'flex-start' }}>
-          
+
           {/* Sidebar Filters */}
           <aside className="collection-sidebar">
             <div className="filter-group">
@@ -117,7 +117,7 @@ const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => 
               <ul className="category-list">
                 {categories.map(cat => (
                   <li key={cat.id}>
-                    <button 
+                    <button
                       className={`cat-btn ${activeCategory === cat.id ? 'active' : ''}`}
                       onClick={() => setActiveCategory(cat.id)}
                     >
@@ -130,13 +130,13 @@ const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => 
 
             <div className="filter-group">
               <h4>Price Range: Up to ₹{priceRange.toLocaleString()}</h4>
-              <input 
-                type="range" 
-                min="1000" 
-                max="20000" 
-                step="500" 
-                value={priceRange} 
-                onChange={(e) => setPriceRange(Number(e.target.value))} 
+              <input
+                type="range"
+                min="1000"
+                max="20000"
+                step="500"
+                value={priceRange}
+                onChange={(e) => setPriceRange(Number(e.target.value))}
                 style={{ width: '100%', accentColor: 'var(--primary-color)' }}
               />
             </div>
@@ -145,7 +145,7 @@ const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => 
               <h4>Sizes</h4>
               <div className="size-filters">
                 {['XS', 'S', 'M', 'L', 'XL'].map(size => (
-                  <button 
+                  <button
                     key={size}
                     className={`size-btn ${selectedSizes.includes(size) ? 'active' : ''}`}
                     onClick={() => handleSizeToggle(size)}
@@ -181,61 +181,61 @@ const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => 
               ) : (
                 filteredProducts.map(product => (
                   <div key={product.id} className="product-card" onClick={() => onProductClick && onProductClick(product)} style={{ cursor: 'pointer' }}>
-                  <div className="product-image-wrap">
-                    <img src={product.image} alt={product.name} loading="lazy" />
-                    {product.discountPercent > 0 && (
-                      <span className="discount-badge">{product.discountPercent}% OFF</span>
-                    )}
-                    {(product.tag || product.isNew) && (
-                      <span className="product-tag">{product.tag || 'New'}</span>
-                    )}
-                    
-                    <div className="product-hover-overlay">
-                      <button 
-                        className="wishlist-btn-overlay"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleWishlist(product);
-                        }}
-                      >
-                        <Heart fill={isInWishlist(product.id) ? "currentColor" : "none"} />
-                      </button>
-                      <div className="overlay-actions-row">
-                        <button className="add-to-cart-btn-overlay" onClick={(e) => {
-                          e.stopPropagation();
-                          addToCart(product, "Free Size", 1);
-                          addToast(`${product.name} added to cart!`, 'success');
-                        }}>
-                          <ShoppingBag size={16} /> Add to Cart
+                    <div className="product-image-wrap">
+                      <img src={product.image} alt={product.name} loading="lazy" />
+                      {product.discountPercent > 0 && (
+                        <span className="discount-badge">{product.discountPercent}% OFF</span>
+                      )}
+                      {(product.tag || product.isNew) && (
+                        <span className="product-tag">{product.tag || 'New'}</span>
+                      )}
+
+                      <div className="product-hover-overlay">
+                        <button
+                          className="wishlist-btn-overlay"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleWishlist(product);
+                          }}
+                        >
+                          <Heart fill={isInWishlist(product.id) ? "currentColor" : "none"} />
                         </button>
-                        <button className="whatsapp-btn-overlay" onClick={(e) => {
-                          e.stopPropagation();
-                          setQuickViewProduct(product);
-                          setIsQuickViewOpen(true);
-                        }}>
-                          <Eye size={16} /> Quick View
-                        </button>
+                        <div className="overlay-actions-row">
+                          <button className="add-to-cart-btn-overlay" onClick={(e) => {
+                            e.stopPropagation();
+                            addToCart(product, "Free Size", 1);
+                            addToast(`${product.name} added to cart!`, 'success');
+                          }}>
+                            <ShoppingBag size={16} /> Add to Cart
+                          </button>
+                          <button className="whatsapp-btn-overlay" onClick={(e) => {
+                            e.stopPropagation();
+                            setQuickViewProduct(product);
+                            setIsQuickViewOpen(true);
+                          }}>
+                            <Eye size={16} /> Quick View
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="product-info">
+                      <h3 className="product-title">{product.name}</h3>
+                      <div className="product-price">
+                        {product.discountPercent > 0 && (
+                          <span className="original-price">₹{product.originalPrice.toLocaleString()}</span>
+                        )}
+                        <span className="selling-price">₹{product.sellingPrice.toLocaleString()}</span>
                       </div>
                     </div>
                   </div>
-                  <div className="product-info">
-                    <h3 className="product-title">{product.name}</h3>
-                    <div className="product-price">
-                      {product.discountPercent > 0 && (
-                        <span className="original-price">₹{product.originalPrice.toLocaleString()}</span>
-                      )}
-                      <span className="selling-price">₹{product.sellingPrice.toLocaleString()}</span>
-                    </div>
-                  </div>
-                </div>
-              )))}
+                )))}
             </div>
           </main>
         </div>
       </div>
-      <QuickViewModal 
-        isOpen={isQuickViewOpen} 
-        onClose={() => setIsQuickViewOpen(false)} 
+      <QuickViewModal
+        isOpen={isQuickViewOpen}
+        onClose={() => setIsQuickViewOpen(false)}
         product={quickViewProduct}
         onNavigateToProduct={onProductClick}
       />

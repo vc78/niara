@@ -47,7 +47,7 @@ const Navbar = ({ onCartOpen, onWishlistOpen, onAuthOpen, onProfileOpen, onConta
   const wishlistCount = wishlist.length;
   const whatsappPhone = '919030423317';
   const emailAddress = 'contactshubriti@gmail.com';
-  const instagramUrl = 'https://www.instagram.com/label_by_sahithi_nandan/reels/';
+  const instagramUrl = 'https://www.instagram.com/sreevastrakhammam?igsh=MWpteWRiZ2xuOTVmcg==';
 
   const handleWhatsAppContact = () => {
     const message = encodeURIComponent('Hello SREE VASTRA team, I would like to inquire about a custom order.');
