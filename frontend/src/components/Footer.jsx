@@ -3,7 +3,7 @@ import './Footer.css';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const whatsappPhone = '919030423317';
+  const whatsappPhone = '919032306961';
   
   const handleWhatsAppContact = (e) => {
     e.preventDefault();
@@ -103,7 +103,7 @@ const Footer = () => {
             </li>
             <li style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'rgba(250, 248, 244, 0.8)' }}>
               <Mail size={16} color="var(--accent-gold)" /> 
-              <span>contactshubriti@gmail.com</span>
+              <span>contact@sreevastra.com</span>
             </li>
             <li style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'rgba(250, 248, 244, 0.8)' }}>
               <Globe size={16} color="var(--accent-gold)" /> 

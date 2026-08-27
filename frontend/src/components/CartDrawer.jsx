@@ -9,7 +9,7 @@ import './CartDrawer.css';
 
 const BRAND_NAME = 'SREE VASTRA';
 const WHATSAPP_NUMBER = '919030423317';
-const UPI_ID = 'contactshubriti@okaxis'; // Placeholder UPI ID
+const UPI_ID = 'sreevastra@okaxis'; // Placeholder UPI ID
 const DELIVERY_CHARGE = 0;
 
 const CartDrawer = ({ isOpen, onClose }) => {

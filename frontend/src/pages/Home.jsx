@@ -285,18 +285,18 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
       <section className="editorial-about" id="about">
         <div className="about-grid">
           <div className="about-image">
-            <img src="/images/founder.jpg" alt="Navya Sri Namburi" />
+            <img src="/images/founder.jpg" alt="Founder" style={{ filter: 'blur(8px)' }} />
           </div>
           <div className="about-text">
             <h2>From Passion to Profession</h2>
-            <p className="subtitle">Meet Navya Sri Namburi — the heart behind Sree Vastra</p>
+            <p className="subtitle">Meet the visionary — the heart behind Sree Vastra</p>
             <p className="body">
-              SREE VASTRA was born from a deep love for quality fabrics and authentic Indian fashion. Navya Sri Namburi — a passionate entrepreneur — built this brand with her own hands, from curating every fabric to personally connecting with each customer. At SREE VASTRA, quality isn't just a promise — it's our foundation.
+              SREE VASTRA was born from a deep love for quality fabrics and authentic Indian fashion. Our passionate founder — an entrepreneur at heart — built this brand with dedication, from curating every fabric to personally connecting with each customer. At SREE VASTRA, quality isn't just a promise — it's our foundation.
             </p>
             <blockquote style={{ borderLeft: '2px solid var(--accent-gold)', paddingLeft: '15px', margin: '20px 0', fontStyle: 'italic', color: 'var(--accent-gold)' }}>
-              "Quality is most important — that's our motto." — Navya Sri Namburi
+              "Quality is most important — that's our motto."
             </blockquote>
-            <img src="/assets/signature.png" alt="Navya Sri Namburi" className="signature-img" onError={(e) => e.target.style.display = 'none'} />
+            <img src="/assets/signature.png" alt="Founder Signature" className="signature-img" onError={(e) => e.target.style.display = 'none'} />
           </div>
         </div>
 

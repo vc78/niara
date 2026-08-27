@@ -98,14 +98,14 @@ const ContactModal = ({ isOpen, onClose }) => {
                   <MapPin size={20} className="info-icon" />
                   <div className="info-text">
                     <strong>Flagship Studio</strong>
-                    <span>Navya Sri Namburi Label<br/>Hyderabad, India</span>
+                    <span>Sree Vastra Studio<br/>Hyderabad, India</span>
                   </div>
                 </li>
                 <li>
                   <Phone size={20} className="info-icon" />
                   <div className="info-text">
                     <strong>Phone / WhatsApp</strong>
-                    <span>+91 90001 64752</span>
+                    <span>+91 9032306961</span>
                   </div>
                 </li>
                 <li>

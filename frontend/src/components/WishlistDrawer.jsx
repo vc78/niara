@@ -63,7 +63,7 @@ const WishlistDrawer = ({ isOpen, onClose }) => {
     e.preventDefault();
     if (wishlist.length === 0) return;
 
-    const phoneNumber = "919030423317"; // Owner's WhatsApp number
+    const phoneNumber = "919032306961"; // Owner's WhatsApp number
 
     let messageText = `✨ *Bespoke Consultation - Eedara* ✨\n\n`;
     messageText += `Hello Eedara team, I have curated a selection of beautiful designs from your gallery and would love to consult with you on their custom crafting:\n\n`;

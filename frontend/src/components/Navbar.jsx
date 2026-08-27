@@ -45,8 +45,8 @@ const Navbar = ({ onCartOpen, onWishlistOpen, onAuthOpen, onProfileOpen, onConta
 
   const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
   const wishlistCount = wishlist.length;
-  const whatsappPhone = '919030423317';
-  const emailAddress = 'contactshubriti@gmail.com';
+  const whatsappPhone = '919032306961';
+  const emailAddress = 'contact@sreevastra.com';
   const instagramUrl = 'https://www.instagram.com/sreevastrakhammam?igsh=MWpteWRiZ2xuOTVmcg==';
 
   const handleWhatsAppContact = () => {
