@@ -144,10 +144,10 @@ const AboutPage = ({ onBack }) => {
             <a href="https://www.instagram.com/sreevastrakhammam?igsh=MWpteWRiZ2xuOTVmcg==" target="_blank" rel="noopener noreferrer" className="social-icon" title="Follow us on Instagram">
               <Camera size={24} />
             </a>
-            <a href="https://wa.me/919030423317" target="_blank" rel="noopener noreferrer" className="social-icon" title="Chat on WhatsApp">
+            <a href="https://wa.me/919032306961" target="_blank" rel="noopener noreferrer" className="social-icon" title="Chat on WhatsApp">
               <MessageCircle size={24} />
             </a>
-            <a href="mailto:contact@sreevastra.com" className="social-icon" title="Email us">
+            <a href="mailto:venkatchowdary9177@gmail.com" className="social-icon" title="Email us">
               <Mail size={24} />
             </a>
           </div>

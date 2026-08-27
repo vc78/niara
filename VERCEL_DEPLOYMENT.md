@@ -156,7 +156,7 @@ VITE_RAZORPAY_KEY_ID=rzp_test_TDnNEoRLz2m96G
 | Feature | Contact |
 |---------|---------|
 | **Phone/WhatsApp** | +91 9032306961 |
-| **Email** | contact@sreevastra.com |
+| **Email** | venkatchowdary9177@gmail.com |
 | **Razorpay** | Test Mode |
 
 ---

@@ -9,7 +9,7 @@ import { handleRazorpayPayment, initializeRazorpay } from '../utils/razorpayServ
 import './CartDrawer.css';
 
 const BRAND_NAME = 'SREE VASTRA';
-const WHATSAPP_NUMBER = '919030423317';
+const WHATSAPP_NUMBER = '919032306961';
 const UPI_ID = 'sreevastra@okaxis'; // Placeholder UPI ID
 const DELIVERY_CHARGE = 0;
 
@@ -285,7 +285,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
 
           // Send to WhatsApp
           const encodedText = encodeURIComponent(orderText);
-          window.open(`https://wa.me/919032306961?text=${encodedText}`, '_blank');
+          window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText}`, '_blank');
 
           setCheckoutStep(3);
           clearCart();

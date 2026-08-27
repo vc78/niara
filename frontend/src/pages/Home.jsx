@@ -54,7 +54,7 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
   // Helper for WhatsApp
   const handleWhatsAppContact = (messageParam) => {
     const message = encodeURIComponent(messageParam || 'Hello SREE VASTRA team, I would like to inquire about a custom order.');
-    window.open(`https://wa.me/919030423317?text=${message}`, '_blank');
+    window.open(`https://wa.me/919032306961?text=${message}`, '_blank');
   };
 
   // Get featured products

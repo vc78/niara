@@ -143,7 +143,7 @@ Available test coupon codes:
 
 For order issues:
 - **Phone/WhatsApp:** +91 9032306961
-- **Email:** contact@sreevastra.com
+- **Email:** venkatchowdary9177@gmail.com
 
 ## Security Best Practices
 

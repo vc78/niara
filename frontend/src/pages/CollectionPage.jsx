@@ -86,7 +86,7 @@ const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => 
 
   const handleWhatsAppOrder = (product) => {
     const message = encodeURIComponent(`Hi! I'm interested in the ${product.name} (₹${product.sellingPrice}). Use code CHOWDARY20 for 20% off!`);
-    window.open(`https://wa.me/919030423317?text=${message}`, '_blank');
+    window.open(`https://wa.me/919032306961?text=${message}`, '_blank');
   };
 
   return (

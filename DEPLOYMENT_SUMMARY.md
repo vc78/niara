@@ -273,7 +273,7 @@ See `VERCEL_DEPLOYMENT.md` for comprehensive guide.
 ## 📞 Contact Information
 
 - **Phone/WhatsApp:** +91 9032306961
-- **Email:** contact@sreevastra.com
+- **Email:** venkatchowdary9177@gmail.com
 - **GitHub:** https://github.com/vc78/NiaraByNeenu
 - **Vercel Dashboard:** https://vercel.com/dashboard
 

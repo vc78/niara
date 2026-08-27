@@ -95,7 +95,7 @@ const Footer = () => {
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '15px' }}>
             <li style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'rgba(250, 248, 244, 0.8)' }}>
               <MessageSquare size={16} color="var(--accent-gold)" />
-              <span>9030423317 (WhatsApp)</span>
+              <span>9032306961 (WhatsApp)</span>
             </li>
             <li style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'rgba(250, 248, 244, 0.8)' }}>
               <Instagram size={16} color="var(--accent-gold)" />
@@ -103,7 +103,7 @@ const Footer = () => {
             </li>
             <li style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'rgba(250, 248, 244, 0.8)' }}>
               <Mail size={16} color="var(--accent-gold)" />
-              <span>contact@sreevastra.com</span>
+              <span>venkatchowdary9177@gmail.com</span>
             </li>
             <li style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'rgba(250, 248, 244, 0.8)' }}>
               <Globe size={16} color="var(--accent-gold)" />
