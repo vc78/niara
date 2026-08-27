@@ -60,6 +60,58 @@
   gap: clamp(14px, 2.5vw, 28px);
 }
 
+.gallery-image-card {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  border: 1px solid rgba(37, 37, 96, 0.08);
+  border-radius: 12px;
+  background: var(--card-bg);
+  box-shadow: 0 10px 28px rgba(37, 37, 96, 0.1);
+}
+
+.gallery-image-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+
+.gallery-image-card:hover img {
+  transform: scale(1.04);
+}
+
+.gallery-image-caption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 56px 18px 18px;
+  color: var(--white);
+  background: linear-gradient(to top, rgba(20, 20, 40, 0.9), transparent);
+}
+
+.gallery-image-caption h3,
+.gallery-image-caption p {
+  overflow-wrap: anywhere;
+}
+
+.gallery-image-caption h3 {
+  margin: 0 0 6px;
+  font-family: var(--font-serif);
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.gallery-image-caption p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
 .video-card {
   position: relative;
   border-radius: 16px;
@@ -191,6 +243,22 @@
 
   .video-card {
     border-radius: 12px;
+  }
+
+  .gallery-image-card {
+    border-radius: 10px;
+  }
+
+  .gallery-image-caption {
+    padding: 42px 11px 12px;
+  }
+
+  .gallery-image-caption h3 {
+    font-size: 14px;
+  }
+
+  .gallery-image-caption p {
+    font-size: 10px;
   }
 
   .video-overlay h3 {
