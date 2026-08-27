@@ -217,6 +217,11 @@ export const shareInvoicePdf = async (order, blob) => {
 };
 
 export const openWhatsAppWithOrder = (order) => {
-    const text = `Hi ${safeText(order.customer.name, 'there')}!\n\nThank you for your order from ${BRAND_NAME}.\n\nOrder ID: ${order.orderId}\nPayment: ${formatCurrency(order.total)} successfully received.\n\nYour order confirmation invoice is ready to download/share.\n\nThank you for shopping with ${BRAND_NAME}!`;
+    const items = order.items.map((item) => `- ${item.name} | Size: ${item.size} | Qty: ${item.quantity} | ${formatCurrency(item.unitPrice * item.quantity)}`).join('\n');
+    const address = `${safeText(order.customer.address)}, ${safeText(order.customer.city)}, ${safeText(order.customer.state)} - ${safeText(order.customer.pincode)}`;
+    const paymentLine = order.paymentStatus === 'PENDING'
+        ? `Payment method: ${order.paymentMethod} (to be collected)`
+        : `Payment: ${formatCurrency(order.total)} - ${order.paymentStatus}`;
+    const text = `NEW ORDER - ${BRAND_NAME}\n------------------\nOrder ID: ${order.orderId}\n\nCUSTOMER\nName: ${safeText(order.customer.name)}\nPhone: ${safeText(order.customer.mobile)}\nEmail: ${safeText(order.customer.email)}\nAddress: ${address}\nLandmark: ${safeText(order.customer.landmark, 'N/A')}\n\nORDER DETAILS\n${items}\n\nSubtotal: ${formatCurrency(order.subtotal)}\n${order.discount > 0 ? `Discount: -${formatCurrency(order.discount)}\n` : ''}${paymentLine}\nTotal: ${formatCurrency(order.total)}\n\nInvoice is available from the order confirmation screen.`;
     window.open(`https://wa.me/${CONTACT_PHONE}?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
 };

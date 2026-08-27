@@ -280,9 +280,6 @@ const CartDrawer = ({ isOpen, onClose }) => {
     orderText += `\n*TOTAL TO PAY:* ${formatPrice(totalAmount)}\n`;
     orderText += `*Please review your order:*`;
 
-    const encodedText = encodeURIComponent(orderText);
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText}`;
-
     // --- EMAIL JS INTEGRATION ---
     const serviceID = 'service_a8hacno';
     const templateID = 'template_3nvh0mg';
@@ -304,8 +301,8 @@ const CartDrawer = ({ isOpen, onClose }) => {
         console.error('Failed to send email.', err);
       });
 
-    buildCompletedOrder(paymentMethod === 'cod' ? 'Cash on Delivery (COD)' : 'UPI / Online Payment', paymentMethod === 'cod' ? 'PENDING' : 'SUCCESSFUL');
-    window.open(whatsappUrl, '_blank');
+    const completed = buildCompletedOrder(paymentMethod === 'cod' ? 'Cash on Delivery (COD)' : 'UPI / Online Payment', paymentMethod === 'cod' ? 'PENDING' : 'SUCCESSFUL');
+    openWhatsAppWithOrder(completed);
     setCheckoutStep(3);
   };
 
@@ -353,9 +350,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
             console.error('Payment succeeded, but confirmation email failed.', emailError);
           }
 
-          // Send to WhatsApp
-          const encodedText = encodeURIComponent(orderText);
-          window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText}`, '_blank');
+          openWhatsAppWithOrder(completed);
 
           setCheckoutStep(3);
           clearCart();
