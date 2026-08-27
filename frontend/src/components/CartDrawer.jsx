@@ -248,22 +248,35 @@ const CartDrawer = ({ isOpen, onClose }) => {
     }
   };
 
-  const handleWhatsAppCheckout = () => {
-    let orderText = `🛍️ *New Order — ${BRAND_NAME}*\n──────────────────\n`;
-    orderText += `👤 Name: ${formData.name}\n`;
-    orderText += `📞 Phone: ${formData.mobile}\n`;
-    orderText += `📍 Address: ${formData.address}, ${formData.city}, ${formData.state} — ${formData.pincode}\n`;
-    orderText += `🏷️ Landmark: ${formData.landmark || 'N/A'}\n\n`;
+  const handleInvoiceShareToWhatsApp = async () => {
+    try {
+      const shared = await shareInvoicePdf(completedOrder, getInvoiceBlob());
+      if (!shared) {
+        downloadInvoicePdf(completedOrder, getInvoiceBlob());
+        openWhatsAppWithOrder(completedOrder);
+        setInvoiceError('The PDF was downloaded. Attach it to the WhatsApp message that opened.');
+      }
+    } catch (error) {
+      if (error?.name !== 'AbortError') setInvoiceError('Please download the invoice and attach it in WhatsApp.');
+    }
+  };
 
-    orderText += `🛒 *Order Details:*\n`;
+  const handleWhatsAppCheckout = () => {
+    let orderText = `*New Order - ${BRAND_NAME}*\n------------------\n`;
+    orderText += `Name: ${formData.name}\n`;
+    orderText += `Phone: ${formData.mobile}\n`;
+    orderText += `Address: ${formData.address}, ${formData.city}, ${formData.state} - ${formData.pincode}\n`;
+    orderText += `Landmark: ${formData.landmark || 'N/A'}\n\n`;
+
+    orderText += `*Order Details:*\n`;
     cart.forEach((item) => {
       orderText += `• ${item.name} | Size: ${item.size} | Qty: ${item.quantity} | ${formatPrice(item.price)}\n`;
     });
 
-    orderText += `💰 *Subtotal:* ${formatPrice(subtotalAmount)}\n`;
-    if (appliedDiscount > 0) orderText += `🏷️ *Discount (${couponCode}):* -${formatPrice(discountAmount)}\n`;
-    if (DELIVERY_CHARGE > 0) orderText += `🚚 *Delivery:* ${formatPrice(DELIVERY_CHARGE)}\n`;
-    orderText += `💳 *Payment Method:* ${paymentMethod === 'cod' ? 'Cash on Delivery (COD)' : 'UPI / Online Payment'}\n`;
+    orderText += `*Subtotal:* ${formatPrice(subtotalAmount)}\n`;
+    if (appliedDiscount > 0) orderText += `*Discount (${couponCode}):* -${formatPrice(discountAmount)}\n`;
+    if (DELIVERY_CHARGE > 0) orderText += `*Delivery:* ${formatPrice(DELIVERY_CHARGE)}\n`;
+    orderText += `*Payment Method:* ${paymentMethod === 'cod' ? 'Cash on Delivery (COD)' : 'UPI / Online Payment'}\n`;
     orderText += `\n*TOTAL TO PAY:* ${formatPrice(totalAmount)}\n`;
     orderText += `*Please review your order:*`;
 
@@ -319,7 +332,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
         handler: async (response) => {
           const completed = buildCompletedOrder('Razorpay Online', 'PAID / SUCCESSFUL', response.razorpay_payment_id);
           // Payment successful - send order details
-          const orderText = `🎉 *Razorpay Payment Confirmed!*\n\n👤 Name: ${completed.customer.name}\n📞 Phone: ${completed.customer.mobile}\n📍 Address: ${completed.customer.address}, ${completed.customer.city}, ${completed.customer.state} — ${completed.customer.pincode}\n🏷️ Landmark: ${completed.customer.landmark}\n\n🛒 *Order Details:*\n${completed.items.map((item) => `• ${item.name} | Size: ${item.size} | Qty: ${item.quantity} | ${formatPrice(item.unitPrice * item.quantity)}`).join('\n')}\n\n💰 *Subtotal:* ${formatPrice(completed.subtotal)}\n${completed.discount > 0 ? `🏷️ *Discount:* -${formatPrice(completed.discount)}\n` : ''}💳 *Payment Method:* ${completed.paymentMethod}\n💎 *Payment ID:* ${completed.paymentId}\n\n*TOTAL PAID:* ${formatPrice(completed.total)}`;
+          const orderText = `*Razorpay Payment Confirmed*\n\nName: ${completed.customer.name}\nPhone: ${completed.customer.mobile}\nAddress: ${completed.customer.address}, ${completed.customer.city}, ${completed.customer.state} - ${completed.customer.pincode}\nLandmark: ${completed.customer.landmark}\n\n*Order Details:*\n${completed.items.map((item) => `- ${item.name} | Size: ${item.size} | Qty: ${item.quantity} | ${formatPrice(item.unitPrice * item.quantity)}`).join('\n')}\n\n*Subtotal:* ${formatPrice(completed.subtotal)}\n${completed.discount > 0 ? `*Discount:* -${formatPrice(completed.discount)}\n` : ''}*Payment Method:* ${completed.paymentMethod}\n*Payment ID:* ${completed.paymentId}\n\n*TOTAL PAID:* ${formatPrice(completed.total)}`;
 
           const emailParams = {
             to_email: formData.email,
@@ -430,8 +443,8 @@ const CartDrawer = ({ isOpen, onClose }) => {
                         <button type="button" className="continue-shopping-btn" onClick={handleInvoiceShare}>
                           <Share2 size={17} /> Share PDF
                         </button>
-                        <button type="button" className="continue-shopping-btn" onClick={() => openWhatsAppWithOrder(completedOrder)}>
-                          <MessageCircle size={17} /> Send on WhatsApp
+                        <button type="button" className="continue-shopping-btn" onClick={handleInvoiceShareToWhatsApp}>
+                          <MessageCircle size={17} /> Share PDF on WhatsApp
                         </button>
                       </div>
                       {invoiceError && <p className="invoice-error" role="alert">{invoiceError}</p>}
