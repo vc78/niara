@@ -1,0 +1,42 @@
+# Git
+.git
+.gitignore
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Node
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Development
+.DS_Store
+.vscode
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Build
+dist
+dist-ssr
+coverage
+
+# Logs
+logs
+*.log
+
+# OS
+Thumbs.db
+
+# Documentation
+README.md
+RAZORPAY_INTEGRATION.md
+*.md
