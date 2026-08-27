@@ -825,6 +825,51 @@
   margin-top: 8px;
 }
 
+.invoice-success-summary {
+  width: min(100%, 340px);
+  padding: 16px;
+  border: 1px solid rgba(201, 168, 76, 0.28);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.035);
+  box-sizing: border-box;
+}
+
+.invoice-order-number,
+.invoice-payment-status {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.invoice-payment-status {
+  margin-top: 6px;
+  color: #25d366;
+  text-transform: uppercase;
+}
+
+.invoice-total-paid {
+  margin-top: 8px;
+  color: var(--accent-gold);
+  font-family: var(--font-serif);
+  font-size: 24px;
+}
+
+.invoice-action-buttons button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.invoice-error {
+  margin: 12px 0 0;
+  color: #ff8a8a;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
 .print-invoice-btn {
   width: 100%;
   padding: 14px 20px;

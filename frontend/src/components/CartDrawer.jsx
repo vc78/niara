@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import { X, Plus, Minus, Trash2, ShoppingBag, ArrowLeft, Copy, Check, MapPin, AlertCircle, QrCode, CreditCard } from 'lucide-react';
+import { X, Plus, Minus, Trash2, ShoppingBag, ArrowLeft, Copy, Check, MapPin, AlertCircle, QrCode, CreditCard, FileText, Download, Share2, MessageCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import BespokeImage from './BespokeImage';
 import { handleRazorpayPayment, initializeRazorpay } from '../utils/razorpayService';
+import { createInvoiceOrder, generateInvoicePdf, downloadInvoicePdf, shareInvoicePdf, openWhatsAppWithOrder } from '../utils/invoiceService';
 import './CartDrawer.css';
 
 const BRAND_NAME = 'SREE VASTRA';
@@ -39,6 +39,9 @@ const CartDrawer = ({ isOpen, onClose }) => {
 
   const [paymentMethod, setPaymentMethod] = useState('razorpay');
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [completedOrder, setCompletedOrder] = useState(null);
+  const [invoiceError, setInvoiceError] = useState('');
+  const invoiceBlobRef = useRef(null);
 
   // Coupon State
   const [couponCode, setCouponCode] = useState('');
@@ -178,12 +181,12 @@ const CartDrawer = ({ isOpen, onClose }) => {
           } else {
             throw new Error('Unable to resolve address');
           }
-        } catch (err) {
+        } catch {
           setLocationStatus('error');
           setLocationMessage('Failed to detect location. Please enter manually.');
         }
       },
-      (error) => {
+      () => {
         setLocationStatus('error');
         setLocationMessage('Please enter your address manually or enable location in browser settings');
       }
@@ -194,6 +197,54 @@ const CartDrawer = ({ isOpen, onClose }) => {
     e.preventDefault();
     if (formData.name && formData.email && formData.mobile && formData.address && formData.pincode && formData.city && formData.state) {
       setCheckoutStep(2);
+    }
+  };
+
+  const buildCompletedOrder = (method, status = 'SUCCESSFUL', paymentId = '') => {
+    const order = createInvoiceOrder({
+      customer: { ...formData, totalAmount },
+      items: cart,
+      paymentMethod: method,
+      paymentStatus: status,
+      paymentId,
+      orderId: completedOrder?.orderId
+    });
+    setCompletedOrder(order);
+    invoiceBlobRef.current = null;
+    setInvoiceError('');
+    return order;
+  };
+
+  const getInvoiceBlob = () => {
+    if (!completedOrder) throw new Error('Order details are not available.');
+    if (!invoiceBlobRef.current) invoiceBlobRef.current = generateInvoicePdf(completedOrder);
+    return invoiceBlobRef.current;
+  };
+
+  const handleInvoiceDownload = () => {
+    try {
+      downloadInvoicePdf(completedOrder, getInvoiceBlob());
+    } catch {
+      setInvoiceError('Your invoice could not be generated. Please try again.');
+    }
+  };
+
+  const handleInvoiceView = () => {
+    try {
+      const url = URL.createObjectURL(getInvoiceBlob());
+      window.open(url, '_blank', 'noopener,noreferrer');
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+    } catch {
+      setInvoiceError('Your invoice could not be opened. Please download it instead.');
+    }
+  };
+
+  const handleInvoiceShare = async () => {
+    try {
+      const shared = await shareInvoicePdf(completedOrder, getInvoiceBlob());
+      if (!shared) setInvoiceError('File sharing is not supported here. Use Download PDF instead.');
+    } catch (error) {
+      if (error?.name !== 'AbortError') setInvoiceError('Your invoice could not be shared. Please download it instead.');
     }
   };
 
@@ -240,6 +291,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
         console.error('Failed to send email.', err);
       });
 
+    buildCompletedOrder(paymentMethod === 'cod' ? 'Cash on Delivery (COD)' : 'UPI / Online Payment', paymentMethod === 'cod' ? 'PENDING' : 'SUCCESSFUL');
     window.open(whatsappUrl, '_blank');
     setCheckoutStep(3);
   };
@@ -265,8 +317,9 @@ const CartDrawer = ({ isOpen, onClose }) => {
           contact: formData.mobile
         },
         handler: async (response) => {
+          const completed = buildCompletedOrder('Razorpay Online', 'PAID / SUCCESSFUL', response.razorpay_payment_id);
           // Payment successful - send order details
-          const orderText = `🎉 *Razorpay Payment Confirmed!*\n\n👤 Name: ${formData.name}\n📞 Phone: ${formData.mobile}\n📍 Address: ${formData.address}, ${formData.city}, ${formData.state} — ${formData.pincode}\n🏷️ Landmark: ${formData.landmark || 'N/A'}\n\n🛒 *Order Details:*\n${cart.map((item) => `• ${item.name} | Size: ${item.size} | Qty: ${item.quantity} | ${formatPrice(item.price)}`).join('\n')}\n\n💰 *Subtotal:* ${formatPrice(subtotalAmount)}\n${appliedDiscount > 0 ? `🏷️ *Discount (${couponCode}):* -${formatPrice(discountAmount)}\n` : ''}${DELIVERY_CHARGE > 0 ? `🚚 *Delivery:* ${formatPrice(DELIVERY_CHARGE)}\n` : ''}💳 *Payment Method:* Online Payment (Razorpay)\n💎 *Payment ID:* ${response.razorpay_payment_id}\n\n*TOTAL PAID:* ${formatPrice(totalAmount)}`;
+          const orderText = `🎉 *Razorpay Payment Confirmed!*\n\n👤 Name: ${completed.customer.name}\n📞 Phone: ${completed.customer.mobile}\n📍 Address: ${completed.customer.address}, ${completed.customer.city}, ${completed.customer.state} — ${completed.customer.pincode}\n🏷️ Landmark: ${completed.customer.landmark}\n\n🛒 *Order Details:*\n${completed.items.map((item) => `• ${item.name} | Size: ${item.size} | Qty: ${item.quantity} | ${formatPrice(item.unitPrice * item.quantity)}`).join('\n')}\n\n💰 *Subtotal:* ${formatPrice(completed.subtotal)}\n${completed.discount > 0 ? `🏷️ *Discount:* -${formatPrice(completed.discount)}\n` : ''}💳 *Payment Method:* ${completed.paymentMethod}\n💎 *Payment ID:* ${completed.paymentId}\n\n*TOTAL PAID:* ${formatPrice(completed.total)}`;
 
           const emailParams = {
             to_email: formData.email,
@@ -361,7 +414,29 @@ const CartDrawer = ({ isOpen, onClose }) => {
                     <Check size={48} />
                   </div>
                   <p className="empty-title">🎉 Order Placed!</p>
-                  <p className="empty-subtitle">Thank you, {formData.name}. We'll confirm your order shortly on WhatsApp.</p>
+                  <p className="empty-subtitle">Thank you, {formData.name}. Your order details are ready.</p>
+                  {completedOrder && (
+                    <div className="invoice-success-summary">
+                      <div className="invoice-order-number">Order ID: {completedOrder.orderId}</div>
+                      <div className="invoice-payment-status">{completedOrder.paymentStatus}</div>
+                      <div className="invoice-total-paid">{formatPrice(completedOrder.total)}</div>
+                      <div className="invoice-action-buttons">
+                        <button type="button" className="print-invoice-btn" onClick={handleInvoiceView}>
+                          <FileText size={17} /> View Invoice
+                        </button>
+                        <button type="button" className="continue-shopping-btn" onClick={handleInvoiceDownload}>
+                          <Download size={17} /> Download PDF
+                        </button>
+                        <button type="button" className="continue-shopping-btn" onClick={handleInvoiceShare}>
+                          <Share2 size={17} /> Share PDF
+                        </button>
+                        <button type="button" className="continue-shopping-btn" onClick={() => openWhatsAppWithOrder(completedOrder)}>
+                          <MessageCircle size={17} /> Send on WhatsApp
+                        </button>
+                      </div>
+                      {invoiceError && <p className="invoice-error" role="alert">{invoiceError}</p>}
+                    </div>
+                  )}
                   <div className="delivery-estimate-badge">Estimated Delivery: 3–5 business days</div>
                   <button onClick={handleContinueShopping} className="btn-secondary shop-btn" style={{ marginTop: '20px' }}>Continue Shopping</button>
                 </div>
