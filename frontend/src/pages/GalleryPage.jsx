@@ -38,19 +38,21 @@ const VideoCard = ({ video }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
+  const [hasPlaybackError, setHasPlaybackError] = useState(false);
 
-  const togglePlay = (e) => {
+  const togglePlay = async (e) => {
     e.stopPropagation();
     if (!videoRef.current) return;
     if (isPlaying) {
       videoRef.current.pause();
     } else {
-      // Catch potential play() promise rejections to prevent crashing
-      videoRef.current.play().catch(error => {
-        console.error("Video playback failed:", error);
-      });
+      try {
+        setHasPlaybackError(false);
+        await videoRef.current.play();
+      } catch {
+        setHasPlaybackError(true);
+      }
     }
-    setIsPlaying(!isPlaying);
   };
 
   const toggleMute = (e) => {
@@ -91,8 +93,13 @@ const VideoCard = ({ video }) => {
         loop
         muted={isMuted}
         playsInline
+        controls
+        preload="metadata"
         className="gallery-video"
         poster={video.poster}
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+        onError={() => setHasPlaybackError(true)}
       />
       <div className="video-controls">
         <button className="control-btn" onClick={togglePlay}>
@@ -106,6 +113,9 @@ const VideoCard = ({ video }) => {
         <h3>{video.title}</h3>
         <p>{video.description}</p>
       </div>
+      {hasPlaybackError && (
+        <p className="video-error" role="alert">This video could not be loaded. Please try again.</p>
+      )}
     </div>
   );
 };

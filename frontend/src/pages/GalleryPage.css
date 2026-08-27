@@ -83,6 +83,7 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  background: #111;
 }
 
 .video-controls {
@@ -132,6 +133,22 @@
 .video-overlay h3,
 .video-overlay p {
   overflow-wrap: anywhere;
+}
+
+.video-error {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 50%;
+  z-index: 12;
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: 6px;
+  color: #fff;
+  background: rgba(120, 24, 24, 0.9);
+  font-size: 12px;
+  line-height: 1.35;
+  text-align: center;
 }
 
 .video-title {
