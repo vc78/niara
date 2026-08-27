@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import { X, Plus, Minus, Trash2, ShoppingBag, ArrowLeft, Copy, Check, MapPin, AlertCircle, QrCode } from 'lucide-react';
+import { X, Plus, Minus, Trash2, ShoppingBag, ArrowLeft, Copy, Check, MapPin, AlertCircle, QrCode, CreditCard } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import BespokeImage from './BespokeImage';
+import { handleRazorpayPayment, initializeRazorpay } from '../utils/razorpayService';
 import './CartDrawer.css';
 
 const BRAND_NAME = 'SREE VASTRA';
@@ -36,7 +37,8 @@ const CartDrawer = ({ isOpen, onClose }) => {
   const [copiedUpi, setCopiedUpi] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
 
-  const [paymentMethod, setPaymentMethod] = useState('upi');
+  const [paymentMethod, setPaymentMethod] = useState('razorpay');
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
   // Coupon State
   const [couponCode, setCouponCode] = useState('');
@@ -242,6 +244,66 @@ const CartDrawer = ({ isOpen, onClose }) => {
     setCheckoutStep(3);
   };
 
+  const handleRazorpayCheckout = async () => {
+    try {
+      setIsProcessingPayment(true);
+
+      // Initialize Razorpay script
+      const isInitialized = await initializeRazorpay();
+      if (!isInitialized) {
+        throw new Error('Failed to load Razorpay. Please try again.');
+      }
+
+      // Prepare payment options
+      const options = {
+        amount: Math.round(totalAmount * 100), // Razorpay expects amount in paise
+        currency: 'INR',
+        description: `Order from ${formData.name}`,
+        prefill: {
+          name: formData.name,
+          email: formData.email,
+          contact: formData.mobile
+        },
+        handler: async (response) => {
+          // Payment successful - send order details
+          const orderText = `🎉 *Razorpay Payment Confirmed!*\n\n👤 Name: ${formData.name}\n📞 Phone: ${formData.mobile}\n📍 Address: ${formData.address}, ${formData.city}, ${formData.state} — ${formData.pincode}\n🏷️ Landmark: ${formData.landmark || 'N/A'}\n\n🛒 *Order Details:*\n${cart.map((item) => `• ${item.name} | Size: ${item.size} | Qty: ${item.quantity} | ${formatPrice(item.price)}`).join('\n')}\n\n💰 *Subtotal:* ${formatPrice(subtotalAmount)}\n${appliedDiscount > 0 ? `🏷️ *Discount (${couponCode}):* -${formatPrice(discountAmount)}\n` : ''}${DELIVERY_CHARGE > 0 ? `🚚 *Delivery:* ${formatPrice(DELIVERY_CHARGE)}\n` : ''}💳 *Payment Method:* Online Payment (Razorpay)\n💎 *Payment ID:* ${response.razorpay_payment_id}\n\n*TOTAL PAID:* ${formatPrice(totalAmount)}`;
+
+          const emailParams = {
+            to_email: formData.email,
+            to_name: formData.name,
+            order_details: orderText.replace(/\n/g, '<br>'),
+            total_amount: totalAmount,
+            payment_method: 'Razorpay Online',
+            payment_id: response.razorpay_payment_id
+          };
+
+          const serviceID = 'service_a8hacno';
+          const templateID = 'template_3nvh0mg';
+          const publicKey = 'AjI2ifuyP51qtZZMX';
+
+          await emailjs.send(serviceID, templateID, emailParams, publicKey);
+
+          // Send to WhatsApp
+          const encodedText = encodeURIComponent(orderText);
+          window.open(`https://wa.me/919032306961?text=${encodedText}`, '_blank');
+
+          setCheckoutStep(3);
+          clearCart();
+        },
+        theme: {
+          color: '#D4AF37' // Gold color
+        }
+      };
+
+      await handleRazorpayPayment(options);
+    } catch (error) {
+      console.error('Razorpay payment error:', error);
+      alert(`Payment Error: ${error.message}. Please try again.`);
+    } finally {
+      setIsProcessingPayment(false);
+    }
+  };
+
   const handleContinueShopping = () => {
     clearCart();
     setCheckoutStep(0);
@@ -308,18 +370,29 @@ const CartDrawer = ({ isOpen, onClose }) => {
 
                   <h3 className="checkout-title">Payment Method</h3>
 
-                  <div className="payment-methods" style={{ display: 'flex', gap: '15px', marginBottom: '25px' }}>
-                    <label style={{ flex: 1, padding: '15px', border: `2px solid ${paymentMethod === 'upi' ? 'var(--accent-gold)' : '#eee'}`, borderRadius: '8px', cursor: 'pointer', textAlign: 'center' }}>
-                      <input type="radio" name="payment" value="upi" checked={paymentMethod === 'upi'} onChange={() => setPaymentMethod('upi')} style={{ display: 'none' }} />
-                      <div style={{ fontWeight: 600 }}>UPI / Online</div>
+                  <div className="payment-methods" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '25px' }}>
+                    <label style={{ padding: '15px', border: `2px solid ${paymentMethod === 'razorpay' ? 'var(--accent-gold)' : '#eee'}`, borderRadius: '8px', cursor: 'pointer', textAlign: 'center' }}>
+                      <input type="radio" name="payment" value="razorpay" checked={paymentMethod === 'razorpay'} onChange={() => setPaymentMethod('razorpay')} style={{ display: 'none' }} />
+                      <div style={{ fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}><CreditCard size={18} /> Razorpay</div>
                     </label>
-                    <label style={{ flex: 1, padding: '15px', border: `2px solid ${paymentMethod === 'cod' ? 'var(--accent-gold)' : '#eee'}`, borderRadius: '8px', cursor: 'pointer', textAlign: 'center' }}>
+                    <label style={{ padding: '15px', border: `2px solid ${paymentMethod === 'upi' ? 'var(--accent-gold)' : '#eee'}`, borderRadius: '8px', cursor: 'pointer', textAlign: 'center' }}>
+                      <input type="radio" name="payment" value="upi" checked={paymentMethod === 'upi'} onChange={() => setPaymentMethod('upi')} style={{ display: 'none' }} />
+                      <div style={{ fontWeight: 600 }}>UPI Manual</div>
+                    </label>
+                    <label style={{ padding: '15px', border: `2px solid ${paymentMethod === 'cod' ? 'var(--accent-gold)' : '#eee'}`, borderRadius: '8px', cursor: 'pointer', textAlign: 'center', gridColumn: '1 / -1' }}>
                       <input type="radio" name="payment" value="cod" checked={paymentMethod === 'cod'} onChange={() => setPaymentMethod('cod')} style={{ display: 'none' }} />
-                      <div style={{ fontWeight: 600 }}>Cash on Delivery</div>
+                      <div style={{ fontWeight: 600 }}>💵 Cash on Delivery</div>
                     </label>
                   </div>
 
-                  {paymentMethod === 'upi' ? (
+                  {paymentMethod === 'razorpay' ? (
+                    <div className="payment-instruction" style={{ textAlign: 'center', padding: '30px 20px', background: 'rgba(212, 175, 55, 0.05)', borderRadius: '12px' }}>
+                      <CreditCard size={32} style={{ margin: '0 auto 15px', color: 'var(--accent-gold)' }} />
+                      <p style={{ fontSize: '16px', fontWeight: 500, color: '#333' }}>Secure Payment via <strong>Razorpay</strong></p>
+                      <p style={{ marginTop: '10px', color: '#666' }}>Click "Pay with Razorpay" to complete your payment securely. You will be able to pay using Credit/Debit Card, UPI, Netbanking, and more.</p>
+                      <p style={{ marginTop: '15px', fontSize: '14px', color: '#999' }}>Amount to pay: <strong style={{ color: 'var(--accent-gold)' }}>{formatPrice(totalAmount)}</strong></p>
+                    </div>
+                  ) : paymentMethod === 'upi' ? (
                     <>
                       <div className="upi-qr-card">
                         <p className="qr-title"><QrCode size={18} /> Scan QR with any UPI App</p>
@@ -537,8 +610,12 @@ const CartDrawer = ({ isOpen, onClose }) => {
                 )}
 
                 {checkoutStep === 2 && (
-                  <button onClick={handleWhatsAppCheckout} className="whatsapp-checkout-btn success-btn">
-                    {paymentMethod === 'upi' ? '✅ I Have Paid - Send Order via WhatsApp' : '✅ Place Order (COD) via WhatsApp'}
+                  <button
+                    onClick={paymentMethod === 'razorpay' ? handleRazorpayCheckout : handleWhatsAppCheckout}
+                    className="whatsapp-checkout-btn success-btn"
+                    disabled={isProcessingPayment}
+                  >
+                    {isProcessingPayment ? '⏳ Processing...' : paymentMethod === 'razorpay' ? '💳 Pay with Razorpay' : paymentMethod === 'upi' ? '✅ I Have Paid - Send Order via WhatsApp' : '✅ Place Order (COD) via WhatsApp'}
                   </button>
                 )}
               </div>
