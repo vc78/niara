@@ -281,7 +281,11 @@ const CartDrawer = ({ isOpen, onClose }) => {
           const templateID = 'template_3nvh0mg';
           const publicKey = 'AjI2ifuyP51qtZZMX';
 
-          await emailjs.send(serviceID, templateID, emailParams, publicKey);
+          try {
+            await emailjs.send(serviceID, templateID, emailParams, publicKey);
+          } catch (emailError) {
+            console.error('Payment succeeded, but confirmation email failed.', emailError);
+          }
 
           // Send to WhatsApp
           const encodedText = encodeURIComponent(orderText);
@@ -370,16 +374,16 @@ const CartDrawer = ({ isOpen, onClose }) => {
 
                   <h3 className="checkout-title">Payment Method</h3>
 
-                  <div className="payment-methods" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '25px' }}>
-                    <label style={{ padding: '15px', border: `2px solid ${paymentMethod === 'razorpay' ? 'var(--accent-gold)' : '#eee'}`, borderRadius: '8px', cursor: 'pointer', textAlign: 'center' }}>
+                  <div className="payment-methods">
+                    <label className={`payment-method-card ${paymentMethod === 'razorpay' ? 'active' : ''}`}>
                       <input type="radio" name="payment" value="razorpay" checked={paymentMethod === 'razorpay'} onChange={() => setPaymentMethod('razorpay')} style={{ display: 'none' }} />
                       <div style={{ fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}><CreditCard size={18} /> Razorpay</div>
                     </label>
-                    <label style={{ padding: '15px', border: `2px solid ${paymentMethod === 'upi' ? 'var(--accent-gold)' : '#eee'}`, borderRadius: '8px', cursor: 'pointer', textAlign: 'center' }}>
+                    <label className={`payment-method-card ${paymentMethod === 'upi' ? 'active' : ''}`}>
                       <input type="radio" name="payment" value="upi" checked={paymentMethod === 'upi'} onChange={() => setPaymentMethod('upi')} style={{ display: 'none' }} />
                       <div style={{ fontWeight: 600 }}>UPI Manual</div>
                     </label>
-                    <label style={{ padding: '15px', border: `2px solid ${paymentMethod === 'cod' ? 'var(--accent-gold)' : '#eee'}`, borderRadius: '8px', cursor: 'pointer', textAlign: 'center', gridColumn: '1 / -1' }}>
+                    <label className={`payment-method-card payment-method-card-wide ${paymentMethod === 'cod' ? 'active' : ''}`}>
                       <input type="radio" name="payment" value="cod" checked={paymentMethod === 'cod'} onChange={() => setPaymentMethod('cod')} style={{ display: 'none' }} />
                       <div style={{ fontWeight: 600 }}>💵 Cash on Delivery</div>
                     </label>

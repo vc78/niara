@@ -1370,6 +1370,42 @@
   margin-top: 15px;
 }
 
+.payment-methods {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.payment-method-card {
+  min-width: 0;
+  min-height: 58px;
+  padding: 12px;
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.payment-method-card.active {
+  border-color: var(--accent-gold);
+  background: rgba(212, 175, 55, 0.12);
+}
+
+.payment-method-card-wide {
+  grid-column: 1 / -1;
+}
+
+.payment-method-card input {
+  display: none;
+}
+
 @media (max-width: 480px) {
   .cart-header {
     padding: 16px;
@@ -1431,5 +1467,24 @@
   .promo-code-container input,
   .promo-code-container button {
     min-height: 44px;
+  }
+
+  .payment-methods {
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .payment-method-card {
+    min-height: 54px;
+    padding: 10px 6px;
+    font-size: 13px;
+  }
+
+  .payment-instruction {
+    padding: 18px 14px !important;
+  }
+
+  .payment-instruction p {
+    overflow-wrap: anywhere;
   }
 }

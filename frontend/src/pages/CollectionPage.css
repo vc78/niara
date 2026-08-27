@@ -280,7 +280,7 @@
   }
 
   .collection-sidebar {
-    padding: 18px;
+    padding: 16px;
     margin-bottom: 0;
   }
 
@@ -302,11 +302,21 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 16px;
+    row-gap: 2px;
   }
 
   .cat-btn {
-    padding: 8px 0;
+    padding: 6px 0;
     font-size: 14px;
+  }
+
+  .size-filters {
+    gap: 6px;
+  }
+
+  .size-btn {
+    padding: 6px 10px;
+    font-size: 12px;
   }
 
   .cat-btn:hover,
