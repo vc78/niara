@@ -1,8 +1,7 @@
 import { jsPDF } from 'jspdf';
 
-const BRAND_NAME = 'SREE VASTRA';
-const CONTACT_PHONE = '9032306961';
-const CONTACT_EMAIL = 'venkatchowdary9177@gmail.com';
+const BRAND_NAME = 'LABEL by SAHITHI NANDAN';
+const CONTACT_PHONE = '9000164752';
 
 const safeText = (value, fallback = 'Not provided') => {
     if (value === undefined || value === null || value === '') return fallback;
@@ -184,14 +183,14 @@ export const generateInvoicePdf = (order) => {
     doc.line(margin, 276, pageWidth - margin, 276);
     doc.setFontSize(9);
     doc.setTextColor(37, 37, 96);
-    doc.text('Thank you for shopping with SREE VASTRA.', margin, 284);
+    doc.text('Thank you for shopping with LABEL by SAHITHI NANDAN.', margin, 284);
     doc.setTextColor(100, 100, 100);
-    doc.text(`${CONTACT_PHONE}  |  ${CONTACT_EMAIL}`, margin, 290);
+    doc.text(`WhatsApp: +91 ${CONTACT_PHONE}`, margin, 290);
 
     return doc.output('blob');
 };
 
-export const invoiceFileName = (order) => `SREE-VASTRA-${safeText(order?.orderId, 'invoice')}.pdf`;
+export const invoiceFileName = (order) => `LABEL-BY-SAHITHI-NANDAN-${safeText(order?.orderId, 'invoice')}.pdf`;
 
 export const downloadInvoicePdf = (order, blob) => {
     const url = URL.createObjectURL(blob || generateInvoicePdf(order));
@@ -211,7 +210,7 @@ export const shareInvoicePdf = async (order, blob) => {
     await navigator.share({
         files: [file],
         title: `${BRAND_NAME} Invoice ${order.orderId}`,
-        text: `Your SREE VASTRA order confirmation - ${order.orderId}`
+        text: `Your LABEL by SAHITHI NANDAN order confirmation - ${order.orderId}`
     });
     return true;
 };

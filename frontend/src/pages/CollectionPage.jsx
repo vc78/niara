@@ -85,8 +85,8 @@ const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => 
   }, [activeCategory, priceRange, selectedSizes, sortOption]);
 
   const handleWhatsAppOrder = (product) => {
-    const message = encodeURIComponent(`Hi! I'm interested in the ${product.name} (₹${product.sellingPrice}). Use code CHOWDARY20 for 20% off!`);
-    window.open(`https://wa.me/919032306961?text=${message}`, '_blank');
+    const message = encodeURIComponent(`Hi! I'm interested in the ${product.name} (₹${product.sellingPrice}). Use code LABEL20 for 20% off!`);
+    window.open(`https://wa.me/919000164752?text=${message}`, '_blank');
   };
 
   return (

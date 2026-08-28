@@ -13,6 +13,17 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
   const { addToast } = useToast();
+  const [copiedCoupon, setCopiedCoupon] = useState('');
+
+  const copyCoupon = async (code) => {
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopiedCoupon(code);
+      window.setTimeout(() => setCopiedCoupon(''), 1800);
+    } catch {
+      addToast('Copy unavailable. Please select the code manually.', 'info');
+    }
+  };
 
   // Quick View State
   const [quickViewProduct, setQuickViewProduct] = useState(null);
@@ -53,8 +64,8 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
 
   // Helper for WhatsApp
   const handleWhatsAppContact = (messageParam) => {
-    const message = encodeURIComponent(messageParam || 'Hello SREE VASTRA team, I would like to inquire about a custom order.');
-    window.open(`https://wa.me/919032306961?text=${message}`, '_blank');
+    const message = encodeURIComponent(messageParam || 'Hello LABEL by SAHITHI NANDAN team, I would like to inquire about a custom order.');
+    window.open(`https://wa.me/919000164752?text=${message}`, '_blank');
   };
 
   // Get featured products
@@ -211,7 +222,7 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
             <span className="scroller-separator">•</span>
             <span className="scroller-item">CUSTOM TAILORING AVAILABLE</span>
             <span className="scroller-separator">•</span>
-            <span className="scroller-item">CHOWDARY EXCLUSIVE COLLECTION</span>
+            <span className="scroller-item">LABEL EXCLUSIVE COLLECTION</span>
             <span className="scroller-separator">•</span>
             <span className="scroller-item">PREMIUM HANDCRAFTED QUALITY</span>
             {/* Duplicate for infinite effect */}
@@ -223,7 +234,7 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
             <span className="scroller-separator" aria-hidden="true">•</span>
             <span className="scroller-item" aria-hidden="true">CUSTOM TAILORING AVAILABLE</span>
             <span className="scroller-separator" aria-hidden="true">•</span>
-            <span className="scroller-item" aria-hidden="true">CHOWDARY EXCLUSIVE COLLECTION</span>
+            <span className="scroller-item" aria-hidden="true">LABEL EXCLUSIVE COLLECTION</span>
             <span className="scroller-separator" aria-hidden="true">•</span>
             <span className="scroller-item" aria-hidden="true">PREMIUM HANDCRAFTED QUALITY</span>
           </div>
@@ -234,15 +245,15 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
           <div className="offer-card gold-theme">
             <div className="offer-card-inner">
               <span className="offer-badge">Limited Time</span>
-              <h3>Chowdary Special</h3>
+              <h3>LABEL Special</h3>
               <div className="offer-discount">
                 <span className="discount-value">20%</span>
                 <span className="discount-text">OFF</span>
               </div>
               <p>On all Handcrafted Collections</p>
               <div className="promo-code-box">
-                <span className="code">CHOWDARY20</span>
-                <button className="copy-btn" onClick={() => navigator.clipboard.writeText('CHOWDARY20')}>Copy</button>
+                <span className="code">LABEL20</span>
+                <button className="copy-btn" onClick={() => copyCoupon('LABEL20')}>{copiedCoupon === 'LABEL20' ? 'Copied' : 'Copy code'}</button>
               </div>
             </div>
           </div>
@@ -257,8 +268,8 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
               </div>
               <p>On your very first purchase</p>
               <div className="promo-code-box">
-                <span className="code">CHOWDARY15</span>
-                <button className="copy-btn" onClick={() => navigator.clipboard.writeText('CHOWDARY15')}>Copy</button>
+                <span className="code">WELCOME15</span>
+                <button className="copy-btn" onClick={() => copyCoupon('WELCOME15')}>{copiedCoupon === 'WELCOME15' ? 'Copied' : 'Copy code'}</button>
               </div>
             </div>
           </div>
@@ -289,9 +300,9 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
           </div>
           <div className="about-text">
             <h2>From Passion to Profession</h2>
-            <p className="subtitle">Meet the visionary — the heart behind Sree Vastra</p>
+            <p className="subtitle">Meet Sahithi Garlapati — the heart behind LABEL by SAHITHI NANDAN</p>
             <p className="body">
-              SREE VASTRA was born from a deep love for quality fabrics and authentic Indian fashion. Our passionate founder — an entrepreneur at heart — built this brand with dedication, from curating every fabric to personally connecting with each customer. At SREE VASTRA, quality isn't just a promise — it's our foundation.
+              LABEL by SAHITHI NANDAN was born from a deep love for elegant, custom-made clothing. Founder and Chief Designer Sahithi Garlapati brings a personal touch to every luxurious design.
             </p>
             <blockquote style={{ borderLeft: '2px solid var(--accent-gold)', paddingLeft: '15px', margin: '20px 0', fontStyle: 'italic', color: 'var(--accent-gold)' }}>
               "Quality is most important — that's our motto."
@@ -468,8 +479,8 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
       <section className="social-proof-section">
         <div className="instagram-feed">
           <div className="section-header">
-            <h2>@sreevastrakhammam</h2>
-            <a href="https://www.instagram.com/sreevastrakhammam?igsh=MWpteWRiZ2xuOTVmcg==" target="_blank" rel="noopener noreferrer" className="view-all-link">
+            <h2>@label_by_sahithi_nandan</h2>
+            <a href="https://www.instagram.com/label_by_sahithi_nandan/" target="_blank" rel="noopener noreferrer" className="view-all-link">
               Follow Us <ArrowRight size={16} />
             </a>
           </div>
@@ -493,7 +504,7 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
             </div>
             <div className="test-card staggered">
               <div className="stars"><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /><Star size={16} /></div>
-              <p className="test-text">"Amazing quality and such a seamless process ordering from the US. Sahithi's team was super responsive."</p>
+              <p className="test-text">"Amazing quality and such a seamless process. Sahithi's team was super responsive."</p>
               <p className="test-author">- Anjali R., New York</p>
             </div>
           </div>

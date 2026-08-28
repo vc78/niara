@@ -26,7 +26,7 @@ function App() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isHotPicksOpen, setIsHotPicksOpen] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
-  
+
   const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'collection' | 'product'
   const [activeCategory, setActiveCategory] = useState('all');
   const [activeProduct, setActiveProduct] = useState(null);
@@ -45,7 +45,12 @@ function App() {
 
   const navigateToHome = () => {
     setCurrentRoute('home');
-    window.scrollTo(0, 0);
+    window.setTimeout(() => window.scrollTo(0, 0), 0);
+  };
+
+  const navigateToSection = (sectionId) => {
+    setCurrentRoute('home');
+    window.setTimeout(() => document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' }), 0);
   };
 
   const navigateToGallery = () => {
@@ -64,72 +69,75 @@ function App() {
         <WishlistProvider>
           <ToastProvider>
             <div className="app">
-              
-          {/* Global sticky navigation bar */}
-          <Navbar 
-            onCartOpen={() => setIsCartOpen(true)} 
-            onAuthOpen={() => setIsAuthOpen(true)}
-            onWishlistOpen={() => setIsWishlistOpen(true)}
-            onProfileOpen={() => setIsProfileOpen(true)}
-            onContactOpen={() => setIsContactOpen(true)}
-            onNavigateToGallery={navigateToGallery}
-            onNavigateToAbout={navigateToAbout}
-          />
-          
-          {/* Main single-page scroll view or Collection view */}
-          <main className="main-content">
-            {currentRoute === 'home' ? (
-              <Home 
-                onAuthOpen={() => setIsAuthOpen(true)}
-                onProfileOpen={() => setIsProfileOpen(true)}
+
+              {/* Global sticky navigation bar */}
+              <Navbar
+                onNavigateToHome={navigateToHome}
                 onNavigateToCollection={navigateToCollection}
-                onProductClick={navigateToProduct}
+                onNavigateToSection={navigateToSection}
+                onCartOpen={() => setIsCartOpen(true)}
+                onAuthOpen={() => setIsAuthOpen(true)}
+                onWishlistOpen={() => setIsWishlistOpen(true)}
+                onProfileOpen={() => setIsProfileOpen(true)}
+                onContactOpen={() => setIsContactOpen(true)}
+                onNavigateToGallery={navigateToGallery}
+                onNavigateToAbout={navigateToAbout}
               />
-            ) : currentRoute === 'collection' ? (
-              <CollectionPage 
-                initialCategory={activeCategory}
-                onBack={navigateToHome}
-                onProductClick={navigateToProduct}
-              />
-            ) : currentRoute === 'product' && activeProduct ? (
-              <ProductPage
-                product={activeProduct}
-                onBack={() => {
-                  setCurrentRoute(activeCategory ? 'collection' : 'home');
-                  window.scrollTo(0, 0);
-                }}
-              />
-            ) : currentRoute === 'gallery' ? (
-              <GalleryPage onBack={navigateToHome} />
-            ) : currentRoute === 'about' ? (
-              <AboutPage onBack={navigateToHome} />
-            ) : null}
-          </main>
 
-          {/* Global floating side cart panel */}
-          <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-          
-          {/* Global Wishlist Drawer */}
-          <WishlistDrawer isOpen={isWishlistOpen} onClose={() => setIsWishlistOpen(false)} />
-          
-          {/* Global Auth Modal */}
-          <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
-          
-          {/* Global Profile/Sizing Modal */}
-          <UserProfileModal isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
+              {/* Main single-page scroll view or Collection view */}
+              <main className="main-content">
+                {currentRoute === 'home' ? (
+                  <Home
+                    onAuthOpen={() => setIsAuthOpen(true)}
+                    onProfileOpen={() => setIsProfileOpen(true)}
+                    onNavigateToCollection={navigateToCollection}
+                    onProductClick={navigateToProduct}
+                  />
+                ) : currentRoute === 'collection' ? (
+                  <CollectionPage
+                    initialCategory={activeCategory}
+                    onBack={navigateToHome}
+                    onProductClick={navigateToProduct}
+                  />
+                ) : currentRoute === 'product' && activeProduct ? (
+                  <ProductPage
+                    product={activeProduct}
+                    onBack={() => {
+                      setCurrentRoute(activeCategory ? 'collection' : 'home');
+                      window.scrollTo(0, 0);
+                    }}
+                  />
+                ) : currentRoute === 'gallery' ? (
+                  <GalleryPage onBack={navigateToHome} />
+                ) : currentRoute === 'about' ? (
+                  <AboutPage onBack={navigateToHome} />
+                ) : null}
+              </main>
 
-          {/* Global Contact Modal */}
-          <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
-          
-          {/* New Features: Welcome Popup & Hot Picks */}
-          <WelcomePopup onCartOpen={() => setIsCartOpen(true)} />
-          <HotPicksTab onClick={() => setIsHotPicksOpen(true)} />
-          <HotPicksDrawer 
-            isOpen={isHotPicksOpen} 
-            onClose={() => setIsHotPicksOpen(false)} 
-            onCartOpen={() => setIsCartOpen(true)} 
-          />
-                      </div>
+              {/* Global floating side cart panel */}
+              <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+
+              {/* Global Wishlist Drawer */}
+              <WishlistDrawer isOpen={isWishlistOpen} onClose={() => setIsWishlistOpen(false)} />
+
+              {/* Global Auth Modal */}
+              <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
+
+              {/* Global Profile/Sizing Modal */}
+              <UserProfileModal isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
+
+              {/* Global Contact Modal */}
+              <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
+
+              {/* New Features: Welcome Popup & Hot Picks */}
+              <WelcomePopup onCartOpen={() => setIsCartOpen(true)} />
+              <HotPicksTab onClick={() => setIsHotPicksOpen(true)} />
+              <HotPicksDrawer
+                isOpen={isHotPicksOpen}
+                onClose={() => setIsHotPicksOpen(false)}
+                onCartOpen={() => setIsCartOpen(true)}
+              />
+            </div>
           </ToastProvider>
         </WishlistProvider>
       </CartProvider>

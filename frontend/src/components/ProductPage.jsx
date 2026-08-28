@@ -22,7 +22,7 @@ const ProductPage = ({ product, onBack }) => {
       addToast("Please select a size first.", "info");
       return;
     }
-    
+
     addToCart(product, selectedSize, 1);
     setAdded(true);
     addToast(`${product.name} added to cart!`, 'success');
@@ -54,8 +54,8 @@ const ProductPage = ({ product, onBack }) => {
           {images.length > 1 && (
             <div className="product-thumbnails">
               {images.map((img, i) => (
-                <button 
-                  key={i} 
+                <button
+                  key={i}
                   className={`thumbnail-btn ${mainImage === img ? 'active' : ''}`}
                   onClick={() => setMainImage(img)}
                 >
@@ -70,9 +70,9 @@ const ProductPage = ({ product, onBack }) => {
         <div className="product-info-panel">
           <h1 className="product-title-large">{product.name}</h1>
           <p className="product-price-large">{formatPrice(product.sellingPrice || product.price)}</p>
-          
+
           <div className="product-description-block">
-            <p>{product.description || "A luxury handcrafted piece by Navya Sri Namburi. Intricate detailing and premium fabrics create a timeless silhouette."}</p>
+            <p>{product.description || "A luxurious, custom-made piece by Sahithi Garlapati. Thoughtful detailing and premium fabrics create a timeless silhouette."}</p>
           </div>
 
           <div className="size-selector-section">
@@ -102,7 +102,7 @@ const ProductPage = ({ product, onBack }) => {
           </div>
 
           <div className="product-actions-sticky">
-            <button 
+            <button
               className={`add-to-cart-cta ${added ? 'added' : ''}`}
               onClick={handleAddToCart}
             >

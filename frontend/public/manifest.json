@@ -1,9 +1,9 @@
 {
-  "short_name": "SREE VASTRA",
-  "name": "SREE VASTRA",
+  "short_name": "LABEL",
+  "name": "LABEL by SAHITHI NANDAN",
   "icons": [
     {
-      "src": "/logo.png",
+      "src": "/images/logo.png",
       "sizes": "1024x1024",
       "type": "image/png"
     }
@@ -13,5 +13,5 @@
   "display": "standalone",
   "scope": "/",
   "theme_color": "#d4af37",
-  "description": "Premium Indian fashion — cotton wear, party wear, coord sets"
+  "description": "Elegant, custom-made and luxurious clothing by LABEL by SAHITHI NANDAN"
 }

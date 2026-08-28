@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowLeft, Camera, Globe, MessageCircle, Mail } from 'lucide-react';
+import { ArrowLeft, Camera, Globe, MessageCircle } from 'lucide-react';
 import './AboutPage.css';
 
 const AboutPage = ({ onBack }) => {
@@ -58,7 +58,7 @@ const AboutPage = ({ onBack }) => {
             transition={{ duration: 1, delay: 0.6 }}
             className="about-hero-subtitle"
           >
-            Meet Navya Sri Namburi — the heart behind Sree Vastra
+            Meet Sahithi Garlapati — the heart behind LABEL by SAHITHI NANDAN
           </motion.p>
         </div>
       </div>
@@ -74,10 +74,10 @@ const AboutPage = ({ onBack }) => {
           <h2>The Founder's Story</h2>
           <div className="accent-line"></div>
           <p>
-            Sree Vastra was born from a deep love for quality fabrics and authentic Indian fashion. <strong>Navya Sri Namburi</strong> — a passionate entrepreneur — built this brand with her own hands, from curating every fabric to personally connecting with each customer. At Sree Vastra, quality isn't just a promise — it's our foundation.
+            LABEL by SAHITHI NANDAN was born from a deep love for elegant, custom-made clothing. <strong>Sahithi Garlapati</strong> — Founder & Chief Designer — built this label with a passion for luxurious fashion and personal service.
           </p>
           <p>
-            Every piece that leaves our atelier bears Navya's personal stamp of excellence. She doesn't just design clothes; she designs dreams. From the selection of the finest cottons and silks to the meticulous hand-embroidery, every garment is a testament to her unwavering commitment to quality and her love for authentic Indian fashion.
+            Every piece from the label reflects Sahithi's personal stamp of excellence, combining luxurious fabrics, thoughtful styling, and custom-made details for a distinctive look.
           </p>
           <div style={{
             marginTop: '2rem',
@@ -90,7 +90,7 @@ const AboutPage = ({ onBack }) => {
               "Quality is most important — that's our motto."
             </p>
             <p style={{ marginTop: '0.5rem', color: '#666', fontSize: '0.9rem', margin: '0.5rem 0 0 0' }}>
-              — Navya Sri Namburi, Founder & Creative Director
+              — Sahithi Garlapati, Founder & Chief Designer
             </p>
           </div>
         </motion.section>
@@ -107,7 +107,7 @@ const AboutPage = ({ onBack }) => {
               <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80" alt="Hand-Curated Collections" />
             </div>
             <h3>Hand-Curated Collections</h3>
-            <p>Navya personally selects every fabric, every color, and every design. She spends weeks sourcing the finest materials from trusted artisans across India, ensuring that every piece meets her exacting standards for quality and beauty.</p>
+            <p>Sahithi personally shapes every collection, selecting distinctive fabrics, colors, and designs to create elegant looks with a luxurious finish.</p>
           </motion.div>
 
           <motion.div className="about-grid-item" variants={fadeInUp}>
@@ -115,7 +115,7 @@ const AboutPage = ({ onBack }) => {
               <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80" alt="Personal Connection" />
             </div>
             <h3>Personal Connection</h3>
-            <p>Every customer is important to Navya. She believes in building relationships, not just transactions. From custom measurements to style consultations, she's involved in every step of your journey with Sree Vastra.</p>
+            <p>Every customer matters to Sahithi. From styling guidance to custom-made details, she brings a personal touch to every fashion experience.</p>
           </motion.div>
         </motion.section>
 
@@ -127,9 +127,9 @@ const AboutPage = ({ onBack }) => {
           variants={fadeInUp}
         >
           <blockquote>
-            "When you wear a piece from Sree Vastra, you're not just wearing fabric—you're wearing passion, integrity, and a woman entrepreneur's dream."
+            "When you wear a piece from LABEL by SAHITHI NANDAN, you're wearing passion, confidence, and a designer's vision."
           </blockquote>
-          <cite>— Navya Sri Namburi</cite>
+          <cite>— Sahithi Garlapati</cite>
         </motion.section>
 
         <motion.section
@@ -141,14 +141,11 @@ const AboutPage = ({ onBack }) => {
         >
           <h3>Connect With Us</h3>
           <div className="social-links">
-            <a href="https://www.instagram.com/sreevastrakhammam?igsh=MWpteWRiZ2xuOTVmcg==" target="_blank" rel="noopener noreferrer" className="social-icon" title="Follow us on Instagram">
+            <a href="https://www.instagram.com/label_by_sahithi_nandan/" target="_blank" rel="noopener noreferrer" className="social-icon" title="Follow us on Instagram">
               <Camera size={24} />
             </a>
-            <a href="https://wa.me/919032306961" target="_blank" rel="noopener noreferrer" className="social-icon" title="Chat on WhatsApp">
+            <a href="https://wa.me/919000164752" target="_blank" rel="noopener noreferrer" className="social-icon" title="Chat on WhatsApp">
               <MessageCircle size={24} />
-            </a>
-            <a href="mailto:venkatchowdary9177@gmail.com" className="social-icon" title="Email us">
-              <Mail size={24} />
             </a>
           </div>
         </motion.section>

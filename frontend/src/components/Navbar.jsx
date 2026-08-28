@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ShoppingCart, Heart, Menu, X, User, AtSign, Mail, MessageSquare } from 'lucide-react';
+import { ShoppingCart, Heart, Menu, X, User, AtSign, MessageSquare } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { useWishlist } from '../context/WishlistContext';
@@ -8,11 +8,11 @@ import './Navbar.css';
 
 const announcements = [
   "🌍 Now shipping worldwide — UAE · UK · USA · Australia",
-  "📞 Book a FREE measurement video call with Sahithi",
+  "📞 Book a FREE styling consultation with Sahithi",
   "✨ New Festive Collection dropping soon — DM to pre-order"
 ];
 
-const Navbar = ({ onCartOpen, onWishlistOpen, onAuthOpen, onProfileOpen, onContactOpen, onNavigateToGallery, onNavigateToAbout }) => {
+const Navbar = ({ onCartOpen, onWishlistOpen, onAuthOpen, onProfileOpen, onContactOpen, onNavigateToHome, onNavigateToCollection, onNavigateToSection, onNavigateToGallery, onNavigateToAbout }) => {
   const { cart } = useCart();
   const { user, logout } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -45,12 +45,11 @@ const Navbar = ({ onCartOpen, onWishlistOpen, onAuthOpen, onProfileOpen, onConta
 
   const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
   const wishlistCount = wishlist.length;
-  const whatsappPhone = '919032306961';
-  const emailAddress = 'venkatchowdary9177@gmail.com';
-  const instagramUrl = 'https://www.instagram.com/sreevastrakhammam?igsh=MWpteWRiZ2xuOTVmcg==';
+  const whatsappPhone = '919000164752';
+  const instagramUrl = 'https://www.instagram.com/label_by_sahithi_nandan/';
 
   const handleWhatsAppContact = () => {
-    const message = encodeURIComponent('Hello SREE VASTRA team, I would like to inquire about a custom order.');
+    const message = encodeURIComponent('Hello LABEL by SAHITHI NANDAN team, I would like to inquire about a custom order.');
     window.open(`https://wa.me/${whatsappPhone}?text=${message}`, '_blank');
   };
 
@@ -69,6 +68,12 @@ const Navbar = ({ onCartOpen, onWishlistOpen, onAuthOpen, onProfileOpen, onConta
 
   const handleMobileLinkClick = () => {
     setMobileMenuOpen(false);
+  };
+
+  const handleNavigation = (callback) => (event) => {
+    event.preventDefault();
+    handleMobileLinkClick();
+    callback();
   };
 
   const getInitials = (name) => {
@@ -133,13 +138,16 @@ const Navbar = ({ onCartOpen, onWishlistOpen, onAuthOpen, onProfileOpen, onConta
         <div className="navbar-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', gap: '20px' }}>
 
           {/* Brand Logo (Left) */}
-          <a href="#home" className="navbar-logo" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+          <a href="#home" onClick={handleNavigation(onNavigateToHome)} className="navbar-logo" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
             <img
-              src="/logo.png"
-              alt="SREE VASTRA"
+              src="/images/logo.png"
+              alt="LABEL by SAHITHI NANDAN"
               style={{
                 height: isScrolled ? '48px' : '64px',
+                aspectRatio: '1',
                 objectFit: 'contain',
+                clipPath: 'circle(45% at 50% 50%)',
+                filter: 'none',
                 transition: 'height 0.3s ease'
               }}
             />
@@ -147,10 +155,10 @@ const Navbar = ({ onCartOpen, onWishlistOpen, onAuthOpen, onProfileOpen, onConta
 
           {/* Desktop Navigation Links (Middle) */}
           <div className="navbar-links">
-            <a href="#home" className="nav-link">Home</a>
-            <a href="#shop" className="nav-link">Collection</a>
-            <a href="#how-to-order" className="nav-link">Order</a>
-            <a href="#international" className="nav-link">International</a>
+            <a href="#home" onClick={handleNavigation(onNavigateToHome)} className="nav-link">Home</a>
+            <a href="#shop" onClick={handleNavigation(() => onNavigateToCollection('all'))} className="nav-link">Collection</a>
+            <a href="#how-to-order" onClick={handleNavigation(() => onNavigateToSection('how-to-order'))} className="nav-link">Order</a>
+            <a href="#international" onClick={handleNavigation(() => onNavigateToSection('international'))} className="nav-link">International</a>
             <button onClick={onNavigateToAbout} className="nav-link" style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: '15px', color: 'var(--text-dark)' }}>About</button>
             <button onClick={onNavigateToGallery} className="nav-link" style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: '15px', color: 'var(--text-dark)' }}>Gallery</button>
             <button onClick={onContactOpen} className="nav-link" style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: '15px', color: 'var(--text-dark)' }}>Contact</button>
@@ -219,10 +227,10 @@ const Navbar = ({ onCartOpen, onWishlistOpen, onAuthOpen, onProfileOpen, onConta
         {mobileMenuOpen && (
           <div className="mobile-menu-overlay dark-glass-panel">
             <div className="mobile-menu-links">
-              <a href="#home" onClick={handleMobileLinkClick} className="mobile-nav-link">Home</a>
-              <a href="#shop" onClick={handleMobileLinkClick} className="mobile-nav-link">Collection</a>
-              <a href="#how-to-order" onClick={handleMobileLinkClick} className="mobile-nav-link">How to Order</a>
-              <a href="#international" onClick={handleMobileLinkClick} className="mobile-nav-link">International Orders</a>
+              <a href="#home" onClick={handleNavigation(onNavigateToHome)} className="mobile-nav-link">Home</a>
+              <a href="#shop" onClick={handleNavigation(() => onNavigateToCollection('all'))} className="mobile-nav-link">Collection</a>
+              <a href="#how-to-order" onClick={handleNavigation(() => onNavigateToSection('how-to-order'))} className="mobile-nav-link">How to Order</a>
+              <a href="#international" onClick={handleNavigation(() => onNavigateToSection('international'))} className="mobile-nav-link">International Orders</a>
               <button onClick={() => { handleMobileLinkClick(); onNavigateToAbout(); }} className="mobile-nav-link" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>About</button>
               <button onClick={() => { handleMobileLinkClick(); onNavigateToGallery(); }} className="mobile-nav-link" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>Gallery</button>
               <button onClick={() => { handleMobileLinkClick(); onContactOpen(); }} className="mobile-nav-link" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>Contact</button>
@@ -236,10 +244,6 @@ const Navbar = ({ onCartOpen, onWishlistOpen, onAuthOpen, onProfileOpen, onConta
                 <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="mobile-nav-link social-action-button">
                   <AtSign size={18} />
                   Instagram
-                </a>
-                <a href={`mailto:${emailAddress}`} className="mobile-nav-link social-action-button">
-                  <Mail size={18} />
-                  Email
                 </a>
               </div>
 

@@ -98,14 +98,14 @@ const ContactModal = ({ isOpen, onClose }) => {
                   <MapPin size={20} className="info-icon" />
                   <div className="info-text">
                     <strong>Flagship Studio</strong>
-                    <span>Sree Vastra Studio<br />Hyderabad, India</span>
+                    <span>LABEL by SAHITHI NANDAN Studio<br />Visit us at the location below</span>
                   </div>
                 </li>
                 <li>
                   <Phone size={20} className="info-icon" />
                   <div className="info-text">
                     <strong>Phone / WhatsApp</strong>
-                    <span>+91 9032306961</span>
+                    <span>+91 9000164752</span>
                   </div>
                 </li>
                 <li>
@@ -118,24 +118,21 @@ const ContactModal = ({ isOpen, onClose }) => {
               </ul>
 
               <div className="map-container">
-                {/* Fallback visual map. In production, embed the exact Google Maps iframe */}
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d121825.86799017686!2d78.36144883499424!3d17.41215312301132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb99daeaebd2c7%3A0xae93b78392bafbc2!2sHyderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen=""
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Store Location"
-                ></iframe>
+                <a
+                  href="https://maps.app.goo.gl/DYnpiRtkERaKnSmA6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center', color: 'inherit', textDecoration: 'none', fontWeight: 600 }}
+                >
+                  Open LABEL by SAHITHI NANDAN location in Google Maps
+                </a>
               </div>
 
               <div className="contact-actions">
-                <a href="https://share.google/2eXexwWrCqR9lZgRX" target="_blank" rel="noopener noreferrer" className="directions-btn">
+                <a href="https://maps.app.goo.gl/DYnpiRtkERaKnSmA6" target="_blank" rel="noopener noreferrer" className="directions-btn">
                   <MapPin size={18} /> Get Directions
                 </a>
-                <a href="https://www.instagram.com/sreevastrakhammam?igsh=MWpteWRiZ2xuOTVmcg==" target="_blank" rel="noopener noreferrer" className="social-btn">
+                <a href="https://www.instagram.com/label_by_sahithi_nandan/" target="_blank" rel="noopener noreferrer" className="social-btn">
                   <Camera size={18} /> Follow Us
                 </a>
               </div>

@@ -8,9 +8,9 @@ import { handleRazorpayPayment, initializeRazorpay } from '../utils/razorpayServ
 import { createInvoiceOrder, generateInvoicePdf, downloadInvoicePdf, shareInvoicePdf, openWhatsAppWithOrder } from '../utils/invoiceService';
 import './CartDrawer.css';
 
-const BRAND_NAME = 'SREE VASTRA';
-const WHATSAPP_NUMBER = '919032306961';
-const UPI_ID = 'sreevastra@okaxis'; // Placeholder UPI ID
+const BRAND_NAME = 'LABEL by SAHITHI NANDAN';
+const WHATSAPP_NUMBER = '919000164752';
+const UPI_ID = 'labelbysahithi@upi';
 const DELIVERY_CHARGE = 0;
 
 const CartDrawer = ({ isOpen, onClose }) => {
@@ -50,15 +50,15 @@ const CartDrawer = ({ isOpen, onClose }) => {
 
   const applyCoupon = () => {
     const code = couponCode.trim().toUpperCase();
-    if (code === 'FESTIVE20') {
+    if (code === 'LABEL20') {
       setAppliedDiscount(20);
       setCouponMessage('🎉 20% OFF applied!');
-    } else if (code === 'CHOWDARY20') {
-      setAppliedDiscount(20);
-      setCouponMessage('🎉 20% OFF applied!');
-    } else if (code === 'CHOWDARY15') {
+    } else if (code === 'WELCOME15') {
       setAppliedDiscount(15);
-      setCouponMessage('✨ 15% OFF applied!');
+      setCouponMessage('🎉 15% OFF applied!');
+    } else if (code === 'FESTIVE20') {
+      setAppliedDiscount(20);
+      setCouponMessage('🎉 20% OFF applied!');
     } else if (code === '') {
       setAppliedDiscount(0);
       setCouponMessage('');

@@ -19,7 +19,7 @@ export const ProductGridSkeleton = ({ count = 6 }) => {
 
 export const ProductGridError = ({ onRetry }) => {
   const handleWhatsApp = () => {
-    window.open("https://wa.me/919032306961?text=Hi, I am having trouble viewing the collection on your website.", "_blank");
+    window.open("https://wa.me/919000164752?text=Hi, I am having trouble viewing the collection on your website.", "_blank");
   };
 
   return (

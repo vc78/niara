@@ -1,5 +1,5 @@
-// SREE VASTRA - 60 Item Product Database
-// Curated by Navya Sri Namburi - Premium Indian Fashion
+// LABEL by SAHITHI NANDAN - 60 Item Product Database
+// Curated by Sahithi Garlapati - Premium Indian Fashion
 // Categories: kurta-sets, co-ords, lehengas, festive-wear (15 items each)
 
 const generateProducts = () => {
