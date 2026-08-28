@@ -850,57 +850,9 @@
 .featured-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: clamp(16px, 2.4vw, 30px);
+  gap: 30px;
   max-width: 1400px;
   margin: 0 auto;
-}
-
-.featured-grid .product-image-wrap {
-  aspect-ratio: 3 / 4;
-  overflow: hidden;
-}
-
-.featured-grid .product-image-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.featured-grid .product-info {
-  padding: 12px 2px 0;
-}
-
-.featured-grid .product-title {
-  color: var(--text-dark);
-  font-family: var(--font-serif);
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 1.25;
-  min-height: 2.5em;
-  margin: 0 0 8px;
-}
-
-.featured-grid .product-price {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 8px;
-  line-height: 1.2;
-}
-
-.featured-grid .original-price {
-  color: var(--text-muted);
-  font-family: var(--font-sans);
-  font-size: 13px;
-  text-decoration: line-through;
-}
-
-.featured-grid .selling-price {
-  color: var(--primary-color);
-  font-family: var(--font-sans);
-  font-size: 16px;
-  font-weight: 700;
 }
 
 /* ---------- 6. HOW IT WORKS TIMELINE ---------- */
@@ -1167,10 +1119,6 @@
     gap: 15px;
   }
 
-  .featured-pieces {
-    padding: 64px 5%;
-  }
-
   .hero-content h1 {
     font-size: 40px;
   }
@@ -1218,26 +1166,7 @@
   }
 
   .product-title {
-    font-size: 15px;
-  }
-
-  .featured-grid .product-info {
-    padding-top: 9px;
-  }
-
-  .featured-grid .product-title {
-    font-size: 15px;
-    min-height: 3.75em;
-    margin-bottom: 6px;
-  }
-
-  .featured-grid .product-price {
-    gap: 4px;
-  }
-
-  .featured-grid .original-price,
-  .featured-grid .selling-price {
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .booking-modal {
@@ -1570,58 +1499,4 @@
   .about-image img {
     height: 350px !important;
   }
-}
-
-/* ============================================================ */
-/* FOUNDER IMAGE BLUR + OVERLAY                                 */
-/* ============================================================ */
-.about-image {
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-}
-
-.founder-blurred-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  filter: blur(5px);
-  transform: scale(1.06);
-  transition: filter 0.4s ease, transform 0.4s ease;
-}
-
-.about-image:hover .founder-blurred-img {
-  filter: blur(3px);
-  transform: scale(1.09);
-}
-
-.founder-img-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: rgba(18, 23, 31, 0.38);
-  gap: 6px;
-  pointer-events: none;
-}
-
-.founder-overlay-title {
-  font-family: var(--font-serif);
-  font-size: clamp(20px, 4vw, 30px);
-  color: #fff;
-  letter-spacing: 1.5px;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
-  font-weight: 600;
-}
-
-.founder-overlay-sub {
-  font-family: var(--font-sans);
-  font-size: clamp(12px, 2vw, 15px);
-  color: var(--accent-gold);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
 }
