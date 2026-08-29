@@ -165,6 +165,24 @@ const CartDrawer = ({ isOpen, onClose, externalCoupon, onClearExternalCoupon }) 
     }
   }, [user, isOpen, checkoutStep]);
 
+  // Lock background scroll when drawer is open on mobile/desktop
+  useEffect(() => {
+    if (isOpen) {
+      const scrollY = window.scrollY;
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      return () => {
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [isOpen]);
+
   // Reset checkout state when modal closes completely
   useEffect(() => {
     if (!isOpen) {
@@ -616,11 +634,11 @@ const CartDrawer = ({ isOpen, onClose, externalCoupon, onClearExternalCoupon }) 
                       <span>{locationStatus === 'fetching' ? 'Detecting Location...' : 'Use Current Location'}</span>
                     </button>
                     {locationMessage && (
-                      <span className={`location-status-msg ${locationStatus}`}>
+                      <div className={`location-status-msg ${locationStatus}`}>
                         {locationStatus === 'error' && <AlertCircle size={14} />}
                         {locationStatus === 'success' && <Check size={14} />}
-                        {locationMessage}
-                      </span>
+                        <span>{locationMessage}</span>
+                      </div>
                     )}
                   </div>
 
