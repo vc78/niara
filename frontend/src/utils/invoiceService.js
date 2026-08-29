@@ -14,25 +14,59 @@ const formatCurrency = (value) => {
     return `Rs. ${Math.round(amount).toLocaleString('en-IN')}`;
 };
 
-const normalizeItems = (items = []) => items
-    .filter((item) => item && Number(item.quantity) > 0 && Number.isFinite(Number(item.price)))
-    .map((item) => ({
-        name: safeText(item.name, 'Product'),
-        size: safeText(item.size, 'Free Size'),
-        quantity: Math.max(1, Math.floor(Number(item.quantity))),
-        unitPrice: Number(item.price)
-    }));
+const normalizePrice = (val) => {
+    if (typeof val === 'number') return Number.isFinite(val) ? val : 0;
+    if (!val) return 0;
+    const cleaned = String(val).replace(/[^0-9.]/g, '');
+    const num = parseFloat(cleaned);
+    return Number.isFinite(num) ? num : 0;
+};
 
-export const createInvoiceOrder = ({ customer, items, paymentMethod, paymentStatus, paymentId, orderId }) => {
-    const normalizedItems = normalizeItems(items);
-    const subtotal = normalizedItems.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
-    const total = Number(customer?.totalAmount);
-    const safeTotal = Number.isFinite(total) ? total : subtotal;
+const normalizeItems = (items = []) => {
+    if (!Array.isArray(items)) return [];
+    return items
+        .map((item) => {
+            if (!item) return null;
+            const price = normalizePrice(item.price ?? item.unitPrice ?? item.sellingPrice);
+            const quantity = Math.max(1, Math.floor(Number(item.quantity) || 1));
+            return {
+                name: safeText(item.name || item.title, 'Product'),
+                size: safeText(item.size, 'Free Size'),
+                quantity,
+                unitPrice: price
+            };
+        })
+        .filter((item) => item !== null && item.quantity > 0);
+};
 
-    if (!normalizedItems.length) throw new Error('Your order has no valid items.');
+export const createInvoiceOrder = ({
+    customer,
+    items,
+    cart,
+    paymentMethod,
+    paymentStatus,
+    paymentId,
+    orderId,
+    total,
+    subtotal: customSubtotal,
+    discount: customDiscount,
+    deliveryCharge = 0
+}) => {
+    const rawItems = (Array.isArray(items) && items.length > 0) ? items : (Array.isArray(cart) ? cart : []);
+    const normalizedItems = normalizeItems(rawItems);
+    const calculatedSubtotal = normalizedItems.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
+    const subtotal = Number.isFinite(Number(customSubtotal)) ? Number(customSubtotal) : calculatedSubtotal;
+    
+    const passedTotal = Number(total ?? customer?.totalAmount);
+    const safeTotal = Number.isFinite(passedTotal) ? passedTotal : calculatedSubtotal;
+    const discount = Number.isFinite(Number(customDiscount)) ? Number(customDiscount) : Math.max(0, subtotal - safeTotal);
+
+    if (!normalizedItems.length) {
+        throw new Error('Your order has no valid items.');
+    }
 
     return {
-        orderId: safeText(orderId, `SV-${new Date().getFullYear()}-${Date.now().toString().slice(-6)}`),
+        orderId: safeText(orderId, `SN-${new Date().getFullYear()}-${Date.now().toString().slice(-6)}`),
         createdAt: new Date().toISOString(),
         customer: {
             name: safeText(customer?.name),
@@ -47,7 +81,7 @@ export const createInvoiceOrder = ({ customer, items, paymentMethod, paymentStat
         },
         items: normalizedItems,
         subtotal,
-        discount: Math.max(0, subtotal - safeTotal),
+        discount,
         total: safeTotal,
         paymentMethod: safeText(paymentMethod, 'Online Payment'),
         paymentStatus: safeText(paymentStatus, 'SUCCESSFUL'),

@@ -15,12 +15,12 @@ export const AuthProvider = ({ children }) => {
     const saved = localStorage.getItem('registeredUsers');
     // Default mock user if empty
     return saved ? JSON.parse(saved) : [{
-      name: 'Neenu Sharma',
-      email: 'admin@eedara.com',
+      name: 'Client',
+      email: 'client@labelbysahithinandhan.com',
       mobile: '9000164752',
       password: 'password123',
-      address: '123 Luxury Avenue, Banjara Hills',
-      pincode: '500034'
+      address: 'Plot 42, Jubilee Hills, Hyderabad',
+      pincode: '500033'
     }];
   });
 

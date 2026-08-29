@@ -1,7 +1,7 @@
-import { Instagram, MessageSquare, Pin, MapPin, Globe, Video, Package } from 'lucide-react';
+import { Instagram, MessageSquare, MapPin, Globe, Video, Package, Mail } from 'lucide-react';
 import './Footer.css';
 
-const Footer = ({ onNavigateToHome, onNavigateToCollection, onNavigateToSection }) => {
+const Footer = ({ onNavigateToHome, onNavigateToCollection, onNavigateToSection, onNavigateToGallery, onNavigateToAbout, onContactOpen }) => {
   const currentYear = new Date().getFullYear();
   const whatsappPhone = '919000164752';
 
@@ -11,27 +11,32 @@ const Footer = ({ onNavigateToHome, onNavigateToCollection, onNavigateToSection 
     window.open(`https://wa.me/${whatsappPhone}?text=${message}`, '_blank');
   };
 
+  const handleNavClick = (e, callback) => {
+    e.preventDefault();
+    callback();
+  };
+
   return (
     <footer className="footer">
       <div className="footer-content">
         {/* Column 1: Brand */}
         <div className="footer-brand">
           <div className="footer-brand-heading">
-            <img src="/images/logo.png" alt="EEDARA logo" />
+            <img src="/logos/logo1.png" alt="LABEL by SAHITHI NANDAN logo" />
             <h3>LABEL by SAHITHI NANDAN</h3>
           </div>
           <p className="footer-tagline">
             Contemporary Ethnic & Festive Fusion. Handcrafted with elegance, designed just for you.
           </p>
           <div className="social-links">
-            <a href="https://www.instagram.com/label_by_sahithi_nandan/" target="_blank" rel="noopener noreferrer" aria-label="Follow LABEL by SAHITHI NANDAN on Instagram">
+            <a href="https://www.instagram.com/label_by_sahithi_nandan/" target="_blank" rel="noopener noreferrer" aria-label="Follow on Instagram">
               <Instagram size={18} />
             </a>
-            <a href="#whatsapp" onClick={handleWhatsAppContact} aria-label="Contact LABEL by SAHITHI NANDAN on WhatsApp">
+            <a href="#whatsapp" onClick={handleWhatsAppContact} aria-label="Contact on WhatsApp">
               <MessageSquare size={18} />
             </a>
-            <a href="https://maps.app.goo.gl/DYnpiRtkERaKnSmA6" target="_blank" rel="noopener noreferrer" aria-label="Find LABEL by SAHITHI NANDAN on Google Maps">
-              <Pin size={18} />
+            <a href="https://maps.app.goo.gl/DYnpiRtkERaKnSmA6" target="_blank" rel="noopener noreferrer" aria-label="Find us on Google Maps">
+              <MapPin size={18} />
             </a>
           </div>
         </div>
@@ -40,13 +45,19 @@ const Footer = ({ onNavigateToHome, onNavigateToCollection, onNavigateToSection 
         <div className="footer-links">
           <h4>Quick Links</h4>
           <ul className="footer-nav">
-            <li><a href="#home" onClick={(event) => { event.preventDefault(); onNavigateToHome(); }}>Home</a></li>
-            <li><a href="#shop" onClick={(event) => { event.preventDefault(); onNavigateToCollection('all'); }}>Collection</a></li>
-            <li><a href="#how-to-order" onClick={(event) => { event.preventDefault(); onNavigateToSection('how-to-order'); }}>How to Order</a></li>
-            <li><a href="#international" onClick={(event) => { event.preventDefault(); onNavigateToSection('international'); }}>International Orders</a></li>
-            <li><a href="#book-call">Book a Styling Call</a></li>
-            <li><a href="#about">Designer</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#home" onClick={(e) => handleNavClick(e, onNavigateToHome)}>Home</a></li>
+            <li><a href="#shop" onClick={(e) => handleNavClick(e, () => onNavigateToCollection('all'))}>Collection</a></li>
+            <li><a href="#how-to-order" onClick={(e) => handleNavClick(e, () => onNavigateToSection('how-to-order'))}>How to Order</a></li>
+            <li><a href="#international" onClick={(e) => handleNavClick(e, () => onNavigateToSection('international'))}>International Orders</a></li>
+            {onNavigateToGallery && (
+              <li><a href="#gallery" onClick={(e) => handleNavClick(e, onNavigateToGallery)}>Gallery</a></li>
+            )}
+            {onNavigateToAbout && (
+              <li><a href="#about" onClick={(e) => handleNavClick(e, onNavigateToAbout)}>About Designer</a></li>
+            )}
+            {onContactOpen && (
+              <li><a href="#contact" onClick={(e) => handleNavClick(e, onContactOpen)}>Contact Us</a></li>
+            )}
           </ul>
         </div>
 
@@ -54,10 +65,14 @@ const Footer = ({ onNavigateToHome, onNavigateToCollection, onNavigateToSection 
         <div className="footer-categories">
           <h4>Categories</h4>
           <ul className="footer-nav">
-            <li><a href="#shop">Kurta Sets</a></li>
-            <li><a href="#shop">Co-ords</a></li>
-            <li><a href="#shop">Lehengas</a></li>
-            <li><a href="#shop">Festive Wear</a></li>
+            <li><a href="#shop" onClick={(e) => handleNavClick(e, () => onNavigateToCollection('sarees'))}>Sarees</a></li>
+            <li><a href="#shop" onClick={(e) => handleNavClick(e, () => onNavigateToCollection('blouses'))}>Blouses</a></li>
+            <li><a href="#shop" onClick={(e) => handleNavClick(e, () => onNavigateToCollection('kurta-sets'))}>Kurta Sets</a></li>
+            <li><a href="#shop" onClick={(e) => handleNavClick(e, () => onNavigateToCollection('lehengas'))}>Lehengas</a></li>
+            <li><a href="#shop" onClick={(e) => handleNavClick(e, () => onNavigateToCollection('co-ords'))}>Pre Draped</a></li>
+            <li><a href="#shop" onClick={(e) => handleNavClick(e, () => onNavigateToCollection('dresses'))}>Dresses</a></li>
+            <li><a href="#shop" onClick={(e) => handleNavClick(e, () => onNavigateToCollection('men'))}>Men</a></li>
+            <li><a href="#shop" onClick={(e) => handleNavClick(e, () => onNavigateToCollection('festive-wear'))}>Combo & Festive</a></li>
           </ul>
         </div>
 

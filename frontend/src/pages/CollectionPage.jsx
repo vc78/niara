@@ -1,12 +1,15 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { ArrowLeft, Filter, Heart, MessageSquare, ShoppingBag, Eye } from 'lucide-react';
-import { products } from '../data/products';
+import { ArrowLeft, Filter, SlidersHorizontal, Heart, ShoppingBag, Eye, X, Check, Search, RotateCcw, ChevronDown, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { products, categories } from '../data/products';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { ProductGridSkeleton, ProductGridError } from '../components/Skeletons';
 import { useToast } from '../context/ToastContext';
 import QuickViewModal from '../components/QuickViewModal';
 import './CollectionPage.css';
+
+const availableSizes = ['Free Size', 'XS', 'S', 'M', 'L', 'XL', 'XXL', '32', '34', '36', '38', '40', '42', 'Custom'];
 
 const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => {
   const { addToCart } = useCart();
@@ -17,34 +20,32 @@ const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => 
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
 
   const [activeCategory, setActiveCategory] = useState(initialCategory);
-  const [priceRange, setPriceRange] = useState(20000);
+  const [priceRange, setPriceRange] = useState(35000);
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [sortOption, setSortOption] = useState('newest');
+  const [searchQuery, setSearchQuery] = useState('');
+  
+  // Mobile filter drawer state
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
+  // Sync initialCategory prop changes
+  useEffect(() => {
+    if (initialCategory) {
+      setActiveCategory(initialCategory);
+    }
+  }, [initialCategory]);
+
   useEffect(() => {
     setIsLoading(true);
     setHasError(false);
-    // Simulate network delay for fetching products
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1200);
+    }, 280);
     return () => clearTimeout(timer);
-  }, [activeCategory]);
-
-  const categories = [
-    { id: 'all', name: 'All Pieces' },
-    { id: 'sarees', name: 'Saree' },
-    { id: 'blouses', name: 'Blouse' },
-    { id: 'co-ords', name: 'Pre Draped' },
-    { id: 'dresses', name: 'Dresses' },
-    { id: 'kurta-sets', name: 'Kurta' },
-    { id: 'lehengas', name: 'Lehenga' },
-    { id: 'men', name: 'Men' },
-    { id: 'festive-wear', name: 'Combo' }
-  ];
+  }, [activeCategory, sortOption]);
 
   const handleSizeToggle = (size) => {
     setSelectedSizes(prev =>
@@ -52,19 +53,53 @@ const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => 
     );
   };
 
-  const filteredProducts = useMemo(() => {
-    let filtered = products;
+  const handleResetFilters = () => {
+    setActiveCategory('all');
+    setPriceRange(35000);
+    setSelectedSizes([]);
+    setSortOption('newest');
+    setSearchQuery('');
+  };
 
+  const activeFiltersCount = useMemo(() => {
+    let count = 0;
+    if (activeCategory !== 'all') count++;
+    if (priceRange < 35000) count++;
+    if (selectedSizes.length > 0) count += selectedSizes.length;
+    if (searchQuery.trim() !== '') count++;
+    return count;
+  }, [activeCategory, priceRange, selectedSizes, searchQuery]);
+
+  const filteredProducts = useMemo(() => {
+    let filtered = [...products];
+
+    // Category Filter
     if (activeCategory !== 'all') {
       filtered = filtered.filter(p => p.category === activeCategory);
     }
 
-    filtered = filtered.filter(p => p.sellingPrice <= priceRange);
-
-    if (selectedSizes.length > 0) {
-      filtered = filtered.filter(p => p.sizes.some(size => selectedSizes.includes(size)));
+    // Search Query Filter
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      filtered = filtered.filter(p =>
+        p.name.toLowerCase().includes(q) ||
+        (p.fabric && p.fabric.toLowerCase().includes(q)) ||
+        (p.colors && p.colors.some(c => c.toLowerCase().includes(q))) ||
+        (p.description && p.description.toLowerCase().includes(q))
+      );
     }
 
+    // Price Filter
+    filtered = filtered.filter(p => p.sellingPrice <= priceRange);
+
+    // Size Filter
+    if (selectedSizes.length > 0) {
+      filtered = filtered.filter(p =>
+        p.sizes && p.sizes.some(size => selectedSizes.includes(size))
+      );
+    }
+
+    // Sorting
     switch (sortOption) {
       case 'price-asc':
         filtered.sort((a, b) => a.sellingPrice - b.sellingPrice);
@@ -75,6 +110,9 @@ const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => 
       case 'discount':
         filtered.sort((a, b) => b.discountPercent - a.discountPercent);
         break;
+      case 'bestseller':
+        filtered.sort((a, b) => (b.tag === 'Bestseller' ? 1 : 0) - (a.tag === 'Bestseller' ? 1 : 0));
+        break;
       case 'newest':
       default:
         filtered.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
@@ -82,72 +120,167 @@ const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => 
     }
 
     return filtered;
-  }, [activeCategory, priceRange, selectedSizes, sortOption]);
+  }, [activeCategory, priceRange, selectedSizes, sortOption, searchQuery]);
 
-  const handleWhatsAppOrder = (product) => {
-    const message = encodeURIComponent(`Hi! I'm interested in the ${product.name} (₹${product.sellingPrice}). Use code LABEL20 for 20% off!`);
-    window.open(`https://wa.me/919000164752?text=${message}`, '_blank');
-  };
+  const activeCategoryObj = categories.find(c => c.id === activeCategory) || { name: 'All Pieces' };
 
   return (
-    <div className="collection-page" style={{ paddingTop: '100px', minHeight: '100vh', backgroundColor: 'var(--bg-color)' }}>
-      <div className="collection-container" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 5%' }}>
+    <div className="collection-page-wrapper">
+      <div className="collection-container">
 
-        {/* Header & Breadcrumb */}
-        <div className="collection-header" style={{ marginBottom: '40px', display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <button onClick={onBack} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontFamily: 'var(--font-sans)', color: 'var(--text-muted)' }}>
-            <ArrowLeft size={20} /> Back to Home
-          </button>
-          <div style={{ flex: 1 }}>
-            <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '36px', color: 'var(--primary-color)', margin: '0 0 5px' }}>
-              {categories.find(c => c.id === activeCategory)?.name || 'Collection'}
-            </h1>
-            <p style={{ fontFamily: 'var(--font-sans)', color: 'var(--text-muted)', fontSize: '14px', margin: 0 }}>
-              Home {'>'} Collections {'>'} {categories.find(c => c.id === activeCategory)?.name || 'All'}
-            </p>
+        {/* Top Header & Breadcrumb Bar */}
+        <div className="collection-hero-bar">
+          <div className="collection-header-nav">
+            <button onClick={onBack} className="back-btn-chic" aria-label="Back to home">
+              <ArrowLeft size={17} />
+              <span>Back to Home</span>
+            </button>
+            <div className="collection-breadcrumbs">
+              <span onClick={onBack} style={{ cursor: 'pointer' }}>Home</span>
+              <span className="crumb-sep">/</span>
+              <span>Collections</span>
+              <span className="crumb-sep">/</span>
+              <span className="crumb-active">{activeCategoryObj.name}</span>
+            </div>
+          </div>
+
+          <div className="collection-title-row">
+            <div className="collection-heading-group">
+              <h1 className="collection-main-title">{activeCategoryObj.name}</h1>
+              <p className="collection-subtitle">
+                Exclusive handcrafted ensembles styled by Sahithi Garlapati
+              </p>
+            </div>
+            <div className="collection-search-bar">
+              <Search size={18} className="search-icon" />
+              <input
+                type="text"
+                placeholder="Search outfits, fabrics, colors..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="collection-search-input"
+                aria-label="Search collection"
+              />
+              {searchQuery && (
+                <button onClick={() => setSearchQuery('')} className="search-clear-btn" aria-label="Clear search">
+                  <X size={15} />
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
-        <div className="collection-layout" style={{ display: 'flex', gap: '40px', alignItems: 'flex-start' }}>
+        {/* Horizontal Category Pill Scroller (Quick navigation chips) */}
+        <div className="category-pill-strip">
+          <div className="pill-scroll-track">
+            {categories.map(cat => {
+              const count = cat.id === 'all'
+                ? products.length
+                : products.filter(p => p.category === cat.id).length;
+              return (
+                <button
+                  key={cat.id}
+                  className={`pill-btn ${activeCategory === cat.id ? 'active' : ''}`}
+                  onClick={() => setActiveCategory(cat.id)}
+                >
+                  <span>{cat.name}</span>
+                  <span className="pill-count">{count}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
-          {/* Sidebar Filters */}
-          <aside className="collection-sidebar">
-            <div className="filter-group">
-              <h4>Categories</h4>
-              <ul className="category-list">
+        {/* Mobile Control Bar (Filter trigger & Sort) */}
+        <div className="mobile-filter-toolbar">
+          <button
+            className="mobile-filter-trigger-btn"
+            onClick={() => setIsMobileFilterOpen(true)}
+          >
+            <SlidersHorizontal size={17} />
+            <span>Filters {activeFiltersCount > 0 && `(${activeFiltersCount})`}</span>
+          </button>
+
+          <div className="mobile-sort-wrapper">
+            <select
+              value={sortOption}
+              onChange={(e) => setSortOption(e.target.value)}
+              className="mobile-sort-select"
+              aria-label="Sort collection"
+            >
+              <option value="newest">✨ New Arrivals</option>
+              <option value="bestseller">⭐ Bestsellers</option>
+              <option value="price-asc">💵 Price: Low to High</option>
+              <option value="price-desc">💎 Price: High to Low</option>
+              <option value="discount">🏷️ Highest Discount</option>
+            </select>
+            <ChevronDown size={14} className="sort-chevron-icon" />
+          </div>
+        </div>
+
+        {/* Main Content Layout */}
+        <div className="collection-layout-grid">
+
+          {/* Desktop Filter Sidebar */}
+          <aside className="collection-desktop-sidebar">
+            <div className="sidebar-header">
+              <h3>Filters</h3>
+              {activeFiltersCount > 0 && (
+                <button onClick={handleResetFilters} className="reset-filters-btn">
+                  <RotateCcw size={13} /> Reset
+                </button>
+              )}
+            </div>
+
+            <div className="filter-block">
+              <h4 className="filter-heading">Categories</h4>
+              <ul className="desktop-category-list">
                 {categories.map(cat => (
                   <li key={cat.id}>
                     <button
-                      className={`cat-btn ${activeCategory === cat.id ? 'active' : ''}`}
+                      className={`desktop-cat-link ${activeCategory === cat.id ? 'active' : ''}`}
                       onClick={() => setActiveCategory(cat.id)}
                     >
-                      {cat.name}
+                      <span>{cat.name}</span>
+                      <span className="cat-count">
+                        {cat.id === 'all'
+                          ? products.length
+                          : products.filter(p => p.category === cat.id).length}
+                      </span>
                     </button>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="filter-group">
-              <h4>Price Range: Up to ₹{priceRange.toLocaleString()}</h4>
+            <div className="filter-block">
+              <div className="filter-heading-flex">
+                <h4 className="filter-heading">Max Price</h4>
+                <span className="price-tag-value">₹{priceRange.toLocaleString('en-IN')}</span>
+              </div>
               <input
                 type="range"
-                min="1000"
-                max="20000"
-                step="500"
+                min="5000"
+                max="35000"
+                step="1000"
                 value={priceRange}
                 onChange={(e) => setPriceRange(Number(e.target.value))}
-                style={{ width: '100%', accentColor: 'var(--primary-color)' }}
+                className="luxury-range-slider"
+                aria-label="Price range filter"
               />
+              <div className="slider-limits">
+                <span>₹5,000</span>
+                <span>₹35,000</span>
+              </div>
             </div>
 
-            <div className="filter-group">
-              <h4>Sizes</h4>
-              <div className="size-filters">
-                {['XS', 'S', 'M', 'L', 'XL'].map(size => (
+            <div className="filter-block">
+              <h4 className="filter-heading">Sizes</h4>
+              <div className="desktop-size-grid">
+                {availableSizes.map(size => (
                   <button
                     key={size}
-                    className={`size-btn ${selectedSizes.includes(size) ? 'active' : ''}`}
+                    className={`desktop-size-chip ${selectedSizes.includes(size) ? 'active' : ''}`}
                     onClick={() => handleSizeToggle(size)}
                   >
                     {size}
@@ -156,83 +289,348 @@ const CollectionPage = ({ initialCategory = 'all', onBack, onProductClick }) => 
               </div>
             </div>
 
-            <div className="filter-group">
-              <h4>Sort By</h4>
-              <select value={sortOption} onChange={(e) => setSortOption(e.target.value)} className="sort-select">
+            <div className="filter-block">
+              <h4 className="filter-heading">Sort By</h4>
+              <select
+                value={sortOption}
+                onChange={(e) => setSortOption(e.target.value)}
+                className="desktop-sort-dropdown"
+                aria-label="Sort options"
+              >
                 <option value="newest">Newest Arrivals</option>
+                <option value="bestseller">Bestsellers First</option>
                 <option value="price-asc">Price: Low to High</option>
                 <option value="price-desc">Price: High to Low</option>
                 <option value="discount">Highest Discount</option>
               </select>
             </div>
+
+            <div className="sidebar-promo-card">
+              <Sparkles size={20} className="promo-card-icon" />
+              <h5>Custom Styling</h5>
+              <p>Need bespoke sizing or bridal consultation? Connect directly with Sahithi on WhatsApp.</p>
+              <a
+                href="https://wa.me/919000164752?text=Hello%20Sahithi%2C%20I%20would%20like%20to%20consult%20about%20a%20bespoke%20order."
+                target="_blank"
+                rel="noreferrer"
+                className="promo-card-link"
+              >
+                Chat on WhatsApp
+              </a>
+            </div>
           </aside>
 
-          {/* Product Grid */}
-          <main className="collection-main" style={{ flex: 1 }}>
-            <p className="product-count" style={{ marginBottom: '20px', fontFamily: 'var(--font-sans)', color: 'var(--text-muted)' }}>
-              Showing {filteredProducts.length} of {products.length} pieces
-            </p>
+          {/* Product Gallery Section */}
+          <main className="collection-products-area">
 
-            <div className="products-grid">
-              {isLoading ? (
-                <ProductGridSkeleton count={6} />
-              ) : hasError ? (
-                <ProductGridError onRetry={() => setIsLoading(true)} />
-              ) : (
-                filteredProducts.map(product => (
-                  <div key={product.id} className="product-card" onClick={() => onProductClick && onProductClick(product)} style={{ cursor: 'pointer' }}>
-                    <div className="product-image-wrap">
-                      <img src={product.image} alt={product.name} loading="lazy" />
-                      {product.discountPercent > 0 && (
-                        <span className="discount-badge">{product.discountPercent}% OFF</span>
-                      )}
-                      {(product.tag || product.isNew) && (
-                        <span className="product-tag">{product.tag || 'New'}</span>
-                      )}
+            {/* Desktop Toolbar Info */}
+            <div className="desktop-results-toolbar">
+              <div className="toolbar-count-row">
+                <p className="results-count-text">
+                  Showing <strong>{filteredProducts.length}</strong> {filteredProducts.length === 1 ? 'piece' : 'pieces'}
+                  {activeCategory !== 'all' && ` in ${activeCategoryObj.name}`}
+                </p>
+              </div>
 
-                      <div className="product-hover-overlay">
+              {activeFiltersCount > 0 && (
+                <div className="active-filter-chips">
+                  {activeCategory !== 'all' && (
+                    <span className="filter-chip">
+                      {activeCategoryObj.name}
+                      <button onClick={() => setActiveCategory('all')} aria-label="Clear category"><X size={12} /></button>
+                    </span>
+                  )}
+                  {priceRange < 35000 && (
+                    <span className="filter-chip">
+                      ≤ ₹{priceRange.toLocaleString('en-IN')}
+                      <button onClick={() => setPriceRange(35000)} aria-label="Clear price limit"><X size={12} /></button>
+                    </span>
+                  )}
+                  {selectedSizes.map(s => (
+                    <span key={s} className="filter-chip">
+                      Size: {s}
+                      <button onClick={() => handleSizeToggle(s)} aria-label={`Clear size ${s}`}><X size={12} /></button>
+                    </span>
+                  ))}
+                  {searchQuery && (
+                    <span className="filter-chip">
+                      "{searchQuery}"
+                      <button onClick={() => setSearchQuery('')} aria-label="Clear search"><X size={12} /></button>
+                    </span>
+                  )}
+                  <button onClick={handleResetFilters} className="clear-all-chips">
+                    Clear all
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Product Cards Grid */}
+            {isLoading ? (
+              <ProductGridSkeleton count={6} />
+            ) : hasError ? (
+              <ProductGridError onRetry={() => setIsLoading(true)} />
+            ) : filteredProducts.length === 0 ? (
+              <div className="no-products-found">
+                <div className="no-products-icon-box">
+                  <Filter size={36} />
+                </div>
+                <h3>No Outfits Found</h3>
+                <p>We couldn't find any piece matching your active filters. Try clearing your filters or exploring another category.</p>
+                <button onClick={handleResetFilters} className="reset-btn-pill">
+                  <RotateCcw size={16} /> Reset All Filters
+                </button>
+              </div>
+            ) : (
+              <div className="luxury-product-grid">
+                {filteredProducts.map(product => {
+                  const inWishlist = isInWishlist(product.id);
+                  return (
+                    <motion.div
+                      key={product.id}
+                      className="boutique-product-card"
+                      onClick={() => onProductClick && onProductClick(product)}
+                      layout
+                      initial={{ opacity: 0, scale: 0.97 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.25 }}
+                    >
+                      <div className="card-media-wrapper">
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          loading="lazy"
+                          className="product-card-img"
+                        />
+
+                        {/* Top Badges */}
+                        <div className="badge-corner-left">
+                          {product.discountPercent > 0 && (
+                            <span className="gold-discount-tag">
+                              {product.discountPercent}% OFF
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="badge-corner-right">
+                          {(product.tag || product.isNew) && (
+                            <span className="editorial-tag">
+                              {product.tag || 'New'}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Floating Wishlist Button */}
                         <button
-                          className="wishlist-btn-overlay"
+                          className={`wishlist-floating-btn ${inWishlist ? 'active' : ''}`}
+                          aria-label="Add to Wishlist"
                           onClick={(e) => {
                             e.stopPropagation();
                             toggleWishlist(product);
+                            addToast(
+                              inWishlist
+                                ? `Removed ${product.name} from wishlist`
+                                : `Added ${product.name} to wishlist ❤️`,
+                              'info'
+                            );
                           }}
                         >
-                          <Heart fill={isInWishlist(product.id) ? "currentColor" : "none"} />
+                          <Heart
+                            size={18}
+                            fill={inWishlist ? 'var(--maroon-red)' : 'none'}
+                            color={inWishlist ? 'var(--maroon-red)' : 'var(--primary-color)'}
+                          />
                         </button>
-                        <div className="overlay-actions-row">
-                          <button className="add-to-cart-btn-overlay" onClick={(e) => {
-                            e.stopPropagation();
-                            addToCart(product, "Free Size", 1);
-                            addToast(`${product.name} added to cart!`, 'success');
-                          }}>
-                            <ShoppingBag size={16} /> Add to Cart
+
+                        {/* Hover / Quick Action Bar */}
+                        <div className="hover-action-overlay">
+                          <button
+                            className="quick-view-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setQuickViewProduct(product);
+                              setIsQuickViewOpen(true);
+                            }}
+                          >
+                            <Eye size={14} />
+                            <span>Quick View</span>
                           </button>
-                          <button className="whatsapp-btn-overlay" onClick={(e) => {
-                            e.stopPropagation();
-                            setQuickViewProduct(product);
-                            setIsQuickViewOpen(true);
-                          }}>
-                            <Eye size={16} /> Quick View
+                          <button
+                            className="quick-add-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              addToCart(product, product.sizes?.[0] || 'Free Size', 1);
+                              addToast(`${product.name} added to cart! ✨`, 'success');
+                            }}
+                          >
+                            <ShoppingBag size={14} />
+                            <span>Add</span>
                           </button>
                         </div>
                       </div>
-                    </div>
-                    <div className="product-info">
-                      <h3 className="product-title">{product.name}</h3>
-                      <div className="product-price">
-                        {product.discountPercent > 0 && (
-                          <span className="original-price">₹{product.originalPrice.toLocaleString()}</span>
+
+                      <div className="product-details-box">
+                        <span className="fabric-subtitle">
+                          {product.fabric || 'Pure Artisan Silk'}
+                        </span>
+                        <h3 className="product-item-title">{product.name}</h3>
+
+                        <div className="pricing-row">
+                          <span className="final-price">
+                            ₹{product.sellingPrice.toLocaleString('en-IN')}
+                          </span>
+                          {product.discountPercent > 0 && (
+                            <span className="strikethrough-price">
+                              ₹{product.originalPrice.toLocaleString('en-IN')}
+                            </span>
+                          )}
+                        </div>
+
+                        {product.sizes && product.sizes.length > 0 && (
+                          <div className="size-preview-row">
+                            {product.sizes.slice(0, 3).map((sz, idx) => (
+                              <span key={idx} className="size-badge-mini">{sz}</span>
+                            ))}
+                            {product.sizes.length > 3 && (
+                              <span className="size-more">+{product.sizes.length - 3}</span>
+                            )}
+                          </div>
                         )}
-                        <span className="selling-price">₹{product.sellingPrice.toLocaleString()}</span>
                       </div>
-                    </div>
-                  </div>
-                )))}
-            </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            )}
           </main>
         </div>
       </div>
+
+      {/* Mobile Slide-Up Filter Drawer */}
+      <AnimatePresence>
+        {isMobileFilterOpen && (
+          <div className="mobile-filter-drawer-backdrop" onClick={() => setIsMobileFilterOpen(false)}>
+            <motion.div
+              className="mobile-filter-drawer-panel"
+              onClick={(e) => e.stopPropagation()}
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ type: 'spring', damping: 26, stiffness: 240 }}
+            >
+              <div className="drawer-header-bar">
+                <div className="drawer-title-group">
+                  <h3>Filters & Sorting</h3>
+                  <span className="drawer-count">{filteredProducts.length} pieces match</span>
+                </div>
+                <button
+                  className="drawer-close-btn"
+                  onClick={() => setIsMobileFilterOpen(false)}
+                  aria-label="Close filter drawer"
+                >
+                  <X size={22} />
+                </button>
+              </div>
+
+              <div className="drawer-scrollable-body">
+                {/* Category Selection */}
+                <div className="drawer-section">
+                  <h4>Category</h4>
+                  <div className="drawer-category-grid">
+                    {categories.map(cat => (
+                      <button
+                        key={cat.id}
+                        className={`drawer-cat-btn ${activeCategory === cat.id ? 'active' : ''}`}
+                        onClick={() => setActiveCategory(cat.id)}
+                      >
+                        {cat.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Price Range */}
+                <div className="drawer-section">
+                  <div className="filter-heading-flex">
+                    <h4>Max Price</h4>
+                    <span className="price-tag-value">₹{priceRange.toLocaleString('en-IN')}</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="5000"
+                    max="35000"
+                    step="1000"
+                    value={priceRange}
+                    onChange={(e) => setPriceRange(Number(e.target.value))}
+                    className="luxury-range-slider"
+                  />
+                  <div className="slider-limits">
+                    <span>₹5,000</span>
+                    <span>₹35,000</span>
+                  </div>
+                </div>
+
+                {/* Size Selection */}
+                <div className="drawer-section">
+                  <h4>Sizes</h4>
+                  <div className="drawer-size-wrap">
+                    {availableSizes.map(size => (
+                      <button
+                        key={size}
+                        className={`drawer-size-btn ${selectedSizes.includes(size) ? 'active' : ''}`}
+                        onClick={() => handleSizeToggle(size)}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Sort Option */}
+                <div className="drawer-section">
+                  <h4>Sort Outfits</h4>
+                  <div className="drawer-sort-options">
+                    {[
+                      { id: 'newest', label: 'Newest Arrivals' },
+                      { id: 'bestseller', label: 'Bestsellers' },
+                      { id: 'price-asc', label: 'Price: Low to High' },
+                      { id: 'price-desc', label: 'Price: High to Low' },
+                      { id: 'discount', label: 'Highest Discount' }
+                    ].map(opt => (
+                      <button
+                        key={opt.id}
+                        className={`drawer-sort-btn ${sortOption === opt.id ? 'active' : ''}`}
+                        onClick={() => setSortOption(opt.id)}
+                      >
+                        <span>{opt.label}</span>
+                        {sortOption === opt.id && <Check size={16} />}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Drawer Footer Actions */}
+              <div className="drawer-footer-actions">
+                <button
+                  className="drawer-reset-btn"
+                  onClick={handleResetFilters}
+                >
+                  Reset All
+                </button>
+                <button
+                  className="drawer-apply-btn"
+                  onClick={() => setIsMobileFilterOpen(false)}
+                >
+                  Apply ({filteredProducts.length})
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Quick View Modal */}
       <QuickViewModal
         isOpen={isQuickViewOpen}
         onClose={() => setIsQuickViewOpen(false)}

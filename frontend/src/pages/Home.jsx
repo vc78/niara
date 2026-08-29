@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Play, ArrowRight, Heart, MessageSquare, Globe, Video, Scissors, RefreshCcw, Star, X, Package, ShoppingBag, Eye } from 'lucide-react';
+import { Play, ArrowRight, Heart, MessageSquare, Globe, Video, Scissors, RefreshCcw, Star, X, Package, ShoppingBag, Eye, Tag, Sparkles, Check, Copy } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { products } from '../data/products';
 import { useCart } from '../context/CartContext';
@@ -9,7 +9,47 @@ import QuickViewModal from '../components/QuickViewModal';
 import CategorySlider from '../components/CategorySlider';
 import './Home.css';
 
-const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClick }) => {
+const BANNER_COUPONS = [
+  {
+    code: 'FESTIVE25',
+    title: 'Festive Grand Luxe',
+    discount: '25% OFF',
+    percent: 25,
+    bannerImg: '/banners/b1.png',
+    desc: '25% off on our signature festive & bridal couture collection',
+    badge: 'Grand Festive'
+  },
+  {
+    code: 'LABEL20',
+    title: 'Heritage Label Special',
+    discount: '20% OFF',
+    percent: 20,
+    bannerImg: '/banners/b2.png',
+    desc: '20% off across all handcrafted artisanal sets and sarees',
+    badge: 'Popular Pick'
+  },
+  {
+    code: 'WELCOME15',
+    title: 'Welcome Trousseau',
+    discount: '15% OFF',
+    percent: 15,
+    bannerImg: '/banners/b3.png',
+    desc: '15% instant discount on your very first couture order',
+    badge: 'New User'
+  },
+  {
+    code: 'FREESHIP',
+    title: 'Express Ship + ₹500 OFF',
+    discount: '₹500 OFF',
+    percent: 0,
+    flatDiscount: 500,
+    bannerImg: '/banners/b4.png',
+    desc: 'Free worldwide express delivery plus ₹500 instant off',
+    badge: 'Worldwide'
+  }
+];
+
+const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClick, onApplyCoupon }) => {
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
   const { addToast } = useToast();
@@ -19,9 +59,17 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
     try {
       await navigator.clipboard.writeText(code);
       setCopiedCoupon(code);
-      window.setTimeout(() => setCopiedCoupon(''), 1800);
+      addToast(`Coupon ${code} copied! Tap Apply to use it.`, 'success');
+      window.setTimeout(() => setCopiedCoupon(''), 2000);
     } catch {
-      addToast('Copy unavailable. Please select the code manually.', 'info');
+      addToast(`Code: ${code}`, 'info');
+    }
+  };
+
+  const handleApplyClick = (code) => {
+    if (onApplyCoupon) {
+      onApplyCoupon(code);
+      addToast(`Applied ${code}! Price updated in bag. ✨`, 'success');
     }
   };
 
@@ -150,7 +198,6 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
       {/* SECTION 2: CATEGORY SLIDER (DIPPED IN LOVE) */}
       <CategorySlider onNavigateToCollection={onNavigateToCollection} />
 
-
       <QuickViewModal
         isOpen={isQuickViewOpen}
         onClose={() => setIsQuickViewOpen(false)}
@@ -209,94 +256,109 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
         </div>
       )}
 
-      {/* SECTION 2.5: OFFERS & DISCOUNTS (WITH SCROLLER) */}
-      <section className="promotional-offers">
+      {/* SECTION 2.5: INTERACTIVE BANNER COUPONS & OFFERS (Task 2) */}
+      <section className="promotional-offers" id="offers">
         {/* Headline Scroller */}
         <div className="promo-scroller-container">
           <div className="promo-scroller-content">
             <span className="scroller-item">WORLDWIDE SHIPPING</span>
             <span className="scroller-separator">•</span>
+            <span className="scroller-item">FESTIVE25 FOR 25% OFF</span>
+            <span className="scroller-separator">•</span>
             <span className="scroller-item">PREMIUM FABRICS</span>
+            <span className="scroller-separator">•</span>
+            <span className="scroller-item">LABEL20 FOR 20% OFF</span>
             <span className="scroller-separator">•</span>
             <span className="scroller-item">BESPOKE BRIDAL WEAR</span>
             <span className="scroller-separator">•</span>
+            <span className="scroller-item">WELCOME15 FOR 15% OFF</span>
+            <span className="scroller-separator">•</span>
             <span className="scroller-item">CUSTOM TAILORING AVAILABLE</span>
             <span className="scroller-separator">•</span>
-            <span className="scroller-item">LABEL EXCLUSIVE COLLECTION</span>
-            <span className="scroller-separator">•</span>
-            <span className="scroller-item">PREMIUM HANDCRAFTED QUALITY</span>
+            <span className="scroller-item">FREESHIP FOR EXPRESS SHIP + ₹500 OFF</span>
             {/* Duplicate for infinite effect */}
             <span className="scroller-item" aria-hidden="true">WORLDWIDE SHIPPING</span>
             <span className="scroller-separator" aria-hidden="true">•</span>
+            <span className="scroller-item" aria-hidden="true">FESTIVE25 FOR 25% OFF</span>
+            <span className="scroller-separator" aria-hidden="true">•</span>
             <span className="scroller-item" aria-hidden="true">PREMIUM FABRICS</span>
+            <span className="scroller-separator" aria-hidden="true">•</span>
+            <span className="scroller-item" aria-hidden="true">LABEL20 FOR 20% OFF</span>
             <span className="scroller-separator" aria-hidden="true">•</span>
             <span className="scroller-item" aria-hidden="true">BESPOKE BRIDAL WEAR</span>
             <span className="scroller-separator" aria-hidden="true">•</span>
+            <span className="scroller-item" aria-hidden="true">WELCOME15 FOR 15% OFF</span>
+            <span className="scroller-separator" aria-hidden="true">•</span>
             <span className="scroller-item" aria-hidden="true">CUSTOM TAILORING AVAILABLE</span>
             <span className="scroller-separator" aria-hidden="true">•</span>
-            <span className="scroller-item" aria-hidden="true">LABEL EXCLUSIVE COLLECTION</span>
-            <span className="scroller-separator" aria-hidden="true">•</span>
-            <span className="scroller-item" aria-hidden="true">PREMIUM HANDCRAFTED QUALITY</span>
+            <span className="scroller-item" aria-hidden="true">FREESHIP FOR EXPRESS SHIP + ₹500 OFF</span>
           </div>
         </div>
 
-        {/* Discount Cards */}
-        <div className="offers-grid">
-          <div className="offer-card gold-theme">
-            <div className="offer-card-inner">
-              <span className="offer-badge">Limited Time</span>
-              <h3>LABEL Special</h3>
-              <div className="offer-discount">
-                <span className="discount-value">20%</span>
-                <span className="discount-text">OFF</span>
-              </div>
-              <p>On all Handcrafted Collections</p>
-              <div className="promo-code-box">
-                <span className="code">LABEL20</span>
-                <button className="copy-btn" onClick={() => copyCoupon('LABEL20')}>{copiedCoupon === 'LABEL20' ? 'Copied' : 'Copy code'}</button>
-              </div>
-            </div>
-          </div>
+        {/* Section Header */}
+        <div className="section-header center" style={{ marginTop: '28px', marginBottom: '24px' }}>
+          <span className="section-eyebrow" style={{ color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '2px', fontSize: '12px', fontWeight: 700 }}>Exclusive Vouchers</span>
+          <h2 style={{ margin: '6px 0 8px' }}>Festive & Couture Offers</h2>
+          <p>Tap any voucher to apply live discount in your cart instantly</p>
+        </div>
 
-          <div className="offer-card blue-theme">
-            <div className="offer-card-inner">
-              <span className="offer-badge">New Users</span>
-              <h3>Welcome Offer</h3>
-              <div className="offer-discount">
-                <span className="discount-value">15%</span>
-                <span className="discount-text">OFF</span>
+        {/* Interactive Banner Coupons Grid (b1 - b4) */}
+        <div className="banner-coupons-grid">
+          {BANNER_COUPONS.map((coupon, idx) => (
+            <motion.div
+              key={coupon.code}
+              className="banner-coupon-card"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1, duration: 0.4 }}
+            >
+              <div className="banner-coupon-img-wrap">
+                <img
+                  src={coupon.bannerImg}
+                  alt={`${coupon.title} Banner`}
+                  className="banner-coupon-img"
+                  loading="lazy"
+                />
+                <div className="banner-badge-tag">{coupon.badge}</div>
+                <div className="banner-discount-overlay">{coupon.discount}</div>
               </div>
-              <p>On your very first purchase</p>
-              <div className="promo-code-box">
-                <span className="code">WELCOME15</span>
-                <button className="copy-btn" onClick={() => copyCoupon('WELCOME15')}>{copiedCoupon === 'WELCOME15' ? 'Copied' : 'Copy code'}</button>
-              </div>
-            </div>
-          </div>
 
-          <div className="offer-card light-theme">
-            <div className="offer-card-inner">
-              <span className="offer-badge">Global Access</span>
-              <h3>Free Shipping</h3>
-              <div className="offer-discount">
-                <span className="discount-value">₹0</span>
-                <span className="discount-text">FEE</span>
+              <div className="banner-coupon-content">
+                <div className="banner-code-header">
+                  <h3 className="banner-coupon-title">{coupon.title}</h3>
+                  <span className="banner-code-pill">{coupon.code}</span>
+                </div>
+                <p className="banner-coupon-desc">{coupon.desc}</p>
+
+                <div className="banner-coupon-actions">
+                  <button
+                    type="button"
+                    className="banner-apply-btn"
+                    onClick={() => handleApplyClick(coupon.code)}
+                  >
+                    <Sparkles size={15} /> Apply Code
+                  </button>
+                  <button
+                    type="button"
+                    className="banner-copy-btn"
+                    onClick={() => copyCoupon(coupon.code)}
+                    title="Copy coupon code"
+                  >
+                    {copiedCoupon === coupon.code ? <Check size={16} /> : <Copy size={16} />}
+                  </button>
+                </div>
               </div>
-              <p>On international orders above ₹40,000</p>
-              <div className="promo-code-box">
-                <span className="code">AUTO APPLIED</span>
-                <button className="copy-btn disabled">Applied</button>
-              </div>
-            </div>
-          </div>
+            </motion.div>
+          ))}
         </div>
       </section>
 
       {/* SECTION 3: EDITORIAL ABOUT & MARQUEE */}
       <section className="editorial-about" id="about">
         <div className="about-grid">
-          <div className="about-image">
-            <img src="/images/founder.jpg" alt="Founder" style={{ filter: 'blur(8px)' }} />
+          <div className="about-image about-image-logo">
+            <img src="/logos/logo1.png" alt="LABEL by SAHITHI NANDAN" className="founder-logo-img" />
           </div>
           <div className="about-text">
             <h2>From Passion to Profession</h2>
@@ -329,30 +391,30 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
 
         <div className="masonry-grid">
           <div className="masonry-item item-large" onClick={() => onNavigateToCollection('kurta-sets')}>
-            <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=600" alt="Kurta Sets" />
+            <img src="/images/i5.png" alt="Kurta Sets" />
             <div className="masonry-overlay">
               <h3>Kurta Sets</h3>
               <span>Explore {'>'}</span>
             </div>
           </div>
           <div className="masonry-item" onClick={() => onNavigateToCollection('lehengas')}>
-            <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600" alt="Lehengas" />
+            <img src="/images/i9.png" alt="Lehengas" />
             <div className="masonry-overlay">
               <h3>Lehengas</h3>
               <span>Explore {'>'}</span>
             </div>
           </div>
           <div className="masonry-item" onClick={() => onNavigateToCollection('co-ords')}>
-            <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600" alt="Co-ords" />
+            <img src="/images/i8.png" alt="Co-ords" />
             <div className="masonry-overlay">
-              <h3>Co-ords</h3>
+              <h3>Pre Draped</h3>
               <span>Explore {'>'}</span>
             </div>
           </div>
           <div className="masonry-item" onClick={() => onNavigateToCollection('festive-wear')}>
-            <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=600" alt="Festive Wear" />
+            <img src="/images/i6.png" alt="Festive Wear" />
             <div className="masonry-overlay">
-              <h3>Festive Wear</h3>
+              <h3>Combo & Festive</h3>
               <span>Explore {'>'}</span>
             </div>
           </div>
@@ -381,9 +443,11 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
                 <div className="product-hover-overlay">
                   <button
                     className="wishlist-btn-overlay"
+                    aria-label="Add to Wishlist"
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleWishlist(product);
+                      addToast(isInWishlist(product.id) ? `Removed from wishlist` : `Added ${product.name} to wishlist ❤️`, 'info');
                     }}
                   >
                     <Heart fill={isInWishlist(product.id) ? "currentColor" : "none"} />
@@ -391,7 +455,7 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
                   <div className="overlay-actions-row">
                     <button className="add-to-cart-btn-overlay" onClick={(e) => {
                       e.stopPropagation();
-                      addToCart(product, "Free Size", 1);
+                      addToCart(product, product.sizes?.[0] || "Free Size", 1);
                       addToast(`${product.name} added to cart!`, 'success');
                     }}>
                       <ShoppingBag size={16} /> Add to Cart
@@ -410,9 +474,9 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
                 <h3 className="product-title">{product.name}</h3>
                 <div className="product-price">
                   {product.discountPercent > 0 && (
-                    <span className="original-price">₹{product.originalPrice.toLocaleString()}</span>
+                    <span className="original-price">₹{product.originalPrice.toLocaleString('en-IN')}</span>
                   )}
-                  <span className="selling-price">₹{product.sellingPrice.toLocaleString()}</span>
+                  <span className="selling-price">₹{product.sellingPrice.toLocaleString('en-IN')}</span>
                 </div>
               </div>
             </div>
@@ -485,10 +549,10 @@ const Home = ({ onAuthOpen, onProfileOpen, onNavigateToCollection, onProductClic
             </a>
           </div>
           <div className="insta-grid">
-            <div className="insta-item"><img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400" alt="Insta 1" /></div>
-            <div className="insta-item"><img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=400" alt="Insta 2" /></div>
-            <div className="insta-item"><img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=400" alt="Insta 3" /></div>
-            <div className="insta-item"><img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400" alt="Insta 4" /></div>
+            <div className="insta-item"><img src="/images/i1.png" alt="Insta 1" /></div>
+            <div className="insta-item"><img src="/images/i2.png" alt="Insta 2" /></div>
+            <div className="insta-item"><img src="/images/i5.png" alt="Insta 3" /></div>
+            <div className="insta-item"><img src="/images/i9.png" alt="Insta 4" /></div>
           </div>
         </div>
 

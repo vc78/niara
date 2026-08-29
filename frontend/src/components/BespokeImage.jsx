@@ -20,7 +20,7 @@ const BespokeImage = ({ src, alt, className, style, ...props }) => {
       <div className={`bespoke-image-container ${className || ''}`} style={style}>
         <img
           src={heroImg}
-          alt={alt || 'Eedara Collection Item'}
+          alt={alt || 'LABEL by SAHITHI NANDAN Piece'}
           className="bespoke-image loaded"
         />
       </div>
@@ -31,7 +31,7 @@ const BespokeImage = ({ src, alt, className, style, ...props }) => {
     <div className={`bespoke-image-container ${className || ''}`} style={style}>
       <img
         src={src}
-        alt={alt || "Eedara Collection Item"}
+        alt={alt || "LABEL by SAHITHI NANDAN Piece"}
         className={`bespoke-image ${isLoaded ? 'loaded' : 'loading'}`}
         onError={handleError}
         onLoad={handleLoad}

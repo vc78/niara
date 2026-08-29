@@ -65,8 +65,8 @@ const WishlistDrawer = ({ isOpen, onClose }) => {
 
     const phoneNumber = "919000164752";
 
-    let messageText = `✨ *Bespoke Consultation - Eedara* ✨\n\n`;
-    messageText += `Hello Eedara team, I have curated a selection of beautiful designs from your gallery and would love to consult with you on their custom crafting:\n\n`;
+    let messageText = `✨ *Bespoke Consultation - LABEL by SAHITHI NANDAN* ✨\n\n`;
+    messageText += `Hello LABEL by SAHITHI NANDAN team, I have curated a selection of beautiful designs from your gallery and would love to consult with you on their custom crafting:\n\n`;
     messageText += `💖 *MY TROUSSEAU SELECTION:*\n`;
     messageText += `------------------------------------------\n`;
 

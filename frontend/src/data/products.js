@@ -1,115 +1,563 @@
-// LABEL by SAHITHI NANDAN - 60 Item Product Database
-// Curated by Sahithi Garlapati - Premium Indian Fashion
-// Categories: kurta-sets, co-ords, lehengas, festive-wear (15 items each)
+// LABEL by SAHITHI NANDAN - Curated Luxury Product Database
+// Curated Haute Couture & Artisanal Indian Wear
+// Categories: sarees, blouses, co-ords, dresses, kurta-sets, lehengas, men, festive-wear
 
-const generateProducts = () => {
-  const products = [];
+export const categories = [
+  { id: 'all', name: 'All Pieces', slug: 'all' },
+  { id: 'sarees', name: 'Saree', slug: 'sarees' },
+  { id: 'blouses', name: 'Blouse', slug: 'blouses' },
+  { id: 'co-ords', name: 'Pre Draped', slug: 'co-ords' },
+  { id: 'dresses', name: 'Dresses', slug: 'dresses' },
+  { id: 'kurta-sets', name: 'Kurta', slug: 'kurta-sets' },
+  { id: 'lehengas', name: 'Lehenga', slug: 'lehengas' },
+  { id: 'men', name: 'Men', slug: 'men' },
+  { id: 'festive-wear', name: 'Combo', slug: 'festive-wear' }
+];
 
-  const kurtaImages = [
-    'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80',
-    'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80',
-    'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=600&q=80'
-  ];
+export const products = [
+  // ==========================================
+  // 1. SAREES (Saree)
+  // ==========================================
+  {
+    id: 'saree-1',
+    name: 'Heritage Banarasi Katan Silk Saree',
+    category: 'sarees',
+    image: '/images/i1.png',
+    images: ['/images/i1.png', '/images/i2.png', '/images/i3.png'],
+    originalPrice: 18500,
+    discountPercent: 20,
+    sellingPrice: 14800,
+    sizes: ['Free Size', 'With Custom Blouse'],
+    colors: ['Crimson Red', 'Royal Gold', 'Emerald Green'],
+    fabric: 'Pure Katan Silk with Zari Brocade',
+    tag: 'Bestseller',
+    isNew: true,
+    description: 'An exquisite handwoven Banarasi silk saree adorned with intricate floral jaal and a regal antique gold zari pallu.'
+  },
+  {
+    id: 'saree-2',
+    name: 'Tissue Organza Hand-Painted Saree',
+    category: 'sarees',
+    image: '/images/i2.png',
+    images: ['/images/i2.png', '/images/i1.png', '/images/i4.png'],
+    originalPrice: 16000,
+    discountPercent: 15,
+    sellingPrice: 13600,
+    sizes: ['Free Size', 'With Custom Blouse'],
+    colors: ['Blush Pink', 'Lilac Mist', 'Pale Gold'],
+    fabric: 'Tissue Silk Organza',
+    tag: 'New',
+    isNew: true,
+    description: 'Airy tissue organza drape with hand-painted botanical motifs and delicate zardozi border accents.'
+  },
+  {
+    id: 'saree-3',
+    name: 'Chanderi Gold Foil Zari Drape',
+    category: 'sarees',
+    image: '/images/i3.png',
+    images: ['/images/i3.png', '/images/i5.png', '/images/i6.png'],
+    originalPrice: 14500,
+    discountPercent: 10,
+    sellingPrice: 13050,
+    sizes: ['Free Size', 'With Custom Blouse'],
+    colors: ['Ivory Gold', 'Mint Sage', 'Peach Rose'],
+    fabric: 'Pure Chanderi Silk',
+    tag: 'Handcrafted',
+    isNew: false,
+    description: 'Timeless Chanderi saree highlighted with delicate gold leaf foil prints and hand-finished scallops.'
+  },
+  {
+    id: 'saree-4',
+    name: 'Royal Paithani Handloom Saree',
+    category: 'sarees',
+    image: '/images/i4.png',
+    images: ['/images/i4.png', '/images/i7.png', '/images/i8.png'],
+    originalPrice: 22000,
+    discountPercent: 25,
+    sellingPrice: 16500,
+    sizes: ['Free Size', 'With Custom Blouse'],
+    colors: ['Peacock Blue', 'Magenta Ruby', 'Deep Purple'],
+    fabric: 'Handloom Paithani Silk',
+    tag: 'Limited Edition',
+    isNew: true,
+    description: 'Authentic handloom Paithani with signature peacock pallu motif and kaleidoscopic gold borders.'
+  },
 
-  for (let i = 1; i <= 15; i++) {
-    const originalPrice = 5000 + (i * 500);
-    const discountPercent = i % 3 === 0 ? 15 : (i % 5 === 0 ? 25 : 0);
-    const sellingPrice = originalPrice - (originalPrice * (discountPercent / 100));
+  // ==========================================
+  // 2. BLOUSES (Blouse)
+  // ==========================================
+  {
+    id: 'blouse-1',
+    name: 'Intricate Maggam Work Raw Silk Blouse',
+    category: 'blouses',
+    image: '/images/i5.png',
+    images: ['/images/i5.png', '/images/i6.png', '/images/i7.png'],
+    originalPrice: 7500,
+    discountPercent: 15,
+    sellingPrice: 6375,
+    sizes: ['32', '34', '36', '38', '40', 'Custom'],
+    colors: ['Ruby Red', 'Mustard Yellow', 'Forest Green'],
+    fabric: 'Heavy Raw Silk with Dabka & Kundan',
+    tag: 'Bestseller',
+    isNew: true,
+    description: 'Bespoke hand-embroidered maggam work blouse with kundan stone accents and tassel dori back.'
+  },
+  {
+    id: 'blouse-2',
+    name: 'Zardozi Embroidered Sweetheart Blouse',
+    category: 'blouses',
+    image: '/images/i6.png',
+    images: ['/images/i6.png', '/images/i5.png', '/images/i8.png'],
+    originalPrice: 6800,
+    discountPercent: 10,
+    sellingPrice: 6120,
+    sizes: ['32', '34', '36', '38', '40', 'Custom'],
+    colors: ['Champagne Gold', 'Dusty Rose', 'Midnight Black'],
+    fabric: 'Silk Brocade with Metallic Threads',
+    tag: 'New',
+    isNew: true,
+    description: 'Sweetheart cut designer blouse embellished with antique zardozi work and scalloped sleeves.'
+  },
+  {
+    id: 'blouse-3',
+    name: 'Pearl-Drop Cutwork Bridal Blouse',
+    category: 'blouses',
+    image: '/images/i7.png',
+    images: ['/images/i7.png', '/images/i9.png', '/images/i1.png'],
+    originalPrice: 8900,
+    discountPercent: 20,
+    sellingPrice: 7120,
+    sizes: ['32', '34', '36', '38', '40', 'Custom'],
+    colors: ['Bridal Crimson', 'Emerald Green', 'Royal Navy'],
+    fabric: 'Raw Silk & Sheer Illusion Net',
+    tag: 'Bespoke',
+    isNew: false,
+    description: 'Statement bridal blouse boasting fine cutwork embroidery, Swarovski crystals, and cascading freshwater pearls.'
+  },
+  {
+    id: 'blouse-4',
+    name: 'Velvet Gota Patti Designer Blouse',
+    category: 'blouses',
+    image: '/images/i8.png',
+    images: ['/images/i8.png', '/images/i2.png', '/images/i3.png'],
+    originalPrice: 7200,
+    discountPercent: 15,
+    sellingPrice: 6120,
+    sizes: ['32', '34', '36', '38', '40', 'Custom'],
+    colors: ['Wine Maroon', 'Bottle Green', 'Obsidian Black'],
+    fabric: 'Micro Silk Velvet with Gota Patti',
+    tag: 'Festive',
+    isNew: true,
+    description: 'Luxurious micro-velvet blouse tailored with intricate gota patti edging and hand-stitched piping.'
+  },
 
-    products.push({
-      id: `kurta-${i}`,
-      name: `Hand-Embroidered Kurta Set ${i}`,
-      category: 'kurta-sets',
-      image: kurtaImages[i % kurtaImages.length],
-      originalPrice,
-      discountPercent,
-      sellingPrice,
-      sizes: ['XS', 'S', 'M', 'L', 'XL'],
-      colors: ['Dusty Rose', 'Sage Green', 'Ivory'],
-      tag: i === 1 ? 'New' : (i === 5 ? 'Bestseller' : null),
-      isNew: i <= 3
-    });
+  // ==========================================
+  // 3. CO-ORDS & PRE-DRAPED (Pre Draped)
+  // ==========================================
+  {
+    id: 'coord-1',
+    name: 'Draped Satin Crepe Pant Saree Set',
+    category: 'co-ords',
+    image: '/images/i8.png',
+    images: ['/images/i8.png', '/images/i9.png', '/images/i1.png'],
+    originalPrice: 12500,
+    discountPercent: 20,
+    sellingPrice: 10000,
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['Emerald Green', 'Wine Maroon', 'Midnight Blue'],
+    fabric: 'Satin Crepe with Hand-Embroidered Belt',
+    tag: 'Trending',
+    isNew: true,
+    description: 'Effortless pre-stitched draped pant saree styled with a mirror-embellished bustier and metallic cinch belt.'
+  },
+  {
+    id: 'coord-2',
+    name: 'Pleated Indowestern Cape & Dhoti Co-ord',
+    category: 'co-ords',
+    image: '/images/i9.png',
+    images: ['/images/i9.png', '/images/i3.png', '/images/i4.png'],
+    originalPrice: 11000,
+    discountPercent: 15,
+    sellingPrice: 9350,
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['Teal Ocean', 'Burnt Ochre', 'Blush Coral'],
+    fabric: 'Pleated Georgette & Organza',
+    tag: 'Bestseller',
+    isNew: true,
+    description: 'Modern 3-piece fusion set comprising cowl dhoti pants, crop top, and a lightweight fluid floor-length cape.'
+  },
+  {
+    id: 'coord-3',
+    name: 'Pre-Draped Ruffle Saree Co-ord Set',
+    category: 'co-ords',
+    image: '/images/i1.png',
+    images: ['/images/i1.png', '/images/i2.png', '/images/i7.png'],
+    originalPrice: 13500,
+    discountPercent: 25,
+    sellingPrice: 10125,
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['Dusty Rose', 'Champagne Nude', 'Mauve Orchid'],
+    fabric: 'Tiered Shimmer Georgette',
+    tag: 'New',
+    isNew: true,
+    description: 'Contemporary tiered ruffle drape that slips on in 30 seconds, paired with a sequined structured blouse.'
+  },
+  {
+    id: 'coord-4',
+    name: 'Asymmetric Mirrorwork Fusion Kaftan Set',
+    category: 'co-ords',
+    image: '/images/i4.png',
+    images: ['/images/i4.png', '/images/i5.png', '/images/i6.png'],
+    originalPrice: 9800,
+    discountPercent: 10,
+    sellingPrice: 8820,
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['Turquoise Jade', 'Sunlit Ochre', 'Ivory Pearl'],
+    fabric: 'Pure Modal Silk with Mirror Yoke',
+    tag: 'Resort Luxe',
+    isNew: false,
+    description: 'Relaxed yet opulent kaftan silhouette with handcrafted mirror work neckline and matching culottes.'
+  },
+
+  // ==========================================
+  // 4. DRESSES (Dresses)
+  // ==========================================
+  {
+    id: 'dress-1',
+    name: 'Anarkali Flared Tiered Gown',
+    category: 'dresses',
+    image: '/images/i2.png',
+    images: ['/images/i2.png', '/images/i3.png', '/images/i5.png'],
+    originalPrice: 14000,
+    discountPercent: 20,
+    sellingPrice: 11200,
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'Custom'],
+    colors: ['Ruby Red', 'Cobalt Blue', 'Ivory Cream'],
+    fabric: 'Pure Georgette with Gotapatti',
+    tag: 'Festive',
+    isNew: true,
+    description: 'Floor-sweeping 32-kali flare Anarkali gown with gotapatti yoke and sheer bell sleeves.'
+  },
+  {
+    id: 'dress-2',
+    name: 'Hand-Pleated Indo-Western Maxi Dress',
+    category: 'dresses',
+    image: '/images/i3.png',
+    images: ['/images/i3.png', '/images/i1.png', '/images/i6.png'],
+    originalPrice: 9800,
+    discountPercent: 15,
+    sellingPrice: 8330,
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['Mustard Sunshine', 'Sage Mint', 'Terracotta'],
+    fabric: 'Modal Silk with Hand Block Print',
+    tag: 'New',
+    isNew: false,
+    description: 'Airy bohemian-luxe maxi dress styled with antique wooden buttons and mirror-work neck detail.'
+  },
+  {
+    id: 'dress-3',
+    name: 'Zari Brocade Tiered Fusion Dress',
+    category: 'dresses',
+    image: '/images/i4.png',
+    images: ['/images/i4.png', '/images/i7.png', '/images/i8.png'],
+    originalPrice: 11500,
+    discountPercent: 10,
+    sellingPrice: 10350,
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['Royal Gold & Plum', 'Pistachio Green', 'Rose Gold'],
+    fabric: 'Banarasi Brocade & Silk Organza',
+    tag: 'Handcrafted',
+    isNew: true,
+    description: 'Fusion festive gown featuring a structured brocade bodice and asymmetric tiered organza hem.'
+  },
+  {
+    id: 'dress-4',
+    name: 'Embroidered Cowl Neck Cocktail Dress',
+    category: 'dresses',
+    image: '/images/i7.png',
+    images: ['/images/i7.png', '/images/i2.png', '/images/i9.png'],
+    originalPrice: 13200,
+    discountPercent: 20,
+    sellingPrice: 10560,
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'Custom'],
+    colors: ['Midnight Sapphire', 'Emerald Green', 'Black Pearl'],
+    fabric: 'Heavy Crepe with Sequin Detailing',
+    tag: 'Evening Luxe',
+    isNew: true,
+    description: 'Statuesque cowl-neck evening dress detailed with fine micro-sequin motifs along the back and slit.'
+  },
+
+  // ==========================================
+  // 5. KURTA SETS (Kurta)
+  // ==========================================
+  {
+    id: 'kurta-1',
+    name: 'Hand-Embroidered Chanderi Kurta Set',
+    category: 'kurta-sets',
+    image: '/images/i5.png',
+    images: ['/images/i5.png', '/images/i6.png', '/images/i7.png'],
+    originalPrice: 8500,
+    discountPercent: 15,
+    sellingPrice: 7225,
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    colors: ['Dusty Rose', 'Sage Green', 'Ivory Sand'],
+    fabric: 'Chanderi Silk with Organza Dupatta',
+    tag: 'Bestseller',
+    isNew: true,
+    description: 'Refined A-line kurta featuring delicate threadwork embroidery, cigarette pants, and an organza dupatta.'
+  },
+  {
+    id: 'kurta-2',
+    name: 'Velvet Marodi Handwork Kurta Palazzo Set',
+    category: 'kurta-sets',
+    image: '/images/i6.png',
+    images: ['/images/i6.png', '/images/i5.png', '/images/i8.png'],
+    originalPrice: 12800,
+    discountPercent: 20,
+    sellingPrice: 10240,
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['Deep Wine', 'Forest Emerald', 'Royal Navy'],
+    fabric: 'Micro Silk Velvet & Zari Lace',
+    tag: 'Winter Luxe',
+    isNew: true,
+    description: 'Opulent silk velvet kurta set enhanced with Marodi gold thread craftsmanship and wide palazzos.'
+  },
+  {
+    id: 'kurta-3',
+    name: 'Angrakha Mirror-Work Kurta Sharara Set',
+    category: 'kurta-sets',
+    image: '/images/i7.png',
+    images: ['/images/i7.png', '/images/i1.png', '/images/i9.png'],
+    originalPrice: 9500,
+    discountPercent: 10,
+    sellingPrice: 8550,
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['Sunny Haldi Yellow', 'Sky Blue', 'Flamingo Pink'],
+    fabric: 'Cotton Silk with Real Mirror Highlights',
+    tag: 'Festive',
+    isNew: false,
+    description: 'Festive Angrakha overlapping silhouette paired with a flared sharara and fringed dupatta.'
+  },
+  {
+    id: 'kurta-4',
+    name: 'Straight Cut Zardozi Kurta Pants Set',
+    category: 'kurta-sets',
+    image: '/images/i8.png',
+    images: ['/images/i8.png', '/images/i3.png', '/images/i4.png'],
+    originalPrice: 7900,
+    discountPercent: 15,
+    sellingPrice: 6715,
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['Pastel Mint', 'Lilac Lavender', 'Champagne Cream'],
+    fabric: 'Mulmul Silk with Zardozi Work',
+    tag: 'New',
+    isNew: true,
+    description: 'Minimalist luxury kurta with delicate neckline hand-embroidery and tailored ankle-length pants.'
+  },
+
+  // ==========================================
+  // 6. LEHENGAS (Lehenga)
+  // ==========================================
+  {
+    id: 'lehenga-1',
+    name: 'Bridal Heritage Chanderi Lehenga',
+    category: 'lehengas',
+    image: '/images/i9.png',
+    images: ['/images/i9.png', '/images/i1.png', '/images/i2.png'],
+    originalPrice: 28000,
+    discountPercent: 25,
+    sellingPrice: 21000,
+    sizes: ['S', 'M', 'L', 'Custom'],
+    colors: ['Crimson Bridal Red', 'Rani Pink', 'Royal Vermilion'],
+    fabric: 'Chanderi Silk with Heavy Gota Patti & Dabka',
+    tag: 'Bestseller',
+    isNew: true,
+    description: 'Monumental bridal lehenga designed with rich kalis, hand-embroidered dabka floral motifs, and double dupatta styling.'
+  },
+  {
+    id: 'lehenga-2',
+    name: 'Sequined Georgette Sangeet Lehenga',
+    category: 'lehengas',
+    image: '/images/i1.png',
+    images: ['/images/i1.png', '/images/i4.png', '/images/i8.png'],
+    originalPrice: 19500,
+    discountPercent: 20,
+    sellingPrice: 15600,
+    sizes: ['S', 'M', 'L', 'Custom'],
+    colors: ['Champagne Gold', 'Midnight Obsidian', 'Rose Mauve'],
+    fabric: 'Fluid Georgette with Dual Tone Sequins',
+    tag: 'Trending',
+    isNew: true,
+    description: 'Dazzling sangeet wear lehenga that catches every spotlight with micro-mirror and tonal sequin shimmer.'
+  },
+  {
+    id: 'lehenga-3',
+    name: 'Pastel Organza Floral Skirt Lehenga',
+    category: 'lehengas',
+    image: '/images/i2.png',
+    images: ['/images/i2.png', '/images/i3.png', '/images/i5.png'],
+    originalPrice: 16500,
+    discountPercent: 15,
+    sellingPrice: 14025,
+    sizes: ['S', 'M', 'L', 'Custom'],
+    colors: ['Mint Sage', 'Baby Peach', 'Soft Lavender'],
+    fabric: 'Pure Silk Organza with Pearl Beads',
+    tag: 'New',
+    isNew: true,
+    description: 'Dreamy day-wedding lehenga featuring watercolor floral prints, scalloped can-can flare, and pearl-beaded blouse.'
+  },
+  {
+    id: 'lehenga-4',
+    name: 'Regal Velvet Zardozi Bridal Lehenga',
+    category: 'lehengas',
+    image: '/images/i6.png',
+    images: ['/images/i6.png', '/images/i7.png', '/images/i9.png'],
+    originalPrice: 32000,
+    discountPercent: 20,
+    sellingPrice: 25600,
+    sizes: ['S', 'M', 'L', 'Custom'],
+    colors: ['Deep Royal Plum', 'Emerald Forest', 'Crimson Velvet'],
+    fabric: 'Silk Velvet & Gold Bullion Wire',
+    tag: 'Royal Bridal',
+    isNew: true,
+    description: 'Heirloom bridal creation embroidered with metallic gold bullion threadwork, semi-precious beads, and heavy border.'
+  },
+
+  // ==========================================
+  // 7. MEN (Men)
+  // ==========================================
+  {
+    id: 'men-1',
+    name: 'Royal Raw Silk Bandhgala Jodhpuri Set',
+    category: 'men',
+    image: '/images/i3.png',
+    images: ['/images/i3.png', '/images/i4.png', '/images/i5.png'],
+    originalPrice: 15500,
+    discountPercent: 20,
+    sellingPrice: 12400,
+    sizes: ['38', '40', '42', '44', 'Custom'],
+    colors: ['Midnight Black', 'Imperial Blue', 'Ivory Ecru'],
+    fabric: 'Structured Raw Silk with Monogram Brass Buttons',
+    tag: 'Bestseller',
+    isNew: true,
+    description: 'Tailored royal Bandhgala suit featuring bespoke crest buttons and slim-fit trousers.'
+  },
+  {
+    id: 'men-2',
+    name: 'Hand-Embroidered Kurta Bundi Jacket Set',
+    category: 'men',
+    image: '/images/i4.png',
+    images: ['/images/i4.png', '/images/i6.png', '/images/i7.png'],
+    originalPrice: 11000,
+    discountPercent: 15,
+    sellingPrice: 9350,
+    sizes: ['38', '40', '42', '44'],
+    colors: ['Mustard & Ivory', 'Pistachio & Beige', 'Wine & Charcoal'],
+    fabric: 'Chanderi Silk Kurta with Jacquard Nehru Jacket',
+    tag: 'Festive',
+    isNew: true,
+    description: 'Festive 3-piece men ensemble featuring a jacquard bundi jacket, silk kurta, and churidar.'
+  },
+  {
+    id: 'men-3',
+    name: 'Chanderi Asymmetric Draped Kurta Set',
+    category: 'men',
+    image: '/images/i5.png',
+    images: ['/images/i5.png', '/images/i1.png', '/images/i8.png'],
+    originalPrice: 8500,
+    discountPercent: 10,
+    sellingPrice: 7650,
+    sizes: ['38', '40', '42', '44'],
+    colors: ['Olive Moss', 'Sand Dune', 'Slate Grey'],
+    fabric: 'Pure Chanderi Silk with Pintuck Detailing',
+    tag: 'New',
+    isNew: false,
+    description: 'Modern silhouette with cowl drape detailing, mandarin collar, and tapered trousers.'
+  },
+  {
+    id: 'men-4',
+    name: 'Gold Zari Brocade Sherwani Set',
+    category: 'men',
+    image: '/images/i8.png',
+    images: ['/images/i8.png', '/images/i3.png', '/images/i9.png'],
+    originalPrice: 21000,
+    discountPercent: 20,
+    sellingPrice: 16800,
+    sizes: ['38', '40', '42', '44', 'Custom'],
+    colors: ['Ivory Gold', 'Champagne Pearl', 'Royal Navy'],
+    fabric: 'Banarasi Zari Brocade with Silk Churidar',
+    tag: 'Groom Luxe',
+    isNew: true,
+    description: 'Magnificent groom sherwani with antique gold brocade weave, matching stole, and churidar.'
+  },
+
+  // ==========================================
+  // 8. FESTIVE WEAR & COMBOS (Combo)
+  // ==========================================
+  {
+    id: 'combo-1',
+    name: 'Couple Festive Harmony Silk Ensemble',
+    category: 'festive-wear',
+    image: '/images/i6.png',
+    images: ['/images/i6.png', '/images/i7.png', '/images/i8.png'],
+    originalPrice: 24000,
+    discountPercent: 25,
+    sellingPrice: 18000,
+    sizes: ['Women M / Men 40', 'Women L / Men 42', 'Custom Sizes'],
+    colors: ['Imperial Maroon & Beige', 'Emerald & Gold', 'Sapphire & Cream'],
+    fabric: 'Banarasi Silk & Micro Velvet',
+    tag: 'Bestseller',
+    isNew: true,
+    description: 'Harmonious color-coordinated luxury ensemble pairing bride/partner Anarkali & groom/partner Kurta Bundi.'
+  },
+  {
+    id: 'combo-2',
+    name: 'Zardozi Tissue Drape & Belt Festive Set',
+    category: 'festive-wear',
+    image: '/images/i7.png',
+    images: ['/images/i7.png', '/images/i1.png', '/images/i5.png'],
+    originalPrice: 14500,
+    discountPercent: 20,
+    sellingPrice: 11600,
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['Forest Emerald', 'Mustard Amber', 'Royal Plum'],
+    fabric: 'Tissue Silk & Zardozi Work',
+    tag: 'Handcrafted',
+    isNew: true,
+    description: 'Luminous metallic tissue drape with handcrafted zardozi motifs, complete with embellished waist cincher.'
+  },
+  {
+    id: 'combo-3',
+    name: 'Mother & Daughter Matching Festive Edit',
+    category: 'festive-wear',
+    image: '/images/i8.png',
+    images: ['/images/i8.png', '/images/i2.png', '/images/i4.png'],
+    originalPrice: 17500,
+    discountPercent: 15,
+    sellingPrice: 14875,
+    sizes: ['Standard Adult + Kids 4-12Y', 'Custom Pair'],
+    colors: ['Rose Quartz', 'Sunlit Gold', 'Mint Dew'],
+    fabric: 'Chanderi Brocade with Gotapatti',
+    tag: 'Special Edit',
+    isNew: true,
+    description: 'Adorably coordinated festive dresses featuring lightweight gota patti borders and featherweight dupattas.'
+  },
+  {
+    id: 'combo-4',
+    name: 'Family Celebrations Festive Trio Set',
+    category: 'festive-wear',
+    image: '/images/i9.png',
+    images: ['/images/i9.png', '/images/i3.png', '/images/i6.png'],
+    originalPrice: 32000,
+    discountPercent: 30,
+    sellingPrice: 22400,
+    sizes: ['Custom Sizing for All'],
+    colors: ['Royal Gold & Ivory', 'Peacock Jewel Tones', 'Maroon & Blush'],
+    fabric: 'Pure Handloom Silk & Chanderi',
+    tag: 'Grand Festive',
+    isNew: true,
+    description: 'Bespoke coordinated festive collection tailored for memorable wedding functions and grand family festivals.'
   }
+];
 
-  const coordImages = [
-    'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80',
-    'https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=600&q=80',
-    'https://images.unsplash.com/photo-1585914924626-15adac1e6402?auto=format&fit=crop&w=600&q=80'
-  ];
-
-  for (let i = 1; i <= 15; i++) {
-    const originalPrice = 6000 + (i * 300);
-    const discountPercent = i % 4 === 0 ? 20 : (i % 7 === 0 ? 30 : 0);
-    const sellingPrice = originalPrice - (originalPrice * (discountPercent / 100));
-
-    products.push({
-      id: `coord-${i}`,
-      name: `Festive Silk Co-ord Set ${i}`,
-      category: 'co-ords',
-      image: coordImages[i % coordImages.length],
-      originalPrice,
-      discountPercent,
-      sellingPrice,
-      sizes: ['XS', 'S', 'M', 'L', 'XL'],
-      colors: ['Midnight Blue', 'Emerald Green', 'Wine'],
-      tag: i === 2 ? 'New' : (i === 6 ? 'Limited' : null),
-      isNew: i <= 2
-    });
-  }
-
-  const lehengaImages = [
-    'https://images.unsplash.com/photo-1550614000-4b95dd2458ae?auto=format&fit=crop&w=600&q=80',
-    'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=600&q=80',
-    'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80'
-  ];
-
-  for (let i = 1; i <= 15; i++) {
-    const originalPrice = 15000 + (i * 1500);
-    const discountPercent = i % 2 === 0 ? 10 : (i % 5 === 0 ? 40 : 0);
-    const sellingPrice = originalPrice - (originalPrice * (discountPercent / 100));
-
-    products.push({
-      id: `lehenga-${i}`,
-      name: `Bridal Chanderi Lehenga ${i}`,
-      category: 'lehengas',
-      image: lehengaImages[i % lehengaImages.length],
-      originalPrice,
-      discountPercent,
-      sellingPrice,
-      sizes: ['S', 'M', 'L', 'Custom'],
-      colors: ['Crimson Red', 'Blush Pink', 'Champagne Gold'],
-      tag: i === 1 ? 'Bestseller' : (i === 10 ? 'Limited' : null),
-      isNew: i <= 4
-    });
-  }
-
-  const festiveImages = [
-    'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80',
-    'https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=600&q=80',
-    'https://images.unsplash.com/photo-1585914924626-15adac1e6402?auto=format&fit=crop&w=600&q=80'
-  ];
-
-  for (let i = 1; i <= 15; i++) {
-    const originalPrice = 8000 + (i * 800);
-    const discountPercent = i % 3 === 0 ? 15 : 0;
-    const sellingPrice = originalPrice - (originalPrice * (discountPercent / 100));
-
-    products.push({
-      id: `festive-${i}`,
-      name: `Zardozi Tissue Drape ${i}`,
-      category: 'festive-wear',
-      image: festiveImages[i % festiveImages.length],
-      originalPrice,
-      discountPercent,
-      sellingPrice,
-      sizes: ['XS', 'S', 'M', 'L', 'XL'],
-      colors: ['Forest Green', 'Mustard Yellow', 'Royal Purple'],
-      tag: i === 3 ? 'New' : (i === 8 ? 'Bestseller' : null),
-      isNew: i <= 5
-    });
-  }
-
-  return products;
-};
-
-export const products = generateProducts();
+export default products;

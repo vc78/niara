@@ -140,13 +140,12 @@ const Navbar = ({ onCartOpen, onWishlistOpen, onAuthOpen, onProfileOpen, onConta
           {/* Brand Logo (Left) */}
           <a href="#home" onClick={handleNavigation(onNavigateToHome)} className="navbar-logo" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
             <img
-              src="/images/logo.png"
+              src="/logos/logo1.png"
               alt="LABEL by SAHITHI NANDAN"
               style={{
                 height: isScrolled ? '48px' : '64px',
                 aspectRatio: '1',
                 objectFit: 'contain',
-                clipPath: 'circle(45% at 50% 50%)',
                 filter: 'none',
                 transition: 'height 0.3s ease'
               }}

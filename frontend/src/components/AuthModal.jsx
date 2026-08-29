@@ -72,7 +72,7 @@ const AuthModal = ({ isOpen, onClose }) => {
             <p>
               {isLogin
                 ? 'Access your bespoke wishlist and personalized orders.'
-                : 'Join Eedara for exclusive curated couture and styling services.'}
+                : 'Join LABEL by SAHITHI NANDAN for exclusive curated couture and styling services.'}
             </p>
           </div>
 

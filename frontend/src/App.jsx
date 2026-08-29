@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import CartDrawer from './components/CartDrawer';
@@ -27,40 +27,52 @@ function App() {
   const [isHotPicksOpen, setIsHotPicksOpen] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
 
-  const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'collection' | 'product'
+  const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'collection' | 'product' | 'gallery' | 'about'
   const [activeCategory, setActiveCategory] = useState('all');
   const [activeProduct, setActiveProduct] = useState(null);
+  const [appliedCouponCode, setAppliedCouponCode] = useState('');
 
   const navigateToCollection = (category = 'all') => {
     setActiveCategory(category);
     setCurrentRoute('collection');
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const navigateToProduct = (product) => {
     setActiveProduct(product);
     setCurrentRoute('product');
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const navigateToHome = () => {
     setCurrentRoute('home');
-    window.setTimeout(() => window.scrollTo(0, 0), 0);
+    window.setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 0);
   };
 
   const navigateToSection = (sectionId) => {
-    setCurrentRoute('home');
-    window.setTimeout(() => document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' }), 0);
+    if (currentRoute !== 'home') {
+      setCurrentRoute('home');
+      window.setTimeout(() => {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const navigateToGallery = () => {
     setCurrentRoute('gallery');
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const navigateToAbout = () => {
     setCurrentRoute('about');
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleApplyBannerCoupon = (code) => {
+    setAppliedCouponCode(code);
+    setIsCartOpen(true);
   };
 
   return (
@@ -84,7 +96,7 @@ function App() {
                 onNavigateToAbout={navigateToAbout}
               />
 
-              {/* Main single-page scroll view or Collection view */}
+              {/* Main routing view */}
               <main className="main-content">
                 {currentRoute === 'home' ? (
                   <Home
@@ -92,6 +104,7 @@ function App() {
                     onProfileOpen={() => setIsProfileOpen(true)}
                     onNavigateToCollection={navigateToCollection}
                     onProductClick={navigateToProduct}
+                    onApplyCoupon={handleApplyBannerCoupon}
                   />
                 ) : currentRoute === 'collection' ? (
                   <CollectionPage
@@ -104,7 +117,7 @@ function App() {
                     product={activeProduct}
                     onBack={() => {
                       setCurrentRoute(activeCategory ? 'collection' : 'home');
-                      window.scrollTo(0, 0);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
                   />
                 ) : currentRoute === 'gallery' ? (
@@ -114,8 +127,13 @@ function App() {
                 ) : null}
               </main>
 
-              {/* Global floating side cart panel */}
-              <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+              {/* Global floating side cart panel with coupon support */}
+              <CartDrawer
+                isOpen={isCartOpen}
+                onClose={() => setIsCartOpen(false)}
+                externalCoupon={appliedCouponCode}
+                onClearExternalCoupon={() => setAppliedCouponCode('')}
+              />
 
               {/* Global Wishlist Drawer */}
               <WishlistDrawer isOpen={isWishlistOpen} onClose={() => setIsWishlistOpen(false)} />
@@ -129,7 +147,7 @@ function App() {
               {/* Global Contact Modal */}
               <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
 
-              {/* New Features: Welcome Popup & Hot Picks */}
+              {/* Welcome Popup & Hot Picks Drawer */}
               <WelcomePopup onCartOpen={() => setIsCartOpen(true)} />
               <HotPicksTab onClick={() => setIsHotPicksOpen(true)} />
               <HotPicksDrawer
