@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -23,6 +23,11 @@
   
   --transition-smooth: all 0.3s ease;
   --transition-premium: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Touch & Safe-area standards */
+  --min-touch-target: 44px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top: env(safe-area-inset-top, 0px);
 }
 
 * {
@@ -32,6 +37,11 @@
   scroll-behavior: smooth;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
 body {
   font-family: var(--font-sans);
   color: var(--text-dark);
@@ -39,13 +49,46 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
-h1, h2, h3, h4, h5, h6 {
+/* Fluid Responsive Typography */
+h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 5.5vw, 3.25rem);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--text-dark);
+}
+
+h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.45rem, 4.5vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--text-dark);
+}
+
+h3 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 3.8vw, 1.85rem);
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--text-dark);
+}
+
+h4, h5, h6 {
   font-family: var(--font-serif);
   font-weight: 500;
   color: var(--text-dark);
   letter-spacing: 0.02em;
+}
+
+p {
+  font-size: clamp(0.875rem, 3.2vw, 1rem);
+  line-height: 1.65;
 }
 
 a {
@@ -54,9 +97,28 @@ a {
   transition: var(--transition-smooth);
 }
 
-button, input, textarea, select {
+/* Critical iOS Safari auto-zoom prevention: inputs must be >= 16px */
+input, textarea, select {
+  font-family: var(--font-sans);
+  font-size: 16px !important;
+  outline: none;
+  box-sizing: border-box;
+}
+
+button {
   font-family: var(--font-sans);
   outline: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Accessible Minimum Touch Target */
+.touch-target {
+  min-width: var(--min-touch-target);
+  min-height: var(--min-touch-target);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Base App Layout */
@@ -218,5 +280,37 @@ button, input, textarea, select {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(197, 168, 128, 0.15);
+}
+
+/* Mobile Spacing Rhythm Scale */
+.section-py {
+  padding-top: clamp(2.5rem, 6vw, 5.5rem);
+  padding-bottom: clamp(2.5rem, 6vw, 5.5rem);
+}
+
+.section-px {
+  padding-left: clamp(1rem, 4vw, 2.5rem);
+  padding-right: clamp(1rem, 4vw, 2.5rem);
+}
+
+/* Safe Area Inset Helpers */
+.safe-bottom {
+  padding-bottom: max(16px, env(safe-area-inset-bottom, 16px));
+}
+
+.safe-top {
+  padding-top: max(16px, env(safe-area-inset-top, 16px));
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 

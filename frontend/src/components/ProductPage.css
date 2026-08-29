@@ -1,8 +1,9 @@
 .product-page-container {
-  padding: 100px 5% 50px;
+  padding: clamp(90px, 14vw, 120px) clamp(16px, 5%, 60px) clamp(40px, 6vw, 60px);
   max-width: 1400px;
   margin: 0 auto;
   min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .product-header-nav {
@@ -10,7 +11,7 @@
 }
 
 .back-btn-ghost {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
   background: none;
@@ -20,7 +21,8 @@
   font-size: 14px;
   cursor: pointer;
   transition: color 0.3s ease;
-  padding: 8px 0;
+  padding: 8px 12px 8px 0;
+  min-height: 44px;
 }
 
 .back-btn-ghost:hover {
@@ -93,16 +95,17 @@
 
 .product-title-large {
   font-family: var(--font-serif);
-  font-size: 42px;
+  font-size: clamp(1.65rem, 4.5vw, 2.6rem);
+  line-height: 1.2;
   color: var(--text-dark);
   margin: 0 0 10px;
 }
 
 .product-price-large {
   font-family: var(--font-mono);
-  font-size: 24px;
+  font-size: clamp(1.2rem, 3.5vw, 1.5rem);
   color: var(--accent-gold);
-  margin: 0 0 30px;
+  margin: 0;
 }
 
 .product-description-block {
@@ -155,11 +158,13 @@
 
 .size-pill {
   min-width: 60px;
-  padding: 10px 15px;
+  min-height: 44px;
+  padding: 10px 16px;
   border: 1px solid var(--border-light);
   background: transparent;
   color: var(--text-dark);
   font-family: var(--font-sans);
+  font-size: 14px;
   border-radius: 30px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -241,11 +246,14 @@
   display: flex;
   gap: 10px;
   margin-bottom: 30px;
+  flex-wrap: wrap;
 }
 
 .add-to-cart-cta {
   flex: 2;
-  padding: 16px;
+  min-flex-basis: 160px;
+  padding: 14px 16px;
+  min-height: 48px;
   background: var(--primary-color);
   color: var(--accent-gold);
   border: none;
@@ -282,6 +290,7 @@
   font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 600;
+  min-height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -296,6 +305,7 @@
 
 .wishlist-toggle-btn {
   width: 50px;
+  min-height: 48px;
   border-radius: 6px;
   border: 1px solid var(--border-light);
   background: var(--card-bg);
@@ -374,37 +384,31 @@
 @media (max-width: 1024px) {
   .product-main-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
-  }
-  
-  .product-title-large {
-    font-size: 32px;
+    gap: 32px;
   }
 }
 
 @media (max-width: 600px) {
-  .product-page-container {
-    padding: 110px 5% 40px;
-  }
-  
   .product-main-grid {
-    gap: 30px;
+    gap: 24px;
   }
 
   .main-image-wrapper {
     aspect-ratio: 4/5;
   }
 
-  .product-title-large {
-    font-size: 28px;
-  }
-  
-  .product-price-large {
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
-  
   .thumbnail-btn {
     width: 60px;
+    min-height: 44px;
+  }
+
+  .product-actions-sticky {
+    position: sticky;
+    bottom: 0;
+    background: var(--bg-color);
+    padding: clamp(10px, 3vw, 16px) 0 calc(16px + env(safe-area-inset-bottom, 12px));
+    margin-bottom: 0;
+    z-index: 50;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.06);
   }
 }
